@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lox.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jlox/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jlox/TokenType.java" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 4 - Scanning (non nesting block comments)">
+      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +69,28 @@
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
     </task>
+    <task id="LOCAL-00001" summary="Chapter 4 - Scanning (done)">
+      <created>1654239608264</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1654239608264</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Chapter 4 - Scanning (non nesting block comments)">
+      <created>1654242316054</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1654242316054</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Chapter 4 - Scanning (non nesting block comments)">
+      <created>1654256590966</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1654256590966</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -91,5 +103,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Chapter 4 - Scanning (done)" />
+    <MESSAGE value="Chapter 4 - Scanning (non nesting block comments)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 4 - Scanning (non nesting block comments)" />
   </component>
 </project>

@@ -86,6 +86,8 @@ class Scanner {
                 if (match('/')) {
                     // Line comments
                     advanceAfter('\n');
+                } else if (match('*')) {
+                    blockComment();
                 } else {
                     addToken(SLASH);
                 }
@@ -144,6 +146,16 @@ class Scanner {
         return true;
     }
 
+    @SuppressWarnings("SameParameterValue")
+    private boolean advanceAfter(char expected, char nextExpected) {
+        while (peek() != expected || peek(1) != nextExpected) {
+            if (isAtEnd()) return false;
+            advance();
+        }
+        advance(); advance();
+        return true;
+    }
+
     private boolean match(char expected) {
         if (peek() != expected)
             return false;
@@ -192,6 +204,13 @@ class Scanner {
         if (type == null)
             type = IDENTIFIER;
         addToken(type);
+    }
+
+    private void blockComment() {
+        // TODO add the possibility to nest them (chapter 4 challenge)
+        if (!advanceAfter('*', '/')) {
+            Lox.error(line, "Unterminated multiline comment");
+        }
     }
 
     private void addToken(TokenType type) {
