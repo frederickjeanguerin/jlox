@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 4 - Scanning (non nesting block comments)">
-      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/tool/GenerateAst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +44,33 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.GenerateAst">
+    <configuration name="AstPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="jlox.AstPrinter" />
+      <module name="Lox" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jlox.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenerateAst" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="jlox.tool.GenerateAst" />
+      <module name="Lox" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jlox.tool.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Lox" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="jlox.Lox" />
       <module name="Lox" />
@@ -56,6 +86,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GenerateAst" />
+        <item itemvalue="Application.AstPrinter" />
         <item itemvalue="Application.Lox" />
       </list>
     </recent_temporary>
@@ -90,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654256590966</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Chapter 4 - Scanning (non nesting block comments)">
+      <created>1654256695625</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654256695626</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
