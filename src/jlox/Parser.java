@@ -30,7 +30,20 @@ class Parser {
 
     // Challenge 1, Chap 6 : C comma expression
     private Expr comma() {
-        return binary(this::equality, COMMA);
+        return binary(this::ternary, COMMA);
+    }
+
+    // Challenge 2, Chap 6 : Ternary
+    private Expr ternary() {
+        Expr expr = equality();
+        if (match(QUESTION)) {
+            Token leftOp = previous();
+            Expr middle = equality();
+            Token rightOp = consume(COLON, "Expect ':' in ternary.");
+            Expr right = ternary();
+            expr =  new Expr.Ternary(expr, leftOp, middle, rightOp, right);
+        }
+        return expr;
     }
 
     private Expr equality() {

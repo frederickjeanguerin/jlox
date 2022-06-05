@@ -28,6 +28,11 @@ public class AstPrinter implements Expr.Visitor<String> {
         return parenthesize(expr.operator.lexeme(), expr.right);
     }
 
+    @Override
+    public String visitTernaryExpr(Expr.Ternary expr) {
+        return parenthesize(expr.leftOp.lexeme() + expr.rightOp.lexeme(), expr.left, expr.middle, expr.right);
+    }
+
     private String parenthesize(String name, Expr... exprs) {
         var sb = new StringBuilder();
         sb.append('(').append(name);
