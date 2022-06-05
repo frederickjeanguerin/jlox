@@ -21,6 +21,7 @@ public class Lox {
         } else {
             runPrompt();
         }
+        if (hadError) System.exit(65);
     }
 
     private static void runFile(String path) throws IOException {
@@ -47,9 +48,10 @@ public class Lox {
 
         Expr ast = new Parser(tokens).parse();
 
-        if (hadError) System.exit(65);
+        if (ast != null)
+            System.out.println(new AstPrinter().print(ast));
 
-        System.out.println(new AstPrinter().print(ast));
+        // if (hadError) System.exit(65);
     }
 
     // Lexer error
@@ -68,6 +70,7 @@ public class Lox {
 
     private static void report(int line, String where, String message) {
         System.err.println("[line " + line + "] Error" + where + ": " + message);
+        System.err.flush();
         hadError = true;
     }
 }

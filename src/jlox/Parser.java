@@ -68,6 +68,17 @@ class Parser {
             Expr right = unary();
             return new Expr.Unary(operator, right);
         }
+        return primaryOrError();
+    }
+
+    // Challenge 3, Chap 6 : Error production for missing first operand
+    private Expr primaryOrError() {
+        if (peek(QUESTION, BANG_EQUAL, EQUAL_EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL, PLUS, SLASH, STAR)) {
+            //noinspection ThrowableNotThrown
+            error(peek(), "Expect first operand (expression) before operator.");
+            insert(new Token(ERROR, peek().lexeme(), peek().literal(), peek().line()));
+            return ternary(); // retry to parse with added dummy first operand
+        }
         return primary();
     }
 
@@ -75,6 +86,7 @@ class Parser {
         if (match(FALSE)) return new Expr.Literal(false);
         if (match(TRUE)) return new Expr.Literal(true);
         if (match(NIL)) return new Expr.Literal(null);
+        if (match(ERROR)) return new Expr.Literal("#Error");
         if (match(NUMBER, STRING)) return new Expr.Literal(previous().literal());
         if (match(LEFT_PAREN)) {
             Expr expr = expression();
@@ -95,18 +107,16 @@ class Parser {
     }
 
     private boolean match(TokenType... types) {
-        for (var type : types) {
-            if (check(type)) {
-                advance();
-                return true;
-            }
+        if (peek(types)) {
+            advance();
+            return true;
         }
         return false;
     }
 
     @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
     private Token consume(TokenType type, String message) {
-        if (check(type)) return advance();
+        if (peek(type)) return advance();
         throw error(peek(), message);
     }
 
@@ -141,9 +151,16 @@ class Parser {
         return previous();
     }
 
-    private boolean check(TokenType type) {
+    private void insert(Token token) {
+        tokens.add(current, token);
+    }
+
+    private boolean peek(TokenType... types) {
         if (isAtEnd()) return false;
-        return peek().type() == type;
+        for (var type : types) {
+            if (peek().type() == type) return true;
+        }
+        return false;
     }
 
     private boolean isAtEnd() {
