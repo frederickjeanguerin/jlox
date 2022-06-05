@@ -25,7 +25,12 @@ class Parser {
     }
 
     private Expr expression() {
-        return equality();
+        return comma();
+    }
+
+    // Challenge 1, Chap 6 : C comma expression
+    private Expr comma() {
+        return binary(this::equality, COMMA);
     }
 
     private Expr equality() {
