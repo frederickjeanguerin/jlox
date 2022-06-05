@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 4 - Scanning (non nesting block comments)">
-      <change afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jlox/tool/GenerateAst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 5 - AST classes generator (done)">
+      <change afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +42,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GenerateAst">
+  <component name="RunManager" selected="Application.Lox">
     <configuration name="AstPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="jlox.AstPrinter" />
       <module name="Lox" />
@@ -86,9 +84,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Lox" />
         <item itemvalue="Application.GenerateAst" />
         <item itemvalue="Application.AstPrinter" />
-        <item itemvalue="Application.Lox" />
       </list>
     </recent_temporary>
   </component>
@@ -129,7 +127,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654256695626</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Chapter 5 - AST classes generator">
+      <created>1654373559762</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1654373559762</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Chapter 5 - AST classes generator (done)">
+      <created>1654373814515</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1654373814515</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -146,6 +158,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Chapter 4 - Scanning (done)" />
     <MESSAGE value="Chapter 4 - Scanning (non nesting block comments)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 4 - Scanning (non nesting block comments)" />
+    <MESSAGE value="Chapter 5 - AST classes generator" />
+    <MESSAGE value="Chapter 5 - AST classes generator (done)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 5 - AST classes generator (done)" />
   </component>
 </project>
