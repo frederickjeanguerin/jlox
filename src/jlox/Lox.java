@@ -8,9 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-
 public class Lox {
-    private static boolean hadError = false;
+    private static final Error error = new Error();
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
@@ -21,7 +20,7 @@ public class Lox {
         } else {
             runPrompt();
         }
-        if (hadError) System.exit(65);
+        if (error.hadError())  System.exit(65);
     }
 
     private static void runFile(String path) throws IOException {
@@ -34,44 +33,30 @@ public class Lox {
         var reader = new BufferedReader(input);
 
         for(;;){
+            System.out.println();
             System.out.print("> ");
             var line = reader.readLine();
             if (line == null) break; // EOF (ctrl+D)
-            run(line);
-            hadError = false;
+            if (!line.isBlank()) {
+                error.reset();
+                run(line);
+            }
         }
     }
 
     private static void run(String source) {
-        Scanner scanner = new Scanner(source);
+        Scanner scanner = new Scanner(source, error);
         List<Token> tokens = scanner.scanTokens();
 
-        Expr ast = new Parser(tokens).parse();
+        Expr ast = new Parser(tokens, error).parse();
+
+        error.report();
 
         if (ast != null)
             System.out.println(new AstPrinter().print(ast));
+        else
+            System.out.println();
 
-        // if (hadError) System.exit(65);
-    }
-
-    // Lexer error
-    static void error(int line, String message) {
-        report(line, "", message);
-    }
-
-    // Parser error
-    static void error(Token token, String message) {
-        if (token.type() == TokenType.EOF) {
-            report(token.line(), " at end", message);
-        } else {
-            report(token.line(), " at '" + token.lexeme() + "'", message);
-        }
-    }
-
-    private static void report(int line, String where, String message) {
-        System.err.println("[line " + line + "] Error" + where + ": " + message);
-        System.err.flush();
-        hadError = true;
     }
 }
 
