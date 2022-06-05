@@ -176,4 +176,18 @@ class Parser {
     private Token previous() {
         return tokens.get(current - 1);
     }
+
+    // ------ Test helpers ------
+
+    static record TestResult(String ast, String errors){}
+
+    static TestResult test(String source) {
+        var error = new Error();
+        Scanner scanner = new Scanner(source, error);
+        List<Token> tokens = scanner.scanTokens();
+        Expr ast = new Parser(tokens, error).parse();
+        return new TestResult(
+            ast == null ? "" : new AstPrinter().print(ast),
+            error.errors());
+    }
 }
