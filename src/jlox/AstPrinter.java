@@ -18,12 +18,7 @@ public class AstPrinter implements Expr.Visitor<String> {
 
     @Override
     public String visitLiteralExpr(Expr.Literal expr) {
-        if (expr.value == null)
-            return "nil";
-        var str = expr.value.toString();
-        if (str.endsWith(".0"))
-            str = str.substring(0, str.length() - 2);
-        return str;
+        return Lox.stringify(expr.value);
     }
 
     @Override

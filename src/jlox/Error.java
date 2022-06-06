@@ -7,7 +7,7 @@ public class Error {
         return log.toString();
     }
 
-    boolean hadError() {
+    boolean hasError() {
         return !log.isEmpty();
     }
 
@@ -15,11 +15,13 @@ public class Error {
         log.setLength(0);
     }
 
-    void report() {
-        if (hadError()) {
+    boolean report() {
+        if (hasError()) {
             System.err.print(errors());
             System.err.flush();
+            return true;
         }
+        return false;
     }
 
     // Lexer error

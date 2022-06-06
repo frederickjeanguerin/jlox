@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Lox {
     private static final Error error = new Error();
+    private static final Interpreter interpreter = new Interpreter();
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
@@ -20,7 +21,7 @@ public class Lox {
         } else {
             runPrompt();
         }
-        if (error.hadError())  System.exit(65);
+        if (error.hasError())  System.exit(65);
     }
 
     private static void runFile(String path) throws IOException {
@@ -33,7 +34,11 @@ public class Lox {
         var reader = new BufferedReader(input);
 
         for(;;){
-            System.out.println();
+            if (error.hasError()) {
+                // To make IntelliJ flush his stderr buffer.
+                System.out.println();
+                System.out.println();
+            }
             System.out.print("> ");
             var line = reader.readLine();
             if (line == null) break; // EOF (ctrl+D)
@@ -49,14 +54,23 @@ public class Lox {
         List<Token> tokens = scanner.scanTokens();
 
         Expr ast = new Parser(tokens, error).parse();
+        if (error.report()) return;
 
-        error.report();
+        var result = interpreter.interpret(ast, error);
+        if (error.report()) return;
 
-        if (ast != null)
-            System.out.println(new AstPrinter().print(ast));
-        else
-            System.out.println();
+        System.out.println(stringify(result));
 
+        // System.out.println(new AstPrinter().print(ast));
+    }
+
+    static String stringify(Object value) {
+        if (value == null)
+            return "nil";
+        var str = value.toString();
+        if (str.endsWith(".0"))
+            str = str.substring(0, str.length() - 2);
+        return str;
     }
 }
 
