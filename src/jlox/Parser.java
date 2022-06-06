@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import static jlox.TokenType.*;
 
-class Parser {
+public class Parser {
 
     private static class ParseError extends RuntimeException {}
 
@@ -179,9 +179,9 @@ class Parser {
 
     // ------ Test helpers ------
 
-    static record TestResult(String ast, String errors){}
+    public record TestResult(String ast, String errors){}
 
-    static TestResult test(String source) {
+    public static TestResult test(String source) {
         var error = new Error();
         Scanner scanner = new Scanner(source, error);
         List<Token> tokens = scanner.scanTokens();

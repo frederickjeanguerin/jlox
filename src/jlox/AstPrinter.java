@@ -20,7 +20,10 @@ public class AstPrinter implements Expr.Visitor<String> {
     public String visitLiteralExpr(Expr.Literal expr) {
         if (expr.value == null)
             return "nil";
-        return expr.value.toString();
+        var str = expr.value.toString();
+        if (str.endsWith(".0"))
+            str = str.substring(0, str.length() - 2);
+        return str;
     }
 
     @Override
