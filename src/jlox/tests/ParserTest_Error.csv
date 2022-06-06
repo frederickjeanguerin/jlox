@@ -1,0 +1,20 @@
+description ¤ input ¤ expectedErrors
+
+# No input
+No input ¤ "" ¤ line 1, at end, expect expression
+
+# Bad characters and line numbers (lexer errors)
+Bad character ¤ 2 + ± 3 ¤ unexpected character '±'
+Bad character on line 2 ¤ 2 \n+ ½ 3 ¤ line 2, unexpected character '½'
+Bad character on line 1 and 2 ¤ 2 ± \n+ ½ 3 ¤ line 1, line 2
+
+# Missing operand
+Missing operand at end ¤ ! ¤ at end, expect expression
+Missing operand in grouping ¤ (!) ¤ at '[)]', expect expression
+Missing last operand at end ¤ 1 + ¤ at end, expect expression
+Missing last operand in grouping ¤ (1 + ) ¤ at '[)]', expect expression
+Missing first operand ¤ + 1 ¤ at '[+]', expect first operand
+Missing first operand in grouping ¤ (, 1) ¤ at ',', expect expression
+
+# Missing many operands
+Missing 2 operands ¤ + ¤ at '[+]', at end, expect first operand, expect expression

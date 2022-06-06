@@ -19,6 +19,7 @@ public class Parser {
     }
 
     Expr parse() {
+        // NB tokens can still be present in the list after a parse
         try {
             return expression();
         } catch (ParseError error) {

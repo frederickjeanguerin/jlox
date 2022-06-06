@@ -1,33 +1,59 @@
 description ¤ input ¤ expectedAst
+
+# Simple expressions
 Simple number ¤ 123 ¤ 123
 Simple decimal number ¤ 987.125 ¤ 987.125
 Simple string ¤ ""abc"" ¤ abc
 Simple nil ¤ nil ¤ nil
 Simple true ¤ true ¤ true
 Simple false ¤ false ¤ false
+
+# Simple with comment
+Simple number with line comment ¤ 456 // comment ¤ 456
+Simple number with block comment ¤ /* comment */ 456 ¤ 456
+Simple number with block and line comment ¤ /* comment */ 456 // comment ¤ 456
+
+# Unary
 Unary minus ¤ -55 ¤ (- 55)
 Unary bang ¤ !true ¤ (! true)
 Unary multiple ¤ ---55 ¤ (- (- (- 55)))
+
+# Factor
 Factor star ¤ 23 * 89 ¤ (* 23 89)
 Factor slash ¤ 23 / 89 ¤ (/ 23 89)
 Factor and unary ¤ -55 * -33 ¤ (* (- 55) (- 33))
 Factor multiple ¤ 1 * 2 / 3 * 4 ¤ (* (/ (* 1 2) 3) 4)
+
+# Term
 Term plus ¤ 2 + 3 ¤ (+ 2 3)
 Term minus ¤ 6 - 8 ¤ (- 6 8)
 Term and factor ¤ 11 + -4 * 5 ¤ (+ 11 (* (- 4) 5))
 Term multiple ¤ 1 - 2 + 3 - 4 ¤ (- (+ (- 1 2) 3) 4)
+
+# Comparison
 Comparison < ¤ 1 < 2 ¤ (< 1 2)
 Comparison <= ¤ 1 <= 2 ¤ (<= 1 2)
 Comparison > ¤ 1 > 2 ¤ (> 1 2)
 Comparison >= ¤ 1 >= 2 ¤ (>= 1 2)
 Comparison complex ¤ 1 + 2 < 2 * 3 ¤ (< (+ 1 2) (* 2 3))
 Comparison multiple ¤ 1 < 2 <= 3 > 4 >= 5 ¤ (>= (> (<= (< 1 2) 3) 4) 5)
+
+# Equality
 Equality ¤ 1 == 2 ¤ (== 1 2)
 Inequality ¤ 1 != 2 ¤ (!= 1 2)
 Equality complex ¤ 1 + 2 == 2 * 3 ¤ (== (+ 1 2) (* 2 3))
 Equality multiple ¤ 1 == 2 == 3 != 4 != 5 ¤ (!= (!= (== (== 1 2) 3) 4) 5)
+
+# Ternary
 Ternary simple ¤ true ? 1 : 2 ¤ (?: true 1 2)
 Ternary complex ¤ 1 == 2 ? 3 + 4 : -5 ¤ (?: (== 1 2) (+ 3 4) (- 5))
 Ternary multiple ¤ false ? 1 : true ? 2 : 3 ¤ (?: false 1 (?: true 2 3))
+
+# Comma
 Comma simple ¤ 1, 2 ¤ (, 1 2)
 Comma complex ¤ 1, 2, 3 + 4 ¤ (, (, 1 2) (+ 3 4))
+
+# Grouping
+Grouping simple ¤ (1) ¤ (group 1)
+Grouping complex ¤ (1 + 2) * 3 ¤ (* (group (+ 1 2)) 3)
+Grouping multiple ¤ (((1))) ¤ (group (group (group 1)))
