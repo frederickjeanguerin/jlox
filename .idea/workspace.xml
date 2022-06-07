@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Added tests for Parser (ast with errors)">
-      <change afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 7 - Interpreter (basic working only)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Error.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654524166411</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Chapter 7 - Interpreter (basic working only)">
+      <created>1654536981831</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1654536981831</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -275,6 +279,7 @@
     <MESSAGE value="Added test helper method in Parser" />
     <MESSAGE value="Added tests for Parser (ast with no errors only)" />
     <MESSAGE value="Added tests for Parser (ast with errors)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tests for Parser (ast with errors)" />
+    <MESSAGE value="Chapter 7 - Interpreter (basic working only)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 7 - Interpreter (basic working only)" />
   </component>
 </project>
