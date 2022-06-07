@@ -29,8 +29,6 @@ public class Interpreter implements  Expr.Visitor<Object> {
 
         Supplier<Double> leftNumber = () -> number(left, expr.operator, "left operand");
         Supplier<Double> rightNumber = () -> number(right, expr.operator, "right operand");
-        // Supplier<String> leftString = () -> string(left, expr.operator, "left operand");
-        // Supplier<String> rightString = () -> string(right, expr.operator, "right operand");
 
         return switch (expr.operator.type()) {
             case BANG_EQUAL -> !areEqual(left, right);
@@ -44,10 +42,18 @@ public class Interpreter implements  Expr.Visitor<Object> {
             case PLUS -> {
                 if (right instanceof Double && left instanceof Double)
                     yield (double) right + (double) left;
-                if (right instanceof String && left instanceof String)
-                    yield right + (String) left;
-                throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings"); }
-            case SLASH -> leftNumber.get() / rightNumber.get();
+                // Challenge 7.2
+                if (right instanceof String || left instanceof String)
+                    yield Lox.stringify(left) + Lox.stringify(right);
+                throw new RuntimeError(expr.operator, "Operands cannot be added.");
+            }
+            case SLASH -> {
+                // Challenge 7.3
+                double divisor = rightNumber.get();
+                if (divisor == 0)
+                    throw new RuntimeError(expr.operator, "Division by zero.");
+                yield leftNumber.get() / divisor;
+            }
             case STAR -> leftNumber.get() * rightNumber.get();
             default -> throw new IllegalStateException("Unexpected value: " + expr.operator.type());
         };

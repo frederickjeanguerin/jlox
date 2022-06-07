@@ -39,11 +39,11 @@ public class Lox {
                 System.out.println();
                 System.out.println();
             }
+            error.reset();
             System.out.print("> ");
             var line = reader.readLine();
             if (line == null) break; // EOF (ctrl+D)
             if (!line.isBlank()) {
-                error.reset();
                 run(line);
             }
         }
