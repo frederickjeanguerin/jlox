@@ -55,15 +55,27 @@ public class Lox {
 
     // ------ Test helpers ------
 
-    public record TestResult(String ast, String errors){}
+    public record TestParserResult(String ast, String errors){}
 
-    public static TestResult testParser(String source) {
+    public static TestParserResult testParser(String source) {
         var error = new Stdio();
         Scanner scanner = new Scanner(source, error);
         List<Token> tokens = scanner.scanTokens();
         var ast = new Parser(tokens, error).parse();
         var astPrint = ast == null ? "" : new AstPrinter().print(ast);
-        return new TestResult(astPrint, error.stderr());
+        return new TestParserResult(astPrint, error.stderr());
     }
+
+    public record TestInterpreterResult(String prints, String errors){}
+    public static TestInterpreterResult testInterpreter(String source) {
+        var error = new Stdio();
+        Scanner scanner = new Scanner(source, error);
+        List<Token> tokens = scanner.scanTokens();
+        var ast = new Parser(tokens, error).parse();
+        assert !error.hasError();
+        interpreter.interpret(ast);
+        return new TestInterpreterResult(interpreter.stdio.stdout(), interpreter.stdio.stderr());
+    }
+
 }
 

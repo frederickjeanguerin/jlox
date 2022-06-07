@@ -28,12 +28,25 @@ class LoxTest {
             resources = "LoxTest_SyntaxError.csv",
             numLinesToSkip = 1,
             delimiter = '¤')
-    void testError(String description, String input, String expectedErrors) {
+    void testSyntaxError(String description, String input, String expectedErrors) {
         input = transform(input);
         var result = Lox.testParser(input);
         for (String expectedError : expectedErrors.split(", ")) {
             assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.errors()), description);
         }
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(
+            resources = "LoxTest_Interpret.csv",
+            numLinesToSkip = 1,
+            delimiter = '¤')
+    void testInterpreter(String description, String input, String expectedResult) {
+        input = transform(input);
+        expectedResult = transform(expectedResult);
+        var result = Lox.testInterpreter(input);
+        assertEquals(expectedResult, result.prints().stripTrailing(), description);
+        assertEquals("", result.errors());
     }
 
     private static String transform(String input) {

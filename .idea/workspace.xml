@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 7 - Interpreter (challenges 2 + 3)">
-      <change afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 8.1 - Basic statements (syntax tested)">
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stdio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/ParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/ParserTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/ParserTest_Ast.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/ParserTest_Ast.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/ParserTest_Error.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/ParserTest_Error.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tool/GenerateAst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,26 +69,13 @@
       <recent name="jlox.tests" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LoxTest.testError">
+  <component name="RunManager" selected="JUnit.LoxTest.testInterpreter">
     <configuration name="AstPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="jlox.AstPrinter" />
       <module name="Lox" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="jlox.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GenerateAst" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="jlox.tool.GenerateAst" />
-      <module name="Lox" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="jlox.tool.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -133,7 +112,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LoxTest.testError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LoxTest.testInterpreter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Lox" />
       <extension name="coverage">
         <pattern>
@@ -143,7 +122,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="jlox.tests" />
       <option name="MAIN_CLASS_NAME" value="jlox.tests.LoxTest" />
-      <option name="METHOD_NAME" value="testError(java.lang.String,java.lang.String,java.lang.String)" />
+      <option name="METHOD_NAME" value="testInterpreter(java.lang.String,java.lang.String,java.lang.String)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoxTest.testSyntaxError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Lox" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jlox.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="jlox.tests" />
+      <option name="MAIN_CLASS_NAME" value="jlox.tests.LoxTest" />
+      <option name="METHOD_NAME" value="testSyntaxError(java.lang.String,java.lang.String,java.lang.String)" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -152,17 +147,17 @@
     <list>
       <item itemvalue="Application.AstPrinter" />
       <item itemvalue="Application.jlox.Lox" />
-      <item itemvalue="Application.GenerateAst" />
       <item itemvalue="JUnit.LoxTest.testAst" />
-      <item itemvalue="JUnit.LoxTest.testError" />
+      <item itemvalue="JUnit.LoxTest.testInterpreter" />
+      <item itemvalue="JUnit.LoxTest.testSyntaxError" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.LoxTest.testError" />
+        <item itemvalue="JUnit.LoxTest.testInterpreter" />
+        <item itemvalue="JUnit.LoxTest.testSyntaxError" />
         <item itemvalue="JUnit.LoxTest.testAst" />
         <item itemvalue="Application.jlox.Lox" />
         <item itemvalue="Application.AstPrinter" />
-        <item itemvalue="Application.GenerateAst" />
       </list>
     </recent_temporary>
   </component>
@@ -294,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654569101658</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Chapter 8.1 - Basic statements (syntax tested)">
+      <created>1654625102251</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1654625102251</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -324,6 +326,7 @@
     <MESSAGE value="Chapter 7 - Interpreter (basic working only)" />
     <MESSAGE value="Chapter 7 - Interpreter (working but untested)" />
     <MESSAGE value="Chapter 7 - Interpreter (challenges 2 + 3)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 7 - Interpreter (challenges 2 + 3)" />
+    <MESSAGE value="Chapter 8.1 - Basic statements (syntax tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 8.1 - Basic statements (syntax tested)" />
   </component>
 </project>
