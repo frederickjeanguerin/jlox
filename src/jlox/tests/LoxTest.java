@@ -6,35 +6,37 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import jlox.Lox;
 
-class ParserTest {
+class LoxTest {
 
     @ParameterizedTest
     @CsvFileSource(
-            resources = "ParserTest_Ast.csv",
+            resources = "LoxTest_Ast.csv",
             numLinesToSkip = 1,
             delimiter = '¤')
     void testAst(String description, String input, String expectedAst) {
-        input = treatInput(input);
-        var result = jlox.Parser.test(input);
+        input = transform(input);
+        expectedAst = transform(expectedAst);
+        var result = Lox.testParser(input);
         assertEquals(expectedAst, result.ast(), description);
         assertEquals("", result.errors());
     }
 
     @ParameterizedTest
     @CsvFileSource(
-            resources = "ParserTest_Error.csv",
+            resources = "LoxTest_SyntaxError.csv",
             numLinesToSkip = 1,
             delimiter = '¤')
     void testError(String description, String input, String expectedErrors) {
-        input = treatInput(input);
-        var result = jlox.Parser.test(input);
+        input = transform(input);
+        var result = Lox.testParser(input);
         for (String expectedError : expectedErrors.split(", ")) {
             assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.errors()), description);
         }
     }
 
-    private static String treatInput(String input) {
+    private static String transform(String input) {
         return input
                 // string needs to be doubly quoted, because simply quoted have special treatment in csv file
                 .replace("\"\"", "\"")

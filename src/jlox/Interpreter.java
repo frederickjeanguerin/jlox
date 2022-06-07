@@ -1,24 +1,50 @@
 package jlox;
 
+import java.util.List;
 import java.util.function.Supplier;
 
-public class Interpreter implements  Expr.Visitor<Object> {
+public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     private static class RuntimeError extends RuntimeException {
-        final Token token;
 
+        final Token token;
         public RuntimeError(Token token, String message) {
             super(message);
             this.token = token;
         }
+
     }
 
-    public Object interpret(Expr expr, Error errors) {
+    public final Stdio stdio = new Stdio();
+
+    public void interpret(List<Stmt> statements) {
+        stdio.reset();
         try {
-            return evaluate(expr);
+            for (var stmt: statements) {
+                execute(stmt);
+            }
         } catch (RuntimeError error) {
-            errors.atToken(error.token, error.getMessage());
+            stdio.errorAtToken(error.token, error.getMessage());
         }
+    }
+
+    @Override
+    public Void visitExpressionStmt(Stmt.Expression stmt) {
+        evaluate(stmt.expression);
+        return null;
+    }
+
+    @Override
+    public Void visitPrintStmt(Stmt.Print stmt) {
+        Object result = evaluate(stmt.expression);
+        stdio.print(result);
+        return null;
+    }
+
+    @Override
+    public Void visitLastStmt(Stmt.Last stmt) {
+        Object result = evaluate(stmt.expression);
+        stdio.print(result);
         return null;
     }
 
@@ -44,7 +70,7 @@ public class Interpreter implements  Expr.Visitor<Object> {
                     yield (double) right + (double) left;
                 // Challenge 7.2
                 if (right instanceof String || left instanceof String)
-                    yield Lox.stringify(left) + Lox.stringify(right);
+                    yield Stdio.stringify(left) + Stdio.stringify(right);
                 throw new RuntimeError(expr.operator, "Operands cannot be added.");
             }
             case SLASH -> {
@@ -85,6 +111,10 @@ public class Interpreter implements  Expr.Visitor<Object> {
     @Override
     public Object visitTernaryExpr(Expr.Ternary expr) {
         return isTruthy(evaluate(expr.left)) ? evaluate(expr.middle) : evaluate(expr.right);
+    }
+
+    private void execute(Stmt stmt) {
+        stmt.visit(this);
     }
 
     private Object evaluate(Expr expr) {

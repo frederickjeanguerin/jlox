@@ -1,5 +1,6 @@
 package jlox;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -9,22 +10,56 @@ public class Parser {
 
     private static class ParseError extends RuntimeException {}
 
-    private final Error error;
+    private final Stdio stdio;
     private final List<Token> tokens;
     private int current = 0;
 
-    Parser(List<Token> tokens, Error error) {
+    Parser(List<Token> tokens, Stdio stdio) {
         this.tokens = tokens;
-        this.error = error;
+        this.stdio = stdio;
     }
 
-    Expr parse() {
+    Expr parseExpr() {
         // NB tokens can still be present in the list after a parse
         try {
             return expression();
         } catch (ParseError error) {
             return null;
         }
+    }
+
+    List<Stmt> parse() {
+        List<Stmt> statements = new ArrayList<>();
+        try {
+            while (!isAtEnd()) {
+                statements.add(statement());
+            }
+        } catch (ParseError ignored) { }
+        return statements;
+    }
+
+    private Stmt statement() {
+        // TODO empty statement
+        if (match(PRINT)) return printStatement();
+        return expressionStatement();
+    }
+
+    private Stmt expressionStatement() {
+        Expr expr = expression();
+        if (isAtEnd())
+            return new Stmt.Last(expr);
+        semicolon();
+        return new Stmt.Expression(expr);
+    }
+
+    private Stmt printStatement() {
+        Expr expr = expression();
+        semicolon();
+        return new Stmt.Print(expr);
+    }
+
+    private void semicolon() {
+        consume(SEMICOLON, "Expect ';' at end of statement.");
     }
 
     private Expr expression() {
@@ -124,7 +159,7 @@ public class Parser {
     }
 
     private ParseError error(Token token, String message) {
-        error.atToken(token, message);
+        stdio.errorAtToken(token, message);
         return new ParseError();
     }
 
@@ -176,19 +211,5 @@ public class Parser {
 
     private Token previous() {
         return tokens.get(current - 1);
-    }
-
-    // ------ Test helpers ------
-
-    public record TestResult(String ast, String errors){}
-
-    public static TestResult test(String source) {
-        var error = new Error();
-        Scanner scanner = new Scanner(source, error);
-        List<Token> tokens = scanner.scanTokens();
-        Expr ast = new Parser(tokens, error).parse();
-        return new TestResult(
-            ast == null ? "" : new AstPrinter().print(ast),
-            error.errors());
     }
 }

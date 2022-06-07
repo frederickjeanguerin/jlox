@@ -22,6 +22,11 @@ public class GenerateAst {
                 "Unary      : Token operator, Expr right",
                 "Ternary    : Expr left, Token leftOp, Expr middle, Token rightOp, Expr right"
         ));
+        defineAst(outputDir, "Stmt", Arrays.asList(
+                "Expression : Expr expression",
+                "Print      : Expr expression",
+                "Last       : Expr expression"
+        ));
     }
 
     @SuppressWarnings("unused")

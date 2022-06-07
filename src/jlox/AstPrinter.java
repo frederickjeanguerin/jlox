@@ -1,9 +1,21 @@
 package jlox;
 
-public class AstPrinter implements Expr.Visitor<String> {
+import java.util.List;
+
+public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
+
+    // TODO use StringBuilder all over instead of string concat (+)
 
     String print(Expr expr) {
         return expr.visit(this);
+    }
+
+    String print(List<Stmt> statements) {
+        var sb = new StringBuilder();
+        for (var stmt: statements) {
+            sb.append(stmt.visit(this));
+        }
+        return sb.toString();
     }
 
     @Override
@@ -18,7 +30,7 @@ public class AstPrinter implements Expr.Visitor<String> {
 
     @Override
     public String visitLiteralExpr(Expr.Literal expr) {
-        return Lox.stringify(expr.value);
+        return Stdio.stringify(expr.value);
     }
 
     @Override
@@ -41,14 +53,29 @@ public class AstPrinter implements Expr.Visitor<String> {
         return sb.toString();
     }
 
+    @Override
+    public String visitExpressionStmt(Stmt.Expression stmt) {
+        return stmt.expression.visit(this) + ";\n";
+    }
+
+    @Override
+    public String visitPrintStmt(Stmt.Print stmt) {
+        return "print " + stmt.expression.visit(this) + ";\n";
+    }
+
+    @Override
+    public String visitLastStmt(Stmt.Last stmt) {
+        return stmt.expression.visit(this);
+    }
+
     public static void main(String[] args) {
         Expr expr = new Expr.Binary(
-            new Expr.Unary(
-                new Token(TokenType.MINUS, "-", null, 1),
-                new Expr.Literal(123)),
-            new Token(TokenType.STAR, "*", null, 1),
-            new Expr.Grouping(
-                    new Expr.Literal(45.67))
+                new Expr.Unary(
+                        new Token(TokenType.MINUS, "-", null, 1),
+                        new Expr.Literal(123)),
+                new Token(TokenType.STAR, "*", null, 1),
+                new Expr.Grouping(
+                        new Expr.Literal(45.67))
         );
         System.out.println(new AstPrinter().print(expr));
     }

@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Lox {
-    private static final Error error = new Error();
+    private static final Stdio STDIO = new Stdio();
     private static final Interpreter interpreter = new Interpreter();
 
     public static void main(String[] args) throws IOException {
@@ -21,7 +21,7 @@ public class Lox {
         } else {
             runPrompt();
         }
-        if (error.hasError())  System.exit(65);
+        if (STDIO.hasError() || interpreter.stdio.hasError())  System.exit(65);
     }
 
     private static void runFile(String path) throws IOException {
@@ -34,43 +34,36 @@ public class Lox {
         var reader = new BufferedReader(input);
 
         for(;;){
-            if (error.hasError()) {
-                // To make IntelliJ flush his stderr buffer.
-                System.out.println();
-                System.out.println();
-            }
-            error.reset();
+            STDIO.reset();
             System.out.print("> ");
             var line = reader.readLine();
             if (line == null) break; // EOF (ctrl+D)
-            if (!line.isBlank()) {
-                run(line);
-            }
+            run(line);
         }
     }
 
     private static void run(String source) {
-        Scanner scanner = new Scanner(source, error);
+        Scanner scanner = new Scanner(source, STDIO);
         List<Token> tokens = scanner.scanTokens();
 
-        Expr ast = new Parser(tokens, error).parse();
-        if (error.report()) return;
+        var ast = new Parser(tokens, STDIO).parse();
+        if (STDIO.report()) return;
 
-        var result = interpreter.interpret(ast, error);
-        if (error.report()) return;
-
-        System.out.println(stringify(result));
-
-        // System.out.println(new AstPrinter().print(ast));
+        interpreter.interpret(ast);
+        interpreter.stdio.report();
     }
 
-    static String stringify(Object value) {
-        if (value == null)
-            return "nil";
-        var str = value.toString();
-        if (str.endsWith(".0"))
-            str = str.substring(0, str.length() - 2);
-        return str;
+    // ------ Test helpers ------
+
+    public record TestResult(String ast, String errors){}
+
+    public static TestResult testParser(String source) {
+        var error = new Stdio();
+        Scanner scanner = new Scanner(source, error);
+        List<Token> tokens = scanner.scanTokens();
+        var ast = new Parser(tokens, error).parse();
+        var astPrint = ast == null ? "" : new AstPrinter().print(ast);
+        return new TestResult(astPrint, error.stderr());
     }
 }
 

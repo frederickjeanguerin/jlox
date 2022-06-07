@@ -9,15 +9,15 @@ import static jlox.TokenType.*;
 
 class Scanner {
     private final String source;
-    private final Error error;
+    private final Stdio stdio;
     private final List<Token> tokens = new ArrayList<>();
     private int start = 0;      // offset in source
     private int current = 0;    // offset in source
     private int line = 1;
 
-    Scanner(String source, Error error) {
+    Scanner(String source, Stdio stdio) {
         this.source = source;
-        this.error = error;
+        this.stdio = stdio;
     }
 
     List<Token> scanTokens() {
@@ -120,7 +120,7 @@ class Scanner {
                     identifier();
                 } else {
                     // TODO Collapse consecutive unexpected chars together in a single error message.
-                    error.atLine(line, "Unexpected character '" + c + "'");
+                    stdio.errorAtLine(line, "Unexpected character '" + c + "'");
                 }
         }
     }
@@ -184,7 +184,7 @@ class Scanner {
     private void string() {
         // TODO Add escape sequences or at least the possibility to insert a " inside a string
         if (!advanceAfter('"')) {
-            error.atLine(line, "Unterminated string");
+            stdio.errorAtLine(line, "Unterminated string");
         } else {
             String value = source.substring(start + 1, current - 1);
             addToken(STRING, value);
@@ -217,7 +217,7 @@ class Scanner {
     private void blockComment() {
         // TODO add the possibility to nest them (chapter 4 challenge)
         if (!advanceAfter('*', '/')) {
-            error.atLine(line, "Unterminated multiline comment");
+            stdio.errorAtLine(line, "Unterminated multiline comment");
         }
     }
 

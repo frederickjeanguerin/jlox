@@ -1,8 +1,5 @@
 description ¤ input ¤ expectedErrors
 
-# No input
-No input ¤ "" ¤ line 1, at end, expect expression
-
 # Bad characters and line numbers (lexer errors)
 Bad character ¤ 2 + ± 3 ¤ unexpected character '±'
 Bad character on line 2 ¤ 2 \n+ ½ 3 ¤ line 2, unexpected character '½'
@@ -18,3 +15,10 @@ Missing first operand in grouping ¤ (, 1) ¤ at ',', expect expression
 
 # Missing many operands
 Missing 2 operands ¤ + ¤ at '[+]', at end, expect first operand, expect expression
+
+# Print statement
+Print missing expression ¤ print ¤ at end, expect expression
+Print missing semi ¤ print 33 ¤ at end, expect ';'
+
+# Expression statement
+Expression statement missing semi ¤ 1 2 ¤ at '2', expect ';'
