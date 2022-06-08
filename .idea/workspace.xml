@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 8.4 - Variable assignment (tested)">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTORING test without newline">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -319,7 +318,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654674038028</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="REFACTORING test without newline">
+      <created>1654683806052</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1654683806052</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -354,6 +360,7 @@
     <MESSAGE value="Chapter 8.2 - Parsing variables (tested)" />
     <MESSAGE value="Chapter 8.3 - Interpreting variables (tested, but not for errors)" />
     <MESSAGE value="Chapter 8.4 - Variable assignment (tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 8.4 - Variable assignment (tested)" />
+    <MESSAGE value="REFACTORING test without newline" />
+    <option name="LAST_COMMIT_MESSAGE" value="REFACTORING test without newline" />
   </component>
 </project>

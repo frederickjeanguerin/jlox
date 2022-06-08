@@ -84,8 +84,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             case LESS_EQUAL -> leftNumber.get() <= rightNumber.get();
             case MINUS -> leftNumber.get() - rightNumber.get();
             case PLUS -> {
-                if (right instanceof Double && left instanceof Double)
-                    yield (double) right + (double) left;
+                if (right instanceof Double a && left instanceof Double b)
+                    yield a + b;
                 // Challenge 7.2
                 if (right instanceof String || left instanceof String)
                     yield Stdio.stringify(left) + Stdio.stringify(right);
@@ -145,7 +145,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     private boolean isTruthy(Object obj) {
-        return obj instanceof Boolean ? (boolean) obj : obj != null;
+        return obj instanceof Boolean bool ? bool : obj != null;
     }
 
     private boolean areEqual(Object a, Object b) {

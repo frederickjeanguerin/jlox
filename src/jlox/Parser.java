@@ -90,8 +90,8 @@ public class Parser {
         if (match(EQUAL)) {
             Token equals = previous();
             Expr value = assignment(); // right-associative
-            if (expr instanceof Expr.Variable) {
-                Token name = ((Expr.Variable)expr).name;
+            if (expr instanceof Expr.Variable var) {
+                Token name = var.name;
                 return new Expr.Assign(name, value);
             }
             error(equals, "Invalid assignment target (asa lvalue).");
