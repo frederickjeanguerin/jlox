@@ -81,3 +81,10 @@ Last simple ¤ 1; 2; 3 ¤ 3
 
 # No statement
 No statement ¤ "" ¤ ""
+
+# Variables
+Variable definition without initializer ¤ var abc; abc ¤ nil
+Variable definition with initializer ¤ var abc = 10; abc ¤ 10
+Variable definition and computation ¤ var abc = 10; abc + abc ¤ 20
+Variable from variable ¤ var a = 10; var b = a + 1; b ¤ 11
+Variable redefinition ¤ var a = 10; var b = a; var a = 20; a + b ¤ 30

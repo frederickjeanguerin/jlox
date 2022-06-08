@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
-    private static class RuntimeError extends RuntimeException {
+    static class RuntimeError extends RuntimeException {
 
         final Token token;
         public RuntimeError(Token token, String message) {
@@ -16,6 +16,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     public final Stdio stdio = new Stdio();
+    public final Environment environment = new Environment();
 
     public void interpret(List<Stmt> statements) {
         stdio.reset();
@@ -43,7 +44,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitVarStmt(Stmt.Var stmt) {
-        // TODO implement
+        Object value = null;
+        if (stmt.initializer != null) {
+            value = evaluate(stmt.initializer);
+        }
+        environment.defineVar(stmt.name.lexeme(), value);
         return null;
     }
 
@@ -116,8 +121,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        // TODO implement
-        return null;
+        return environment.getVar(expr.name);
     }
 
     @Override
