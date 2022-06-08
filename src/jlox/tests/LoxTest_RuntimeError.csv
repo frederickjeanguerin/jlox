@@ -1,0 +1,31 @@
+description ¤ input ¤ expectedErrors
+
+# Binary operator
+Operator > ¤ true > 5 ¤ at '>', left operand, number expected
+Operator > ¤ 5 > true ¤ at '>', right operand, number expected
+Operator > ¤ true > true ¤ at '>', left operand, number expected
+Operator >= ¤ true >= 5 ¤ at '>=', left operand, number expected
+Operator < ¤ true < 5 ¤ at '<', left operand, number expected
+Operator <= ¤ true <= 5 ¤ at '<=', left operand, number expected
+Operator - ¤ true - 5 ¤ at '-', left operand, number expected
+Operator * ¤ true * 5 ¤ at '[*]', left operand, number expected
+Operator / ¤ true / 5 ¤ at '/', left operand, number expected
+
+# Operator +
+Operator + incompatible operands ¤ true + false ¤ at '[+]', operands cannot be added
+Operator + incompatible operands ¤ 1 + false ¤ at '[+]', operands cannot be added
+Operator + incompatible operands ¤ false + 1 ¤ at '[+]', operands cannot be added
+
+# Division by zero
+Division by zero ¤ 3 / 0 ¤ at '/', division by zero
+Division by zero ¤ 0 / 0 ¤ at '/', division by zero
+Division by zero ¤ 1.5 / 0 ¤ at '/', division by zero
+
+# Unary operator
+Unary - ¤ - true ¤ at '-', right operand, number expected
+
+# Undefined variables
+Undefined variable in expression ¤ a ¤ at 'a', undefined variable 'a'
+Undefined variable in multiple expression ¤ b + a ¤ at 'b', undefined variable 'b'
+Undefined variable in assignment ¤ a = 10 ¤ at 'a', undefined variable 'a'
+Undefined variable in chained assignment ¤ var a; c = b = a = 10 ¤ at 'b', undefined variable 'b'

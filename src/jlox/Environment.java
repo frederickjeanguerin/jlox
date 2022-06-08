@@ -18,4 +18,13 @@ public class Environment {
         }
         throw new Interpreter.RuntimeError(varToken, "Undefined variable '%s'.".formatted(name));
     }
+
+    void assignVar(Token varToken, Object value) {
+        var name = varToken.lexeme();
+        if (variables.containsKey(name)) {
+            variables.put(name, value);
+            return;
+        }
+        throw new Interpreter.RuntimeError(varToken, "Undefined variable '%s'.".formatted(name));
+    }
 }

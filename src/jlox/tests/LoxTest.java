@@ -49,6 +49,19 @@ class LoxTest {
         assertEquals("", result.errors());
     }
 
+    @ParameterizedTest
+    @CsvFileSource(
+            resources = "LoxTest_RuntimeError.csv",
+            numLinesToSkip = 1,
+            delimiter = '¤')
+    void testRuntimeError(String description, String input, String expectedErrors) {
+        input = transform(input);
+        var result = Lox.testInterpreter(input);
+        for (String expectedError : expectedErrors.split(", ")) {
+            assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.errors()), description);
+        }
+    }
+
     private static String transform(String input) {
         return input
                 // string needs to be doubly quoted, because simply quoted have special treatment in csv file

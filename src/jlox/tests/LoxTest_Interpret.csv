@@ -88,3 +88,7 @@ Variable definition with initializer ¤ var abc = 10; abc ¤ 10
 Variable definition and computation ¤ var abc = 10; abc + abc ¤ 20
 Variable from variable ¤ var a = 10; var b = a + 1; b ¤ 11
 Variable redefinition ¤ var a = 10; var b = a; var a = 20; a + b ¤ 30
+Variable assignment simple ¤ var a; a = 10; a ¤ 10
+Variable reassignment simple ¤ var a = 10 ; a = 20; a = 30; a ¤ 30
+Variable self assignment ¤ var a = 10; a = a + 20; a ¤ 30
+Variable assignment chaining ¤ var a; var b; var c; a = b = c = 10; a + b + c ¤ 30

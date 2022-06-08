@@ -4,10 +4,13 @@ import java.util.List;
 
 public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
-    // TODO use StringBuilder all over instead of string concat (+)
+    private static final String EOL = ";\n";
 
-    String print(Expr expr) {
+    private String print(Expr expr) {
         return expr.visit(this);
+    }
+    private String println(Expr expr) {
+        return expr.visit(this) + EOL;
     }
 
     String print(List<Stmt> statements) {
@@ -16,6 +19,11 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
             sb.append(stmt.visit(this));
         }
         return sb.toString();
+    }
+
+    @Override
+    public String visitAssignExpr(Expr.Assign expr) {
+        return "(= " + expr.name.lexeme() + " " + print(expr.value) + ")";
     }
 
     @Override
@@ -40,7 +48,7 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
     @Override
     public String visitVariableExpr(Expr.Variable expr) {
-        return "(var " + expr.name.lexeme() + ")";
+        return expr.name.lexeme();
     }
 
     @Override
@@ -52,7 +60,7 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
         var sb = new StringBuilder();
         sb.append('(').append(name);
         for (var expr: exprs) {
-            sb.append(' ').append(expr.visit(this));
+            sb.append(' ').append(print(expr));
         }
         sb.append(')');
         return sb.toString();
@@ -60,23 +68,23 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
     @Override
     public String visitExpressionStmt(Stmt.Expression stmt) {
-        return stmt.expression.visit(this) + ";\n";
+        return println(stmt.expression);
     }
 
     @Override
     public String visitPrintStmt(Stmt.Print stmt) {
-        return "print " + stmt.expression.visit(this) + ";\n";
+        return "print " + println(stmt.expression);
     }
 
     @Override
     public String visitVarStmt(Stmt.Var stmt) {
         return "var " + stmt.name.lexeme()
-                + (stmt.initializer != null ? " = " + stmt.initializer.visit(this):"") + ";\n";
+                + (stmt.initializer != null ? " = " + print(stmt.initializer):"") + EOL;
     }
 
     @Override
     public String visitLastStmt(Stmt.Last stmt) {
-        return stmt.expression.visit(this);
+        return print(stmt.expression);
     }
 
     public static void main(String[] args) {

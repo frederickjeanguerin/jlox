@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 import static jlox.TokenType.*;
 
+@SuppressWarnings("ThrowableNotThrown")
 public class Parser {
 
     private static class ParseError extends RuntimeException {}
@@ -80,7 +81,22 @@ public class Parser {
 
     // Challenge 1, Chap 6 : C comma expression
     private Expr comma() {
-        return binary(this::ternary, COMMA);
+        return binary(this::assignment, COMMA);
+    }
+
+    private Expr assignment() {
+        Expr expr = ternary();
+
+        if (match(EQUAL)) {
+            Token equals = previous();
+            Expr value = assignment(); // right-associative
+            if (expr instanceof Expr.Variable) {
+                Token name = ((Expr.Variable)expr).name;
+                return new Expr.Assign(name, value);
+            }
+            error(equals, "Invalid assignment target (asa lvalue).");
+        }
+        return expr;
     }
 
     // Challenge 2, Chap 6 : Ternary
@@ -124,7 +140,6 @@ public class Parser {
     // Challenge 3, Chap 6 : Error production for missing first operand
     private Expr primaryOrError() {
         if (peek(QUESTION, BANG_EQUAL, EQUAL_EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL, PLUS, SLASH, STAR)) {
-            //noinspection ThrowableNotThrown
             error(peek(), "Expect first operand (expression) before operator.");
             insert(new Token(ERROR, peek().lexeme(), peek().literal(), peek().line()));
             return ternary(); // retry to parse with added dummy first operand

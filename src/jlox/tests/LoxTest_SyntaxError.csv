@@ -29,3 +29,7 @@ Variable declaration missing initializer expression ¤ var ab = ; ¤ at ';', exp
 
 # Synchronisation
 Synchronisation on semicolon ¤ 1 + ;\n 2;\n print ;\n * 4;\n - ¤ line 1, at ';', line 3, at ';', line 4, at '*', line 5, at end
+
+# Variable assignment
+# Variable assignment bad lvalue ¤ (a) = 1 ¤ invalid assignment target
+# Variable assignment bad lvalue ¤ a + b = 1 + 2 ¤ invalid assignment target

@@ -1,4 +1,4 @@
-package jlox.tool;
+package tool;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +16,7 @@ public class GenerateAst {
         String outputDir = args.length == 1 ? args[0] : "src/jlox";
         // printPWD();
         defineAst(outputDir, "Expr", Arrays.asList(
+                "Assign     : Token name, Expr value",
                 "Binary     : Expr left, Token operator, Expr right",
                 "Grouping   : Expr expression",
                 "Literal    : Object value",

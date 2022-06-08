@@ -60,6 +60,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitAssignExpr(Expr.Assign expr) {
+        Object result = evaluate(expr.value);
+        environment.assignVar(expr.name, result);
+        return result;
+    }
+
+    @Override
     public Object visitBinaryExpr(Expr.Binary expr) {
         var left = evaluate(expr.left);
         var right = evaluate(expr.right);

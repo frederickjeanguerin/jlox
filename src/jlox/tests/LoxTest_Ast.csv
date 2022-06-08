@@ -79,7 +79,7 @@ Empty statements ¤ ;;; ¤ ""
 # Variables
 Variable declaration ¤ var abc; ¤ var abc;\n
 Variable declaration and initialization ¤ var zz = 3 + 4; ¤ var zz = (+ 3 4);\n
-Variable expression ¤ 3 + abc ¤ (+ 3 (var abc))
-
-
-
+Variable expression ¤ 3 + abc ¤ (+ 3 abc)
+Variable assignment ¤ a = 2 + 3 ¤ (= a (+ 2 3))
+Variable chained assignment ¤ a = b = 0 ¤ (= a (= b 0))
+Variable self assignment ¤ a = a + 1 ¤ (= a (+ a 1))
