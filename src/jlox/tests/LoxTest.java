@@ -19,7 +19,7 @@ class LoxTest {
         input = transform(input);
         expectedAst = transform(expectedAst);
         var result = Lox.testParser(input);
-        assertEquals(expectedAst, result.ast(), description);
+        assertEquals(expectedAst, result.ast().replace('\n', ' ').stripTrailing(), description);
         assertEquals("", result.errors());
     }
 
@@ -45,7 +45,7 @@ class LoxTest {
         input = transform(input);
         expectedResult = transform(expectedResult);
         var result = Lox.testInterpreter(input);
-        assertEquals(expectedResult, result.prints().stripTrailing(), description);
+        assertEquals(expectedResult, result.prints().replace('\n', ' ').stripTrailing(), description);
         assertEquals("", result.errors());
     }
 

@@ -74,7 +74,7 @@ Expression multiple ¤ 1; 2; 3; ¤ ""
 # Print statement
 Print simple ¤ print 23; ¤ 23
 Print complex ¤ print 2 + 3; ¤ 5
-Print multiple ¤ print 1; print 2; print 3; ¤ 1\n2\n3
+Print multiple ¤ print 1; print 2; print 3; ¤ 1 2 3
 
 # Last expression statement
 Last simple ¤ 1; 2; 3 ¤ 3

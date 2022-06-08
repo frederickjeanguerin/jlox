@@ -59,16 +59,16 @@ Grouping complex ¤ (1 + 2) * 3 ¤ (* (group (+ 1 2)) 3)
 Grouping multiple ¤ (((1))) ¤ (group (group (group 1)))
 
 # Expression statement
-Expression simple ¤ 2; ¤ 2;\n
-Expression complex ¤ 55 - 4; ¤ (- 55 4);\n
-Expression multiple ¤ 1; 2; 3; ¤ 1;\n2;\n3;\n
+Expression simple ¤ 2; ¤ 2;
+Expression complex ¤ 55 - 4; ¤ (- 55 4);
+Expression multiple ¤ 1; 2; 3; ¤ 1; 2; 3;
 
 # Print statement
-Print simple ¤ print 23; ¤ print 23;\n
-Print complex ¤ print 2 + 3; ¤ print (+ 2 3);\n
+Print simple ¤ print 23; ¤ print 23;
+Print complex ¤ print 2 + 3; ¤ print (+ 2 3);
 
 # Last expression statement
-Last simple ¤ 1; 2; 3 ¤ 1;\n2;\n3
+Last simple ¤ 1; 2; 3 ¤ 1; 2; 3
 
 # No statement
 No statement ¤ "" ¤ ""
@@ -77,8 +77,8 @@ No statement ¤ "" ¤ ""
 Empty statements ¤ ;;; ¤ ""
 
 # Variables
-Variable declaration ¤ var abc; ¤ var abc;\n
-Variable declaration and initialization ¤ var zz = 3 + 4; ¤ var zz = (+ 3 4);\n
+Variable declaration ¤ var abc; ¤ var abc;
+Variable declaration and initialization ¤ var zz = 3 + 4; ¤ var zz = (+ 3 4);
 Variable expression ¤ 3 + abc ¤ (+ 3 abc)
 Variable assignment ¤ a = 2 + 3 ¤ (= a (+ 2 3))
 Variable chained assignment ¤ a = b = 0 ¤ (= a (= b 0))

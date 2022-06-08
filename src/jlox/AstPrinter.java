@@ -4,7 +4,15 @@ import java.util.List;
 
 public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
-    private static final String EOL = ";\n";
+    private final String EOL;
+
+    public AstPrinter() {
+        this("\n");
+    }
+
+    public AstPrinter(String eol) {
+        EOL = ";" + eol;
+    }
 
     private String print(Expr expr) {
         return expr.visit(this);
