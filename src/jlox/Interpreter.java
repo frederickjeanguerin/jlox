@@ -13,10 +13,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             this.token = token;
         }
 
+
     }
 
+    private static final Object UNINITIALIZED = new Object();
     public final Stdio stdio = new Stdio();
     public final Environment environment = new Environment();
+
 
     public void interpret(List<Stmt> statements) {
         stdio.reset();
@@ -55,7 +58,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitVarStmt(Stmt.Var stmt) {
-        Object value = null;
+        Object value = UNINITIALIZED;
         if (stmt.initializer != null) {
             value = evaluate(stmt.initializer);
         }
@@ -139,7 +142,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        return environment.getVar(expr.name);
+        var value = environment.getVar(expr.name);
+        if (value == UNINITIALIZED) {
+            throw new RuntimeError(expr.name, "Uninitialized variable '%s'".formatted(expr.name.lexeme()));
+        }
+        return value;
     }
 
     @Override

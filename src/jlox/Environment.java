@@ -27,7 +27,7 @@ public class Environment {
     Object getVar(Token varToken) {
         var name = varToken.lexeme();
         var value = scope.get(name);
-        if (value == Scope.notFound) {
+        if (value == Scope.NOT_FOUND) {
             throw new Interpreter.RuntimeError(varToken, "Undefined variable '%s'.".formatted(name));
         }
         return value;
@@ -44,7 +44,7 @@ public class Environment {
         private final Map<String, Object> variables = new HashMap<>();
         private final Scope outer;
 
-        private static final Object notFound = new Object();
+        private static final Object NOT_FOUND = new Object();
 
         private Scope(Scope outer) {
             this.outer = outer;
@@ -61,7 +61,7 @@ public class Environment {
             if (outer != null) {
                 return outer.get(name);
             }
-            return notFound;
+            return NOT_FOUND;
         }
 
         boolean set(String name, Object value) {
