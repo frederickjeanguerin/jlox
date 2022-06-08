@@ -42,6 +42,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitVarStmt(Stmt.Var stmt) {
+        // TODO implement
+        return null;
+    }
+
+    @Override
     public Void visitLastStmt(Stmt.Last stmt) {
         Object result = evaluate(stmt.expression);
         stdio.print(result);
@@ -106,6 +112,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             case MINUS -> - rightNumber.get();
             default -> throw new IllegalStateException("Unexpected value: " + expr.operator.type());
         };
+    }
+
+    @Override
+    public Object visitVariableExpr(Expr.Variable expr) {
+        // TODO implement
+        return null;
     }
 
     @Override

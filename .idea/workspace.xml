@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 8.1 - Basic statements (syntax tested)">
-      <change afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 8.1 - Basic statements (interpreter tested, no errors)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tool/GenerateAst.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,13 +74,13 @@
       <recent name="jlox.tests" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LoxTest.testInterpreter">
-    <configuration name="AstPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="jlox.AstPrinter" />
+  <component name="RunManager" selected="JUnit.LoxTest">
+    <configuration name="GenerateAst" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="jlox.tool.GenerateAst" />
       <module name="Lox" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="jlox.*" />
+          <option name="PATTERN" value="jlox.tool.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -83,15 +88,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="jlox.Lox" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="jlox.Lox" />
+    <configuration name="LoxTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Lox" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="jlox.*" />
+          <option name="PATTERN" value="jlox.tests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="jlox.tests" />
+      <option name="MAIN_CLASS_NAME" value="jlox.tests.LoxTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -145,19 +152,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.AstPrinter" />
-      <item itemvalue="Application.jlox.Lox" />
+      <item itemvalue="Application.GenerateAst" />
+      <item itemvalue="JUnit.LoxTest" />
       <item itemvalue="JUnit.LoxTest.testAst" />
       <item itemvalue="JUnit.LoxTest.testInterpreter" />
       <item itemvalue="JUnit.LoxTest.testSyntaxError" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LoxTest" />
+        <item itemvalue="Application.GenerateAst" />
         <item itemvalue="JUnit.LoxTest.testInterpreter" />
         <item itemvalue="JUnit.LoxTest.testSyntaxError" />
         <item itemvalue="JUnit.LoxTest.testAst" />
-        <item itemvalue="Application.jlox.Lox" />
-        <item itemvalue="Application.AstPrinter" />
       </list>
     </recent_temporary>
   </component>
@@ -296,7 +303,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654625102251</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Chapter 8.1 - Basic statements (interpreter tested, no errors)">
+      <created>1654626651286</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1654626651286</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -327,6 +341,7 @@
     <MESSAGE value="Chapter 7 - Interpreter (working but untested)" />
     <MESSAGE value="Chapter 7 - Interpreter (challenges 2 + 3)" />
     <MESSAGE value="Chapter 8.1 - Basic statements (syntax tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 8.1 - Basic statements (syntax tested)" />
+    <MESSAGE value="Chapter 8.1 - Basic statements (interpreter tested, no errors)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 8.1 - Basic statements (interpreter tested, no errors)" />
   </component>
 </project>

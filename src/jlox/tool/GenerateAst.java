@@ -19,13 +19,17 @@ public class GenerateAst {
                 "Binary     : Expr left, Token operator, Expr right",
                 "Grouping   : Expr expression",
                 "Literal    : Object value",
+                "Ternary    : Expr left, Token leftOp, Expr middle, Token rightOp, Expr right",
                 "Unary      : Token operator, Expr right",
-                "Ternary    : Expr left, Token leftOp, Expr middle, Token rightOp, Expr right"
-        ));
+                "Variable   : Token name",
+                null
+                ));
         defineAst(outputDir, "Stmt", Arrays.asList(
                 "Expression : Expr expression",
+                "Last       : Expr expression",
                 "Print      : Expr expression",
-                "Last       : Expr expression"
+                "Var        : Token name, Expr initializer",
+                null
         ));
     }
 
@@ -53,6 +57,7 @@ public class GenerateAst {
             defineVisitor(writer, baseName, types);
 
             for (String type: types) {
+                if (type == null) continue;
                 String className = type.split(":")[0].trim();
                 String fields = type.split(":")[1].trim();
                 defineType(writer, baseName, className, fields);
@@ -114,6 +119,7 @@ public class GenerateAst {
 
         // Methods
         for (String type: types) {
+            if (type == null) continue;
             String className = type.split(":")[0].trim();
             writer.println("    R visit%s%s(%s %s);"
                 .formatted(className, baseName, className, baseName.toLowerCase()));

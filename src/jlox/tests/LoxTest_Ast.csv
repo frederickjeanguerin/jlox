@@ -72,3 +72,14 @@ Last simple ¤ 1; 2; 3 ¤ 1;\n2;\n3
 
 # No statement
 No statement ¤ "" ¤ ""
+
+# Empty statement
+Empty statements ¤ ;;; ¤ ""
+
+# Variables
+Variable declaration ¤ var abc; ¤ var abc;\n
+Variable declaration and initialization ¤ var zz = 3 + 4; ¤ var zz = (+ 3 4);\n
+Variable expression ¤ 3 + abc ¤ (+ 3 (var abc))
+
+
+

@@ -19,27 +19,39 @@ public class Parser {
         this.stdio = stdio;
     }
 
-    Expr parseExpr() {
-        // NB tokens can still be present in the list after a parse
+    List<Stmt> parse() {
+        List<Stmt> statements = new ArrayList<>();
+        while (!isAtEnd()) {
+            var decl = declaration();
+            if (decl != null)
+                statements.add(decl);
+        }
+        return statements;
+    }
+
+    private Stmt declaration() {
         try {
-            return expression();
+            if (match(VAR))
+                return varDeclaration();
+            return statement();
         } catch (ParseError error) {
+            synchronize();
             return null;
         }
     }
 
-    List<Stmt> parse() {
-        List<Stmt> statements = new ArrayList<>();
-        try {
-            while (!isAtEnd()) {
-                statements.add(statement());
-            }
-        } catch (ParseError ignored) { }
-        return statements;
+    private Stmt varDeclaration() {
+        var name = consume(IDENTIFIER, "Expect variable name.");
+        Expr initializer = null;
+        if (match(EQUAL)) {
+            initializer = expression();
+        }
+        semicolon();
+        return new Stmt.Var(name, initializer);
     }
 
     private Stmt statement() {
-        // TODO empty statement
+        if (match(SEMICOLON)) return null;
         if (match(PRINT)) return printStatement();
         return expressionStatement();
     }
@@ -126,6 +138,7 @@ public class Parser {
         if (match(NIL)) return new Expr.Literal(null);
         if (match(ERROR)) return new Expr.Literal("#Error");
         if (match(NUMBER, STRING)) return new Expr.Literal(previous().literal());
+        if (match(IDENTIFIER)) return new Expr.Variable(previous());
         if (match(LEFT_PAREN)) {
             Expr expr = expression();
             consume(RIGHT_PAREN, "Expect ')' after expression.");
@@ -163,8 +176,7 @@ public class Parser {
         return new ParseError();
     }
 
-    @SuppressWarnings("unused")
-    private void Synchronize() {
+    private void synchronize() {
         advance();
         while (!isAtEnd()) {
             if (previous().type() == SEMICOLON) return;

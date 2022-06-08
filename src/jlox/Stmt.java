@@ -5,8 +5,9 @@ package jlox;
 abstract class Stmt {
   interface Visitor<R> {
     R visitExpressionStmt(Expression stmt);
-    R visitPrintStmt(Print stmt);
     R visitLastStmt(Last stmt);
+    R visitPrintStmt(Print stmt);
+    R visitVarStmt(Var stmt);
   }
 
   static class Expression extends Stmt {
@@ -19,6 +20,19 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
       return visitor.visitExpressionStmt(this);
+    }
+  }
+
+  static class Last extends Stmt {
+    final Expr expression;
+
+    Last ( Expr expression ) {
+      this.expression = expression;
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+      return visitor.visitLastStmt(this);
     }
   }
 
@@ -35,16 +49,18 @@ abstract class Stmt {
     }
   }
 
-  static class Last extends Stmt {
-    final Expr expression;
+  static class Var extends Stmt {
+    final Token name;
+    final Expr initializer;
 
-    Last ( Expr expression ) {
-      this.expression = expression;
+    Var ( Token name, Expr initializer ) {
+      this.name = name;
+      this.initializer = initializer;
     }
 
     @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitLastStmt(this);
+      return visitor.visitVarStmt(this);
     }
   }
 

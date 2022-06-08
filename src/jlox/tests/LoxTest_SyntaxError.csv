@@ -22,3 +22,10 @@ Print missing semi ¤ print 33 ¤ at end, expect ';'
 
 # Expression statement
 Expression statement missing semi ¤ 1 2 ¤ at '2', expect ';'
+
+# Variable declaration
+Variable declaration missing variable name ¤ var = 0; ¤ at '=', expect variable name
+Variable declaration missing initializer expression ¤ var ab = ; ¤ at ';', expect expression
+
+# Synchronisation
+Synchronisation on semicolon ¤ 1 + ;\n 2;\n print ;\n * 4;\n - ¤ line 1, at ';', line 3, at ';', line 4, at '*', line 5, at end
