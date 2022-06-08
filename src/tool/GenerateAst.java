@@ -3,8 +3,9 @@ package tool;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 
 public class GenerateAst {
@@ -15,23 +16,16 @@ public class GenerateAst {
         }
         String outputDir = args.length == 1 ? args[0] : "src/jlox";
         // printPWD();
-        defineAst(outputDir, "Expr", Arrays.asList(
-                "Assign     : Token name, Expr value",
-                "Binary     : Expr left, Token operator, Expr right",
-                "Grouping   : Expr expression",
-                "Literal    : Object value",
-                "Ternary    : Expr left, Token leftOp, Expr middle, Token rightOp, Expr right",
-                "Unary      : Token operator, Expr right",
-                "Variable   : Token name",
-                null
-                ));
-        defineAst(outputDir, "Stmt", Arrays.asList(
-                "Expression : Expr expression",
-                "Last       : Expr expression",
-                "Print      : Expr expression",
-                "Var        : Token name, Expr initializer",
-                null
-        ));
+
+        // Generate expressions
+        Path exprPath = Path.of("src/tool/expressions.txt");
+        var expressions = Files.readString(exprPath).split("\n");
+        defineAst(outputDir, "Expr", List.of(expressions));
+
+        // generate statements
+        Path stmtPath = Path.of("src/tool/statements.txt");
+        var statements = Files.readString(stmtPath).split("\n");
+        defineAst(outputDir, "Stmt", List.of(statements));
     }
 
     @SuppressWarnings("unused")
