@@ -29,9 +29,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
+    public void reset() {
+        stdio.reset();
+        environment.reset();
+    }
+
     @Override
-    public Void visitBlockStmt(Stmt.Block stmt) {
-        // TODO implement
+    public Void visitBlockStmt(Stmt.Block block) {
+        executeBlock(block.statements);
         return null;
     }
 
@@ -144,6 +149,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     private void execute(Stmt stmt) {
         stmt.visit(this);
+    }
+
+    private void executeBlock(List<Stmt> statements) {
+        environment.push();
+        try {
+            for (var stmt : statements ) {
+                execute(stmt);
+            }
+        } finally {
+            environment.pop();
+        }
     }
 
     private Object evaluate(Expr expr) {

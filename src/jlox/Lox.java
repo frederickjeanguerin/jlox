@@ -43,11 +43,19 @@ public class Lox {
     }
 
     private static void run(String source) {
+        boolean astOnly = false;
+        if (source.startsWith("#ast")) {
+            source = source.substring(4);
+            astOnly = true;
+        }
         Scanner scanner = new Scanner(source, STDIO);
         List<Token> tokens = scanner.scanTokens();
 
         var ast = new Parser(tokens, STDIO).parse();
-        if (STDIO.report()) return;
+        if (astOnly) {
+            System.out.println(new AstPrinter().print(ast));
+        }
+        if (STDIO.report() || astOnly) return;
 
         interpreter.interpret(ast);
         interpreter.stdio.report();
@@ -72,7 +80,11 @@ public class Lox {
         Scanner scanner = new Scanner(source, error);
         List<Token> tokens = scanner.scanTokens();
         var ast = new Parser(tokens, error).parse();
-        assert !error.hasError();
+        if (error.hasError()) {
+            var astPrint = ast == null ? "(ast is null)" : new AstPrinter().print(ast);
+            return new TestInterpreterResult(astPrint, error.stderr());
+        }
+        interpreter.reset();
         interpreter.interpret(ast);
         return new TestInterpreterResult(interpreter.stdio.stdout(), interpreter.stdio.stderr());
     }

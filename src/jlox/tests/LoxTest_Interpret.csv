@@ -92,3 +92,9 @@ Variable assignment simple ¤ var a; a = 10; a ¤ 10
 Variable reassignment simple ¤ var a = 10 ; a = 20; a = 30; a ¤ 30
 Variable self assignment ¤ var a = 10; a = a + 20; a ¤ 30
 Variable assignment chaining ¤ var a; var b; var c; a = b = c = 10; a + b + c ¤ 30
+
+#Block
+Block simple stmt ¤ { print 10; } ¤ 10
+Block last expr ¤ { 10 } ¤ 10
+Block many stmt ¤ { print 10; print 20; 30 } ¤ 10 20 30
+Block scope ¤ var a = 10; { print a; var a = 20; a } a ¤ 10 20 10

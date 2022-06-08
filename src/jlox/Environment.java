@@ -5,6 +5,41 @@ import java.util.Map;
 
 public class Environment {
 
+    private Scope scope = new Scope(null);
+
+    void reset() {
+        scope = new Scope(null);
+    }
+
+    void push() {
+        scope = new Scope(scope);
+    }
+
+    void pop() {
+        scope = scope.outer;
+    }
+
+    void defineVar(String name, Object value) {
+        // NB Variables can be redefined without error
+        scope.define(name, value);
+    }
+
+    Object getVar(Token varToken) {
+        var name = varToken.lexeme();
+        var value = scope.get(name);
+        if (value == Scope.notFound) {
+            throw new Interpreter.RuntimeError(varToken, "Undefined variable '%s'.".formatted(name));
+        }
+        return value;
+    }
+
+    void assignVar(Token varToken, Object value) {
+        var name = varToken.lexeme();
+        if (!scope.set(name, value)) {
+            throw new Interpreter.RuntimeError(varToken, "Undefined variable '%s'.".formatted(name));
+        }
+    }
+
     private static class Scope {
         private final Map<String, Object> variables = new HashMap<>();
         private final Scope outer;
@@ -38,37 +73,6 @@ public class Environment {
                 return outer.set(name, value);
             }
             return false;
-        }
-    }
-
-    private Scope scope = new Scope(null);
-
-    void push() {
-        scope = new Scope(scope);
-    }
-
-    void pop() {
-        scope = scope.outer;
-    }
-
-    void defineVar(String name, Object value) {
-        // NB Variables can be redefined without error
-        scope.define(name, value);
-    }
-
-    Object getVar(Token varToken) {
-        var name = varToken.lexeme();
-        var value = scope.get(name);
-        if (value == Scope.notFound) {
-            throw new Interpreter.RuntimeError(varToken, "Undefined variable '%s'.".formatted(name));
-        }
-        return value;
-    }
-
-    void assignVar(Token varToken, Object value) {
-        var name = varToken.lexeme();
-        if (!scope.set(name, value)) {
-            throw new Interpreter.RuntimeError(varToken, "Undefined variable '%s'.".formatted(name));
         }
     }
 }

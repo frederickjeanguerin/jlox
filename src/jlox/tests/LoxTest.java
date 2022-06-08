@@ -1,8 +1,13 @@
 package jlox.tests;
 
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,6 +64,26 @@ class LoxTest {
         var result = Lox.testInterpreter(input);
         for (String expectedError : expectedErrors.split(", ")) {
             assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.errors()), description);
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "block-and-scope",
+    })
+    void testSnapShot(String fileName) throws IOException {
+        Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");
+        Path targetPath = Path.of("src/jlox/tests/snapshots/" + fileName + ".txt");
+        var source = Files.readString(sourcePath);
+        var result = Lox.testInterpreter(source);
+        assertEquals("", result.errors());
+        if (Files.exists(targetPath)){
+            var expected = Files.readString(targetPath);
+            assertLinesMatch(List.of(expected.split("\n")), List.of(result.prints().split("\n")));
+        } else {
+            Files.writeString(targetPath, result.prints());
+            //noinspection ConstantConditions
+            Assumptions.assumeTrue(false, "new snapshot created");
         }
     }
 

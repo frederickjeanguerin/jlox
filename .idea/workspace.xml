@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTORING GenerateAst from text files">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTORING AstPrinter based on StringBuilder">
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/block-and-scope.lox" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Environment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/GenerateAst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +77,7 @@
       <recent name="jlox.tests" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LoxTest">
+  <component name="RunManager" selected="JUnit.LoxTest.testSnapShot">
     <configuration name="AstPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="jlox.AstPrinter" />
       <module name="Lox" />
@@ -97,7 +102,7 @@
       </extension>
       <method v="2" />
     </configuration>
-    <configuration name="Lox" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Lox" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="jlox.Lox" />
       <module name="Lox" />
       <extension name="coverage">
@@ -141,6 +146,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LoxTest.testSnapShot" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Lox" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jlox.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="jlox.tests" />
+      <option name="MAIN_CLASS_NAME" value="jlox.tests.LoxTest" />
+      <option name="METHOD_NAME" value="testSnapShot(java.lang.String)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LoxTest.testSyntaxError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Lox" />
       <extension name="coverage">
@@ -159,16 +180,17 @@
     </configuration>
     <list>
       <item itemvalue="Application.GenerateAst" />
-      <item itemvalue="Application.AstPrinter" />
       <item itemvalue="Application.Lox" />
+      <item itemvalue="Application.AstPrinter" />
       <item itemvalue="JUnit.LoxTest" />
+      <item itemvalue="JUnit.LoxTest.testSnapShot" />
       <item itemvalue="JUnit.LoxTest.testInterpreter" />
       <item itemvalue="JUnit.LoxTest.testSyntaxError" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LoxTest.testSnapShot" />
         <item itemvalue="Application.AstPrinter" />
-        <item itemvalue="Application.Lox" />
         <item itemvalue="JUnit.LoxTest.testInterpreter" />
         <item itemvalue="JUnit.LoxTest.testSyntaxError" />
       </list>
@@ -365,7 +387,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654687906802</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="REFACTORING AstPrinter based on StringBuilder">
+      <created>1654695490187</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1654695490187</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -404,6 +433,7 @@
     <MESSAGE value="REFACTORING instanceof" />
     <MESSAGE value="REFACTORING environment with scope, push, pop" />
     <MESSAGE value="REFACTORING GenerateAst from text files" />
-    <option name="LAST_COMMIT_MESSAGE" value="REFACTORING GenerateAst from text files" />
+    <MESSAGE value="REFACTORING AstPrinter based on StringBuilder" />
+    <option name="LAST_COMMIT_MESSAGE" value="REFACTORING AstPrinter based on StringBuilder" />
   </component>
 </project>

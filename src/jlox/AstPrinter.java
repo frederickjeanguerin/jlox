@@ -12,7 +12,7 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     public AstPrinter(String eol) {
-        EOL = ";" + eol;
+        EOL = eol;
     }
 
     private void append(Expr expr) {
@@ -23,8 +23,13 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         append(EOL);
     }
 
+    private void eos() {
+        append(';'); eol();
+    }
+
     private void append(Stmt stmt) {
-        stmt.visit(this);
+        if (stmt != null)
+            stmt.visit(this);
     }
 
     private void append(List<Stmt> statements) {
@@ -100,19 +105,21 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitBlockStmt(Stmt.Block stmt) {
-        // TODO implement
+        append('{'); eol();
+        append(stmt.statements);
+        append('}'); eol();
         return null;
     }
 
     @Override
     public Void visitExpressionStmt(Stmt.Expression stmt) {
-        append(stmt.expression); eol();
+        append(stmt.expression); eos();
         return null;
     }
 
     @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
-        append("print "); append(stmt.expression); eol();
+        append("print "); append(stmt.expression); eos();
         return null;
     }
 
@@ -122,13 +129,13 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         if (stmt.initializer != null) {
             append(" = "); append(stmt.initializer);
         }
-        eol();
+        eos();
         return null;
     }
 
     @Override
     public Void visitLastStmt(Stmt.Last stmt) {
-        append(stmt.expression);
+        append(stmt.expression); append(' ');
         return null;
     }
 

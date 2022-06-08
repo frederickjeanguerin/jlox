@@ -54,12 +54,22 @@ public class Parser {
     private Stmt statement() {
         if (match(SEMICOLON)) return null;
         if (match(PRINT)) return printStatement();
+        if (match(LEFT_BRACE)) return new Stmt.Block(block());
         return expressionStatement();
+    }
+
+    private List<Stmt> block() {
+        List<Stmt> statements = new ArrayList<>();
+        while (!peek(RIGHT_BRACE) && !isAtEnd()) {
+            statements.add(declaration());
+        }
+        consume(RIGHT_BRACE, "Expect '}' after block");
+        return statements;
     }
 
     private Stmt expressionStatement() {
         Expr expr = expression();
-        if (isAtEnd())
+        if (isAtEnd() || peek(RIGHT_BRACE))
             return new Stmt.Last(expr);
         semicolon();
         return new Stmt.Expression(expr);
@@ -194,7 +204,7 @@ public class Parser {
     private void synchronize() {
         advance();
         while (!isAtEnd()) {
-            if (previous().type() == SEMICOLON) return;
+            if (previous().type() == SEMICOLON || previous().type() == RIGHT_BRACE) return;
 
             switch(peek().type()) {
                 case CLASS:
@@ -205,6 +215,7 @@ public class Parser {
                 case RETURN:
                 case VAR:
                 case WHILE:
+                case LEFT_BRACE:
                     return;
             }
             advance();
