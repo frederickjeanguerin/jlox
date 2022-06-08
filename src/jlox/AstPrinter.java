@@ -2,9 +2,10 @@ package jlox;
 
 import java.util.List;
 
-public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
+public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     private final String EOL;
+    private final StringBuilder sb = new StringBuilder();
 
     public AstPrinter() {
         this("\n");
@@ -14,85 +15,121 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
         EOL = ";" + eol;
     }
 
-    private String print(Expr expr) {
-        return expr.visit(this);
-    }
-    private String println(Expr expr) {
-        return expr.visit(this) + EOL;
+    private void append(Expr expr) {
+        expr.visit(this);
     }
 
-    String print(List<Stmt> statements) {
-        var sb = new StringBuilder();
+    private void eol() {
+        append(EOL);
+    }
+
+    private void append(Stmt stmt) {
+        stmt.visit(this);
+    }
+
+    private void append(List<Stmt> statements) {
         for (var stmt: statements) {
-            sb.append(stmt.visit(this));
+            append(stmt);
         }
+    }
+
+    private void append(String string) {
+        sb.append(string);
+    }
+
+    private void append(char c) {
+        sb.append(c);
+    }
+
+    public String print(List<Stmt> statements) {
+        sb.setLength(0);
+        append(statements);
         return sb.toString();
     }
 
     @Override
-    public String visitAssignExpr(Expr.Assign expr) {
-        return "(= " + expr.name.lexeme() + " " + print(expr.value) + ")";
+    public Void visitAssignExpr(Expr.Assign expr) {
+        append("(= ");append(expr.name.lexeme());append(" ");
+        append(expr.value);append(")");
+        return null;
     }
 
     @Override
-    public String visitBinaryExpr(Expr.Binary expr) {
-        return parenthesize(expr.operator.lexeme(), expr.left, expr.right);
+    public Void visitBinaryExpr(Expr.Binary expr) {
+        parenthesize(expr.operator.lexeme(), expr.left, expr.right);
+        return null;
     }
 
     @Override
-    public String visitGroupingExpr(Expr.Grouping expr) {
-        return parenthesize("group", expr.expression);
+    public Void visitGroupingExpr(Expr.Grouping expr) {
+        parenthesize("group", expr.expression);
+        return null;
     }
 
     @Override
-    public String visitLiteralExpr(Expr.Literal expr) {
-        return Stdio.stringify(expr.value);
+    public Void visitLiteralExpr(Expr.Literal expr) {
+        append(Stdio.stringify(expr.value));
+        return null;
     }
 
     @Override
-    public String visitUnaryExpr(Expr.Unary expr) {
-        return parenthesize(expr.operator.lexeme(), expr.right);
+    public Void visitUnaryExpr(Expr.Unary expr) {
+        parenthesize(expr.operator.lexeme(), expr.right);
+        return null;
     }
 
     @Override
-    public String visitVariableExpr(Expr.Variable expr) {
-        return expr.name.lexeme();
+    public Void visitVariableExpr(Expr.Variable expr) {
+        append(expr.name.lexeme());
+        return null;
     }
 
     @Override
-    public String visitTernaryExpr(Expr.Ternary expr) {
-        return parenthesize(expr.leftOp.lexeme() + expr.rightOp.lexeme(), expr.left, expr.middle, expr.right);
+    public Void visitTernaryExpr(Expr.Ternary expr) {
+        parenthesize(expr.leftOp.lexeme() + expr.rightOp.lexeme(), expr.left, expr.middle, expr.right);
+        return null;
     }
 
-    private String parenthesize(String name, Expr... exprs) {
-        var sb = new StringBuilder();
-        sb.append('(').append(name);
+    private void parenthesize(String name, Expr... exprs) {
+        append('('); append(name);
         for (var expr: exprs) {
-            sb.append(' ').append(print(expr));
+            append(' '); append(expr);
         }
-        sb.append(')');
-        return sb.toString();
+        append(')');
     }
 
     @Override
-    public String visitExpressionStmt(Stmt.Expression stmt) {
-        return println(stmt.expression);
+    public Void visitBlockStmt(Stmt.Block stmt) {
+        // TODO implement
+        return null;
     }
 
     @Override
-    public String visitPrintStmt(Stmt.Print stmt) {
-        return "print " + println(stmt.expression);
+    public Void visitExpressionStmt(Stmt.Expression stmt) {
+        append(stmt.expression); eol();
+        return null;
     }
 
     @Override
-    public String visitVarStmt(Stmt.Var stmt) {
-        return "var " + stmt.name.lexeme()
-                + (stmt.initializer != null ? " = " + print(stmt.initializer):"") + EOL;
+    public Void visitPrintStmt(Stmt.Print stmt) {
+        append("print "); append(stmt.expression); eol();
+        return null;
     }
 
     @Override
-    public String visitLastStmt(Stmt.Last stmt) {
-        return print(stmt.expression);
+    public Void visitVarStmt(Stmt.Var stmt) {
+        append("var "); append(stmt.name.lexeme());
+        if (stmt.initializer != null) {
+            append(" = "); append(stmt.initializer);
+        }
+        eol();
+        return null;
+    }
+
+    @Override
+    public Void visitLastStmt(Stmt.Last stmt) {
+        append(stmt.expression);
+        return null;
     }
 
     public static void main(String[] args) {
@@ -104,6 +141,6 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
                 new Expr.Grouping(
                         new Expr.Literal(45.67))
         );
-        System.out.println(new AstPrinter().print(expr));
+        System.out.println(new AstPrinter().print(List.of(new Stmt.Expression(expr))));
     }
 }

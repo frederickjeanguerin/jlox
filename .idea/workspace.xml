@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTORING environment with scope, push, pop">
-      <change afterPath="$PROJECT_DIR$/src/tool/expressions.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTORING GenerateAst from text files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/GenerateAst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +73,19 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.LoxTest">
+    <configuration name="AstPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="jlox.AstPrinter" />
+      <module name="Lox" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jlox.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="GenerateAst" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="tool.GenerateAst" />
       <module name="Lox" />
@@ -144,6 +159,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.GenerateAst" />
+      <item itemvalue="Application.AstPrinter" />
       <item itemvalue="Application.Lox" />
       <item itemvalue="JUnit.LoxTest" />
       <item itemvalue="JUnit.LoxTest.testInterpreter" />
@@ -151,6 +167,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AstPrinter" />
         <item itemvalue="Application.Lox" />
         <item itemvalue="JUnit.LoxTest.testInterpreter" />
         <item itemvalue="JUnit.LoxTest.testSyntaxError" />
@@ -341,7 +358,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654685629539</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="REFACTORING GenerateAst from text files">
+      <created>1654687906802</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1654687906802</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -379,6 +403,7 @@
     <MESSAGE value="REFACTORING test without newline" />
     <MESSAGE value="REFACTORING instanceof" />
     <MESSAGE value="REFACTORING environment with scope, push, pop" />
-    <option name="LAST_COMMIT_MESSAGE" value="REFACTORING environment with scope, push, pop" />
+    <MESSAGE value="REFACTORING GenerateAst from text files" />
+    <option name="LAST_COMMIT_MESSAGE" value="REFACTORING GenerateAst from text files" />
   </component>
 </project>
