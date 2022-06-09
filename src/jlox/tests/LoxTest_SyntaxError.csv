@@ -45,3 +45,10 @@ If missing ) ¤ if (true print 30; ¤ at 'print', expect '[)]'
 # While
 While missing ( ¤ while true print 30; ¤ at 'true', expect '[(]'
 While missing ) ¤ while (true print 30; ¤ at 'print', expect '[)]'
+
+# For
+For missing ( ¤ for true print 30; ¤ at 'true', expect '[(]'
+For missing ) ¤ for (;;; ¤ at ';', expect '[)]'
+For missing first ; ¤ for () ¤ at '[)]', expect ';'
+For missing second ; ¤ for (;) ¤ at '[)]', expect condition or ';'
+For invalid initializer ¤ for ( while(1);;); ¤ at 'while', expect expression

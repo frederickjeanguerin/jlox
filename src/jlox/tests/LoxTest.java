@@ -69,7 +69,8 @@ class LoxTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "block-and-scope",
+            "chap8-block-and-scope",
+            "chap9-fibonacci",
     })
     void testSnapShot(String fileName) throws IOException {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");

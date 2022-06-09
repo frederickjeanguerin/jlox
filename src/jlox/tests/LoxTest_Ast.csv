@@ -106,3 +106,11 @@ Logical and ternary ¤ 1 or 2 ? 3 or 4 : 5 or 6 ¤ (?: (or 1 2) (or 3 4) (or 5 6
 
 # While loop
 While loop ¤ while (1) print 2; ¤ while (1) print 2;
+
+# For loop
+For loop empty ¤ for(;;); ¤ while (true) ;
+For loop full ¤ for(1; 2; 3) 4; ¤ { 1; while (2) { 4; 3; } }
+For loop missing initializer ¤ for(; 2; 3) 4; ¤ while (2) { 4; 3; }
+For loop missing condition ¤ for(1; ; 3) 4; ¤ { 1; while (true) { 4; 3; } }
+For loop missing updater ¤ for(1; 2; ) 4; ¤ { 1; while (2) 4; }
+For loop missing body ¤ for(1; 2; 3) ; ¤ { 1; while (2) 3; }

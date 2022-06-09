@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 import static jlox.TokenType.*;
 
-@SuppressWarnings("ThrowableNotThrown")
+@SuppressWarnings({"ThrowableNotThrown", "UnnecessaryLocalVariable"})
 public class Parser {
 
     private static class ParseError extends RuntimeException {}
@@ -52,12 +52,65 @@ public class Parser {
     }
 
     private Stmt statement() {
+        if (match(FOR)) return forStatement();
         if (match(IF)) return ifStatement();
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
         if (match(PRINT)) return printStatement();
         if (match(SEMICOLON)) return null;
         if (match(WHILE)) return whileStatement();
         return expressionStatement();
+    }
+
+    private Stmt forStatement() {
+        consume(LEFT_PAREN, "Expect '(' after 'for'");
+
+        Stmt initializer = null;
+        if (match(VAR))
+            initializer = varDeclaration();
+        else if (!peek(SEMICOLON, RIGHT_PAREN))
+            initializer = expressionStatement();
+        else
+            consume(SEMICOLON, "Expect ';' or initializer");
+
+        Expr condition = null;
+        if (!peek(SEMICOLON, RIGHT_PAREN))
+            condition = expression();
+        consume(SEMICOLON, "Expect condition or ';' after condition.");
+
+        Stmt updater = null;
+        if (!peek(SEMICOLON, RIGHT_PAREN))
+            updater = new Stmt.Expression(expression());
+        consume(RIGHT_PAREN, "Expect ')' after for loop updater");
+        var body = statement();
+
+        // ----- Desugaring phase -----
+
+        /*
+                for (initializer; condition; updater) body;
+
+            is equivalent to:
+
+                {
+                    initializer;
+                    while (condition) { body; updater; }
+                }
+
+            We progress backward: body, updater, condition, initializer.
+         */
+
+        var whileBody
+                = updater == null ? body
+                : body == null ? updater
+                : new Stmt.Block(List.of(body, updater));
+
+        if (condition == null)
+            condition = new Expr.Literal(true);
+        var whileStmt = new Stmt.While(condition, whileBody);
+
+        var forStmt = initializer == null ? whileStmt
+            : new Stmt.Block(List.of(initializer, whileStmt));
+
+        return forStmt;
     }
 
     private Stmt whileStatement() {
