@@ -18,6 +18,16 @@ Unary minus ¤ -55 ¤ -55
 Unary bang ¤ !true ¤ false
 Unary multiple ¤ ---55 ¤ -55
 
+# Truthiness
+Truthiness false is false ¤ !false ¤ true
+Truthiness nil is false ¤ !nil ¤ true
+Truthiness 0 is false ¤ !0 ¤ true
+Truthiness empty string is false ¤ !"""" ¤ true
+Truthiness non zero is true ¤ !1 ¤ false
+Truthiness non zero is true ¤ !-1 ¤ false
+Truthiness non zero is true ¤ !0.0001 ¤ false
+Truthiness non empty string is true ¤ !"" "" ¤ false
+
 # Factor
 Factor star ¤ 23 * 11 ¤ 253
 Factor slash ¤ 23 / 10 ¤ 2.3
@@ -110,3 +120,13 @@ If then else ¤ if (true) print 3; else print 4; ¤ 3
 If then else ¤ if (false) print 3; else print 4; ¤ 4
 If dangling else ¤ if (false) if (false) print 1; else print 2; ¤ ""
 If dangling else ¤ if (true) if (false) print 1; else print 2; ¤ 2
+
+# Logical and, or
+Logical and ¤ 1 and 2 ¤ 2
+Logical and ¤ 0 and 2 ¤ 0
+logical or ¤ 1 or 2 ¤ 1
+logical or ¤ 0 or 2 ¤ 2
+logical lazy and ¤ var a = 10; 1 and (a = a + 1); a ¤ 11
+logical lazy and ¤ var a = 10; 0 and (a = a + 1); a ¤ 10
+logical lazy or ¤ var a = 10; 1 or (a = a + 1); a ¤ 10
+logical lazy or ¤ var a = 10; 0 or (a = a + 1); a ¤ 11

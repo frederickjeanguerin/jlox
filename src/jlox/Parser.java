@@ -124,15 +124,23 @@ public class Parser {
 
     // Challenge 2, Chap 6 : Ternary
     private Expr ternary() {
-        Expr expr = equality();
+        Expr expr = or();
         if (match(QUESTION)) {
             Token leftOp = previous();
-            Expr middle = equality();
+            Expr middle = or();
             Token rightOp = consume(COLON, "Expect ':' in ternary.");
             Expr right = ternary();
             expr =  new Expr.Ternary(expr, leftOp, middle, rightOp, right);
         }
         return expr;
+    }
+
+    private Expr or() {
+        return binary(this::and, OR);
+    }
+
+    private Expr and() {
+        return binary(this::equality, AND);
     }
 
     private Expr equality() {

@@ -112,6 +112,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Supplier<Double> rightNumber = () -> number(right.get(), expr.operator, "right operand");
 
         return switch (expr.operator.type()) {
+            case AND -> isTruthy(left) ? right.get() : left;
             case BANG_EQUAL -> !areEqual(left, right.get());
             case COMMA -> right.get();
             case EQUAL_EQUAL -> areEqual(left, right.get());
@@ -120,6 +121,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             case LESS -> leftNumber.get() < rightNumber.get();
             case LESS_EQUAL -> leftNumber.get() <= rightNumber.get();
             case MINUS -> leftNumber.get() - rightNumber.get();
+            case OR -> isTruthy(left) ? left : right.get();
             case PLUS -> {
                 if (left instanceof Double b && right.get() instanceof Double a )
                     yield a + b;
@@ -199,6 +201,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     private boolean isTruthy(Object obj) {
         return obj instanceof Boolean bool ? bool
                 : obj instanceof Double d ? d != 0
+                : obj instanceof String s ? !s.isEmpty()
                 : obj != null;
     }
 

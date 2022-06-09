@@ -97,3 +97,9 @@ If only ¤ if (true); ¤ if (true) ;
 If then expr ¤ if (true) 4 ¤ if (true) 4
 If dangling else ¤ if (true) if (false) 9; else 10; ¤ if (true) if (false) 9; else 10;
 
+# Logical and, or
+Logical and ¤ 1 and 2 and 3 ¤ (and (and 1 2) 3)
+Logical or ¤ 1 or 2 or 3 ¤ (or (or 1 2) 3)
+Logical combined ¤ 1 or 2 and 3 ¤ (or 1 (and 2 3))
+Logical and equality ¤ 1 == 1 and 2 == 2 ¤ (and (== 1 1) (== 2 2))
+Logical and ternary ¤ 1 or 2 ? 3 or 4 : 5 or 6 ¤ (?: (or 1 2) (or 3 4) (or 5 6))
