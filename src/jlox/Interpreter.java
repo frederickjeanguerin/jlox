@@ -12,8 +12,22 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             super(message);
             this.token = token;
         }
+    }
 
+    static class Lazy {
+        private static final Object Uninitialized = new Object();
+        private final Supplier<Object> supplier;
+        private Object value = Uninitialized;
 
+        Lazy(Supplier<Object> supplier) {
+            this.supplier = supplier;
+        }
+
+        Object get() {
+            if (value == Uninitialized)
+                value = supplier.get();
+            return value;
+        }
     }
 
     private static final Object UNINITIALIZED = new Object();
@@ -92,25 +106,25 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitBinaryExpr(Expr.Binary expr) {
         var left = evaluate(expr.left);
-        var right = evaluate(expr.right);
+        var right = new Lazy(() -> evaluate(expr.right));
 
         Supplier<Double> leftNumber = () -> number(left, expr.operator, "left operand");
-        Supplier<Double> rightNumber = () -> number(right, expr.operator, "right operand");
+        Supplier<Double> rightNumber = () -> number(right.get(), expr.operator, "right operand");
 
         return switch (expr.operator.type()) {
-            case BANG_EQUAL -> !areEqual(left, right);
-            case COMMA -> right;
-            case EQUAL_EQUAL -> areEqual(left, right);
+            case BANG_EQUAL -> !areEqual(left, right.get());
+            case COMMA -> right.get();
+            case EQUAL_EQUAL -> areEqual(left, right.get());
             case GREATER -> leftNumber.get() > rightNumber.get();
             case GREATER_EQUAL -> leftNumber.get() >= rightNumber.get();
             case LESS -> leftNumber.get() < rightNumber.get();
             case LESS_EQUAL -> leftNumber.get() <= rightNumber.get();
             case MINUS -> leftNumber.get() - rightNumber.get();
             case PLUS -> {
-                if (right instanceof Double a && left instanceof Double b)
+                if (left instanceof Double b && right.get() instanceof Double a )
                     yield a + b;
                 // Challenge 7.2
-                if (right instanceof String || left instanceof String)
+                if (left instanceof String || right.get() instanceof String)
                     yield Stdio.stringify(left) + Stdio.stringify(right);
                 throw new RuntimeError(expr.operator, "Operands cannot be added.");
             }
