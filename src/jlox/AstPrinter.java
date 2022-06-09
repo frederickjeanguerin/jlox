@@ -30,6 +30,8 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     private void append(Stmt stmt) {
         if (stmt != null)
             stmt.visit(this);
+        else
+            append(';');
     }
 
     private void append(List<Stmt> statements) {
@@ -114,6 +116,15 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     @Override
     public Void visitExpressionStmt(Stmt.Expression stmt) {
         append(stmt.expression); eos();
+        return null;
+    }
+
+    @Override
+    public Void visitIfStmt(Stmt.If stmt) {
+        append("if ("); append(stmt.condition); append(") "); append(stmt.then);
+        if (stmt.else_ != null) {
+            append("else "); append(stmt.else_);
+        }
         return null;
     }
 

@@ -37,3 +37,7 @@ Synchronisation on semicolon ¤ 1 + ;\n 2;\n print ;\n * 4;\n - ¤ line 1, at ';
 # Block
 Block missing right brace ¤ 3; { 1 + 2 ¤ expect '[}]'
 Block synchronization ¤ { print } \n print true + 2; ¤ line 1, line 2
+
+# If
+If missing ( ¤ if true print 30; ¤ at 'true', expect '[(]'
+If missing ) ¤ if (true print 30; ¤ at 'print', expect '[)]'

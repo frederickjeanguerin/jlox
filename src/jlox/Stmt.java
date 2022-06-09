@@ -7,6 +7,7 @@ abstract class Stmt {
   interface Visitor<R> {
     R visitBlockStmt(Block stmt);
     R visitExpressionStmt(Expression stmt);
+    R visitIfStmt(If stmt);
     R visitLastStmt(Last stmt);
     R visitPrintStmt(Print stmt);
     R visitVarStmt(Var stmt);
@@ -35,6 +36,23 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
       return visitor.visitExpressionStmt(this);
+    }
+  }
+
+  static class If extends Stmt {
+    final Expr condition;
+    final Stmt then;
+    final Stmt else_;
+
+    If ( Expr condition, Stmt then, Stmt else_ ) {
+      this.condition = condition;
+      this.then = then;
+      this.else_ = else_;
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+      return visitor.visitIfStmt(this);
     }
   }
 
@@ -79,5 +97,6 @@ abstract class Stmt {
     }
   }
 
+  @SuppressWarnings("UnusedReturnValue")
   abstract <R> R visit(Visitor<R> visitor);
 }

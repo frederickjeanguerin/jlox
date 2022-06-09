@@ -50,6 +50,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitIfStmt(Stmt.If stmt) {
+        if (isTruthy(evaluate(stmt.condition)))
+            execute(stmt.then);
+        else if (stmt.else_ != null)
+            execute(stmt.else_);
+        return null;
+    }
+
+    @Override
     public Void visitPrintStmt(Stmt.Print stmt) {
         Object result = evaluate(stmt.expression);
         stdio.print(result);
@@ -174,7 +183,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     private boolean isTruthy(Object obj) {
-        return obj instanceof Boolean bool ? bool : obj != null;
+        return obj instanceof Boolean bool ? bool
+                : obj instanceof Double d ? d != 0
+                : obj != null;
     }
 
     private boolean areEqual(Object a, Object b) {

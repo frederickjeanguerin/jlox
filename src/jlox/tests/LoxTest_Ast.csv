@@ -89,3 +89,11 @@ Variable self assignment ¤ a = a + 1 ¤ (= a (+ a 1))
 Block one stmt ¤ { print 3; } ¤ { print 3; }
 Block many stmt ¤ { var a; a = 10; print a; } ¤ { var a; (= a 10); print a; }
 Block last stmt ¤ { var a = 10; a } ¤ { var a = 10; a }
+
+# If
+If then ¤ if (true) print 3; ¤ if (true) print 3;
+If then else ¤ if (true) print 3; else print 4; ¤ if (true) print 3; else print 4;
+If only ¤ if (true); ¤ if (true) ;
+If then expr ¤ if (true) 4 ¤ if (true) 4
+If dangling else ¤ if (true) if (false) 9; else 10; ¤ if (true) if (false) 9; else 10;
+

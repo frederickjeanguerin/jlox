@@ -55,7 +55,20 @@ public class Parser {
         if (match(SEMICOLON)) return null;
         if (match(PRINT)) return printStatement();
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
+        if (match(IF)) return ifStatement();
         return expressionStatement();
+    }
+
+    private Stmt ifStatement() {
+        consume(LEFT_PAREN, "Expect '(' after 'if'");
+        var condition = expression();
+        consume(RIGHT_PAREN, "Expect ')' after condition");
+        var then = statement();
+        Stmt else_ = null;
+        if (match(ELSE)) {
+            else_ = statement();
+        }
+        return new Stmt.If(condition, then, else_);
     }
 
     private List<Stmt> block() {
