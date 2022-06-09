@@ -14,6 +14,8 @@ public class Parser {
     private final Stdio stdio;
     private final List<Token> tokens;
     private int current = 0;
+    private int loopNesting = 0;
+    private boolean hasContinue = false;
 
     Parser(List<Token> tokens, Stdio stdio) {
         this.tokens = tokens;
@@ -27,6 +29,7 @@ public class Parser {
             if (decl != null)
                 statements.add(decl);
         }
+        assert loopNesting == 0;
         return statements;
     }
 
@@ -52,6 +55,7 @@ public class Parser {
     }
 
     private Stmt statement() {
+        if (match(BREAK, CONTINUE)) return keywordStatement();
         if (match(FOR)) return forStatement();
         if (match(IF)) return ifStatement();
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
@@ -59,6 +63,23 @@ public class Parser {
         if (match(SEMICOLON)) return null;
         if (match(WHILE)) return whileStatement();
         return expressionStatement();
+    }
+
+    private Stmt keywordStatement() {
+        var token = previous();
+        semicolon();
+
+        switch (token.type()) {
+            case CONTINUE:
+                hasContinue = true;
+                // fall-through
+            case BREAK:
+                if (loopNesting == 0)
+                    error(token, token.lexeme() + " outside of any loop");
+                break;
+        }
+
+        return new Stmt.Keyword(token);
     }
 
     private Stmt forStatement() {
@@ -81,7 +102,8 @@ public class Parser {
         if (!peek(SEMICOLON, RIGHT_PAREN))
             updater = new Stmt.Expression(expression());
         consume(RIGHT_PAREN, "Expect ')' after for loop updater");
-        var body = statement();
+
+        Stmt body = loopBody();
 
         // ----- Desugaring phase -----
 
@@ -117,8 +139,19 @@ public class Parser {
         consume(LEFT_PAREN, "Expect '(' after 'while'");
         var condition = expression();
         consume(RIGHT_PAREN, "Expect ')' after condition");
-        var body = statement();
+        var body = loopBody();
         return new Stmt.While(condition, body);
+    }
+
+    private Stmt loopBody() {
+        loopNesting++;
+        var body = statement();
+        loopNesting--;
+        if (hasContinue) {
+            hasContinue = false;
+            body = new Stmt.ContinueCatcher(body);
+        }
+        return body;
     }
 
     private Stmt ifStatement() {
@@ -218,7 +251,7 @@ public class Parser {
     }
 
     private Expr factor() {
-        return binary(this::unary, SLASH, STAR);
+        return binary(this::unary, SLASH, STAR, PERCENT);
     }
 
     private Expr unary() {

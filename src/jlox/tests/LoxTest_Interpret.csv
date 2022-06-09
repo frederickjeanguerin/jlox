@@ -31,6 +31,8 @@ Truthiness non empty string is true ¤ !"" "" ¤ false
 # Factor
 Factor star ¤ 23 * 11 ¤ 253
 Factor slash ¤ 23 / 10 ¤ 2.3
+Factor percent ¤ 10 % 4 ¤ 2
+Factor percent ¤ 10.5 % 4 ¤ 2.5
 Factor and unary ¤ -10 * -30 ¤ 300
 Factor multiple ¤ 1 * 2 / 4 * 6 ¤ 3
 
@@ -136,3 +138,11 @@ While loop ¤ var a = 1; while (a < 10) { print a; a = a + 1; } ¤ 1 2 3 4 5 6 7
 
 # For loop
 For loop ¤ for (var i = 1; i < 10; i = i + 1) print i; ¤ 1 2 3 4 5 6 7 8 9
+
+# Break
+Break from while ¤ var a = 3; while (1) { print a; if (a == 1) break; print a + a; a = a - 1; } ¤ 3 6 2 4 1
+Break from for ¤ for (var a = 9; a > 0; a = a - 1) { print a; if (a == 7) break; print a * a; } ¤ 9 81 8 64 7
+
+# Continue
+# Continue in while ¤ var a = 1; while (a < 7) { a = a + 1; if (a % 2) continue; print a; } ¤ 2 4 6
+# Continue in for ¤ for (var a = 1; a < 7; a = a + 1) { if (a % 2) continue; print a; } ¤ 2 4 6

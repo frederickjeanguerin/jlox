@@ -114,6 +114,12 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
+        append("{ CC: "); append(stmt.statement); append("}");
+        return null;
+    }
+
+    @Override
     public Void visitExpressionStmt(Stmt.Expression stmt) {
         append(stmt.expression); eos();
         return null;
@@ -125,6 +131,12 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         if (stmt.else_ != null) {
             append("else "); append(stmt.else_);
         }
+        return null;
+    }
+
+    @Override
+    public Void visitKeywordStmt(Stmt.Keyword stmt) {
+        append(stmt.keyword.lexeme()); eos();
         return null;
     }
 

@@ -6,11 +6,24 @@ import java.util.function.Supplier;
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     static class RuntimeError extends RuntimeException {
-
         final Token token;
         public RuntimeError(Token token, String message) {
             super(message);
             this.token = token;
+        }
+
+        public RuntimeError(Token token) { this(token, "Unhandled exception (internal error)"); }
+    }
+
+    static class BreakException extends RuntimeError {
+        public BreakException(Token token) {
+            super(token);
+        }
+    }
+
+    static class ContinueException extends RuntimeError {
+        public ContinueException(Token token) {
+            super(token);
         }
     }
 
@@ -58,6 +71,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
+        try {
+            execute(stmt.statement);
+        } catch (ContinueException ignored) { }
+        return null;
+    }
+
+    @Override
     public Void visitExpressionStmt(Stmt.Expression stmt) {
         evaluate(stmt.expression);
         return null;
@@ -70,6 +91,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         else if (stmt.else_ != null)
             execute(stmt.else_);
         return null;
+    }
+
+    @Override
+    public Void visitKeywordStmt(Stmt.Keyword stmt) {
+        switch (stmt.keyword.type()) {
+            // NB Exceptions are slow, and they could be triggered outside the body of a loop, e.g. a sub function.
+            case BREAK -> throw new BreakException(stmt.keyword);
+            case CONTINUE -> throw new ContinueException(stmt.keyword);
+            default -> throw new IllegalStateException("Unexpected value: " + stmt.keyword.lexeme());
+        }
+        // return null;
     }
 
     @Override
@@ -91,8 +123,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitWhileStmt(Stmt.While stmt) {
-        while (isTruthy(evaluate(stmt.condition)))
-            execute(stmt.body);
+
+        while (isTruthy(evaluate(stmt.condition))) {
+            try {
+                execute(stmt.body);
+            } catch (BreakException Ignored) { break; }
+        }
+
         return null;
     }
 
@@ -129,6 +166,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             case LESS_EQUAL -> leftNumber.get() <= rightNumber.get();
             case MINUS -> leftNumber.get() - rightNumber.get();
             case OR -> isTruthy(left) ? left : right.get();
+            case PERCENT -> {
+                double divisor = rightNumber.get();
+                if (divisor == 0)
+                    throw new RuntimeError(expr.operator, "Division by zero.");
+                yield leftNumber.get() % divisor;
+            }
             case PLUS -> {
                 if (left instanceof Double b && right.get() instanceof Double a )
                     yield a + b;
@@ -231,4 +274,5 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     static private String string(Object value, Token token, String position) {
         return downcast(value, String.class, "string", token, position);
     }
+
 }

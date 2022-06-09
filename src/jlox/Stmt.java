@@ -6,8 +6,10 @@ import java.util.List;
 abstract class Stmt {
   interface Visitor<R> {
     R visitBlockStmt(Block stmt);
+    R visitContinueCatcherStmt(ContinueCatcher stmt);
     R visitExpressionStmt(Expression stmt);
     R visitIfStmt(If stmt);
+    R visitKeywordStmt(Keyword stmt);
     R visitLastStmt(Last stmt);
     R visitPrintStmt(Print stmt);
     R visitVarStmt(Var stmt);
@@ -24,6 +26,19 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
       return visitor.visitBlockStmt(this);
+    }
+  }
+
+  static class ContinueCatcher extends Stmt {
+    final Stmt statement;
+
+    ContinueCatcher ( Stmt statement ) {
+      this.statement = statement;
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+      return visitor.visitContinueCatcherStmt(this);
     }
   }
 
@@ -54,6 +69,19 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
       return visitor.visitIfStmt(this);
+    }
+  }
+
+  static class Keyword extends Stmt {
+    final Token keyword;
+
+    Keyword ( Token keyword ) {
+      this.keyword = keyword;
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+      return visitor.visitKeywordStmt(this);
     }
   }
 

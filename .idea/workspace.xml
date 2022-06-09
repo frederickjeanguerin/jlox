@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 9.4 - While loop (tested)">
-      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap9-fibonacci.lox" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/TokenType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/programs/block-and-scope.lox" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap8-block-and-scope.lox" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/snapshots/block-and-scope.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -435,7 +437,28 @@
       <option name="project" value="LOCAL" />
       <updated>1654789844985</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Chapter 9.5 - For loop (tested)">
+      <created>1654796750613</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1654796750613</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error.">
+      <created>1654808229177</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1654808229177</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error.">
+      <created>1654809415322</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1654809415322</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -450,9 +473,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 6 - Parser (Challenge 2 - Ternary operator)" />
-    <MESSAGE value="Chapter 6 - Parser (Challenge 3 - Error production)" />
-    <MESSAGE value="Added Error class for testing" />
     <MESSAGE value="Added test helper method in Parser" />
     <MESSAGE value="Added tests for Parser (ast with no errors only)" />
     <MESSAGE value="Added tests for Parser (ast with errors)" />
@@ -475,6 +495,9 @@
     <MESSAGE value="Added lazy interpretation for right side of binary expression." />
     <MESSAGE value="Chapter 9.3 - Logical and, or (tested)" />
     <MESSAGE value="Chapter 9.4 - While loop (tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 9.4 - While loop (tested)" />
+    <MESSAGE value="Chapter 9.5 - For loop (tested)" />
+    <MESSAGE value="Chapter 9 - Challenge 3 - Break (tested)" />
+    <MESSAGE value="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error." />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error." />
   </component>
 </project>

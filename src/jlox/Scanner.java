@@ -62,6 +62,9 @@ class Scanner {
             case '-':
                 addToken(MINUS);
                 break;
+            case '%':
+                addToken(PERCENT);
+                break;
             case '+':
                 addToken(PLUS);
                 break;
@@ -235,7 +238,9 @@ class Scanner {
     static {
         keywords = Map.ofEntries(
                 entry("and", AND),
+                entry("break", BREAK),
                 entry("class", CLASS),
+                entry("continue", CONTINUE),
                 entry("else", ELSE),
                 entry("false", FALSE),
                 entry("for", FOR),
