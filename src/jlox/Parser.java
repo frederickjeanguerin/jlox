@@ -52,11 +52,20 @@ public class Parser {
     }
 
     private Stmt statement() {
-        if (match(SEMICOLON)) return null;
-        if (match(PRINT)) return printStatement();
-        if (match(LEFT_BRACE)) return new Stmt.Block(block());
         if (match(IF)) return ifStatement();
+        if (match(LEFT_BRACE)) return new Stmt.Block(block());
+        if (match(PRINT)) return printStatement();
+        if (match(SEMICOLON)) return null;
+        if (match(WHILE)) return whileStatement();
         return expressionStatement();
+    }
+
+    private Stmt whileStatement() {
+        consume(LEFT_PAREN, "Expect '(' after 'while'");
+        var condition = expression();
+        consume(RIGHT_PAREN, "Expect ')' after condition");
+        var body = statement();
+        return new Stmt.While(condition, body);
     }
 
     private Stmt ifStatement() {

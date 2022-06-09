@@ -41,3 +41,7 @@ Block synchronization ¤ { print } \n print true + 2; ¤ line 1, line 2
 # If
 If missing ( ¤ if true print 30; ¤ at 'true', expect '[(]'
 If missing ) ¤ if (true print 30; ¤ at 'print', expect '[)]'
+
+# While
+While missing ( ¤ while true print 30; ¤ at 'true', expect '[(]'
+While missing ) ¤ while (true print 30; ¤ at 'print', expect '[)]'

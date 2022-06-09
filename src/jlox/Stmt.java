@@ -11,6 +11,7 @@ abstract class Stmt {
     R visitLastStmt(Last stmt);
     R visitPrintStmt(Print stmt);
     R visitVarStmt(Var stmt);
+    R visitWhileStmt(While stmt);
   }
 
   static class Block extends Stmt {
@@ -97,6 +98,21 @@ abstract class Stmt {
     }
   }
 
-  @SuppressWarnings("UnusedReturnValue")
-  abstract <R> R visit(Visitor<R> visitor);
+  static class While extends Stmt {
+    final Expr condition;
+    final Stmt body;
+
+    While ( Expr condition, Stmt body ) {
+      this.condition = condition;
+      this.body = body;
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+      return visitor.visitWhileStmt(this);
+    }
+  }
+
+    @SuppressWarnings("UnusedReturnValue")
+    abstract <R> R visit(Visitor<R> visitor);
 }

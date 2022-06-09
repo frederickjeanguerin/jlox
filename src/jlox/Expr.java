@@ -121,5 +121,6 @@ abstract class Expr {
     }
   }
 
-  abstract <R> R visit(Visitor<R> visitor);
+    @SuppressWarnings("UnusedReturnValue")
+    abstract <R> R visit(Visitor<R> visitor);
 }

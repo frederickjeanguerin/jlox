@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Added lazy interpretation for right side of binary expression.">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 9.4 - While loop (tested)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/GenerateAst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +52,8 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "create.test.in.the.same.root": "true",
     "last.edited.regexp": "Sample Text",
-    "last_opened_file_path": "C:/Users/fguerin/IdeaProjects/Lox/src/jlox/tests/programs"
+    "last_opened_file_path": "C:/Users/fguerin/IdeaProjects/Lox/src/jlox/tests/programs",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -416,7 +422,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654783930229</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Chapter 9.3 - Logical and, or (tested)">
+      <created>1654786338898</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1654786338898</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -431,8 +444,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 6 - Parser (done)" />
-    <MESSAGE value="Chapter 6 - Parser (Challenge 1 - C comma expression)" />
     <MESSAGE value="Chapter 6 - Parser (Challenge 2 - Ternary operator)" />
     <MESSAGE value="Chapter 6 - Parser (Challenge 3 - Error production)" />
     <MESSAGE value="Added Error class for testing" />
@@ -456,6 +467,8 @@
     <MESSAGE value="Chapter 8 - Challenge 2 (uninitialized variable)" />
     <MESSAGE value="Chapter 9.2 - If then else (tested)" />
     <MESSAGE value="Added lazy interpretation for right side of binary expression." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added lazy interpretation for right side of binary expression." />
+    <MESSAGE value="Chapter 9.3 - Logical and, or (tested)" />
+    <MESSAGE value="Chapter 9.4 - While loop (tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 9.4 - While loop (tested)" />
   </component>
 </project>

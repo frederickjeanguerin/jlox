@@ -145,6 +145,12 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitWhileStmt(Stmt.While stmt) {
+        append("while ("); append(stmt.condition); append(") "); append(stmt.body);
+        return null;
+    }
+
+    @Override
     public Void visitLastStmt(Stmt.Last stmt) {
         append(stmt.expression); append(' ');
         return null;
