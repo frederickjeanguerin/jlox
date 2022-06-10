@@ -2,6 +2,8 @@ package jlox;
 
 import java.util.List;
 
+import static jlox.TokenType.COMMA;
+
 public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     private final String EOL;
@@ -63,7 +65,22 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitBinaryExpr(Expr.Binary expr) {
-        parenthesize(expr.operator.lexeme(), expr.left, expr.right);
+        if (expr.operator.type() == COMMA) {
+            append(expr.left); append(", "); append(expr.right);
+        } else {
+            parenthesize(expr.operator.lexeme(), expr.left, expr.right);
+        }
+        return null;
+    }
+
+    @Override
+    public Void visitCallExpr(Expr.Call expr) {
+        append(expr.callee); append("(");
+        for (var arg : expr.arguments) {
+            if (arg != expr.arguments.get(0)) append(", ");
+            append(arg);
+        }
+        append(')');
         return null;
     }
 

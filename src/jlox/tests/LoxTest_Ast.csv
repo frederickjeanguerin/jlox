@@ -51,8 +51,8 @@ Ternary complex ¤ 1 == 2 ? 3 + 4 : -5 ¤ (?: (== 1 2) (+ 3 4) (- 5))
 Ternary multiple ¤ false ? 1 : true ? 2 : 3 ¤ (?: false 1 (?: true 2 3))
 
 # Comma
-Comma simple ¤ 1, 2 ¤ (, 1 2)
-Comma complex ¤ 1, 2, 3 + 4 ¤ (, (, 1 2) (+ 3 4))
+Comma simple ¤ 1, 2 ¤ 1, 2
+Comma complex ¤ 1, 2, 3 + 4 ¤ 1, 2, (+ 3 4)
 
 # Grouping
 Grouping simple ¤ (1) ¤ (group 1)
@@ -123,3 +123,11 @@ Continue ¤ while (1) continue; ¤ while (1) { CC: continue; }
 # Increment & Decrement
 Increment ¤ ++i ¤ (= i (+ (Double)i 1))
 Decrement ¤ --i ¤ (= i (- (Double)i 1))
+
+
+# Function call
+Call simple ¤ func ( ) ¤ func()
+Call 1 arg ¤ func ( a ) ¤ func(a)
+Call 3 args ¤ func ( a, b, c ) ¤ func(a, b, c)
+Call call ¤ f () (a) (b, c, d) ¤ f()(a)(b, c, d)
+

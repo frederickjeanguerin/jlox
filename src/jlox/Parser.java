@@ -276,12 +276,42 @@ public class Parser {
             }
             error(operator, "Invalid increment/decrement target.");
         }
-        return primaryOrError();
+        return call();
+    }
+
+    private Expr call() {
+        Expr expr = primaryOrError();
+
+        while (true) {
+            if (match(LEFT_PAREN)) {
+                expr = finishCall(expr, previous());
+            } else {
+                break;
+            }
+        }
+
+        return expr;
+    }
+
+    private Expr finishCall(Expr callee, Token leftPar) {
+        List<Expr> arguments = new ArrayList<>();
+        if (!peek(RIGHT_PAREN)) {
+            do {
+                if (arguments.size() >= 255) {
+                    error(peek(), "Function call can't have more than 255 arguments");
+                }
+                // Beware: if we go for expression(), then we will match comma expression...
+                arguments.add(assignment());
+            } while (match(COMMA));
+        }
+        Token rightPar = consume(RIGHT_PAREN, "Expect ')' after arguments");
+        return new Expr.Call(callee, leftPar, arguments, rightPar);
     }
 
     // Challenge 3, Chap 6 : Error production for missing first operand
     private Expr primaryOrError() {
-        if (peek(QUESTION, BANG_EQUAL, EQUAL_EQUAL, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL, PLUS, SLASH, STAR)) {
+        if (peek(QUESTION, BANG_EQUAL, EQUAL_EQUAL, GREATER, GREATER_EQUAL,
+                LESS, LESS_EQUAL, PLUS, PERCENT, SLASH, STAR)) {
             error(peek(), "Expect first operand (expression) before operator.");
             insert(new Token(ERROR, peek().lexeme(), peek().literal(), peek().line()));
             return ternary(); // retry to parse with added dummy first operand
