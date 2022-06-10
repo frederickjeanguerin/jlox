@@ -1,5 +1,6 @@
 package jlox;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -41,6 +42,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 value = supplier.get();
             return value;
         }
+    }
+
+    interface Callable {
+        int arity();
+        Object call(Interpreter interpreter, List<Object> arguments);
     }
 
     private static final Object UNINITIALIZED = new Object();
@@ -194,8 +200,22 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitCallExpr(Expr.Call expr) {
-        // TODO implement
-        return null;
+        Object callee = evaluate((expr.callee));
+        if (callee instanceof  Callable function) {
+            // Check arity
+            if (function.arity() != expr.arguments.size()) {
+                throw new RuntimeError(expr.leftPar,
+                        "Call expect %d arguments, but got %d.".formatted(function.arity(), expr.arguments.size()));
+            }
+            // Evaluate arguments
+            List<Object> arguments = new ArrayList<>();
+            for (var arg : expr.arguments) {
+                arguments.add(evaluate(arg));
+            }
+
+            return function.call(this, arguments);
+        }
+        throw new RuntimeError(expr.leftPar, "Can only call function and classes");
     }
 
     @Override
