@@ -152,3 +152,4 @@ Increment ¤ var i = 0; ++i; print i; ¤ 1
 Increment double ¤ var i = 0; ++i; ++i; i ¤ 2
 Increment prefix ¤ var i = 0; var a = ++i; print a + i; ¤ 2
 Decrement prefix ¤ var i = 0; var a = --i; print a + i; ¤ -2
+

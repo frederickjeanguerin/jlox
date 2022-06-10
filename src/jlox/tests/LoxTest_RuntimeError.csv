@@ -42,3 +42,14 @@ For loop local variable out of scope ¤ for (var a = 0; a < 5; a = a + 1); a ¤ 
 Increment boolean ¤ var i = true; ++i ¤ at 'i', expected 'Double' but got 'Boolean'
 Decrement string ¤ var str = "a"; --str ¤ at 'str', expected 'Double' but got 'String'
 Decrement nil ¤ var str = nil; --str ¤ at 'str', expected 'Double' but got 'Void'
+
+# Native functions
+Native clock takes 0 arg, not 1 ¤ clock(1) ¤ at '[(]', call expect 0 arguments, but got 1
+Native clock takes 0 arg, not 3 ¤ clock(1, 2, 3) ¤ at '[(]', call expect 0 arguments, but got 3
+Native lineSeparator takes 0 arg, not 2 ¤ lineSeparator(1, 2) ¤ at '[(]', call expect 0 arguments, but got 2
+Native exit takes 1 arg, not 0 ¤ exit() ¤ at '[(]', call expect 1 arguments, but got 0
+Native exit takes 1 arg, not 2 ¤ exit(1, 2) ¤ at '[(]', call expect 1 arguments, but got 2
+Native exit expect number arg ¤ exit(false) ¤ at '[(]', type mismatch, expected 'double', got 'boolean'
+Native exit expect number arg ¤ exit(""string"") ¤ at '[(]', type mismatch, expected 'double', got 'string'
+Native exit expect number arg ¤ exit(nil) ¤ at '[(]', type mismatch, expected 'double', got 'void'
+

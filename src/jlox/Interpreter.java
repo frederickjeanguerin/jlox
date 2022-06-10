@@ -17,12 +17,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     static class TypeMismatchError extends RuntimeError {
-        public TypeMismatchError(Token token, Class<?> expected, Class<?> given) {
+        public TypeMismatchError(Token token, Class<?> expected, Object given) {
             this(token, expected, given, "");
         }
-        public TypeMismatchError(Token token, Class<?> expected, Class<?> given, String moreInfo) {
+        public TypeMismatchError(Token token, Class<?> expected, Object given, String moreInfo) {
             super(token, "Type mismatch. Expected '%s' but got '%s'. %s"
-                    .formatted(expected.getSimpleName(), given.getSimpleName(), moreInfo));
+                    .formatted(expected.getSimpleName(),
+                            // TODO translate java types to lox types names
+                            (given == null ? Void.class : given.getClass()).getSimpleName(), moreInfo));
         }
     }
 
@@ -269,7 +271,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Object visitTypeCheckExpr(Expr.TypeCheck expr) {
         var value = evaluate(expr.value);
         if (!expr.type.isInstance(value))
-            throw new TypeMismatchError(expr.name, expr.type, value != null ? value.getClass(): Void.class);
+            throw new TypeMismatchError(expr.name, expr.type, value);
         return value;
     }
 

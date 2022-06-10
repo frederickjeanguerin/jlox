@@ -127,7 +127,7 @@ public class Environment {
                 public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
                     if (arguments.get(0) instanceof Double exitCode)
                         System.exit(exitCode.intValue());
-                    throw new Interpreter.TypeMismatchError(leftPar, Double.class, arguments.get(0).getClass(), "First argument.");
+                    throw new Interpreter.TypeMismatchError(leftPar, Double.class, arguments.get(0), "First argument.");
                 }
 
                 @Override
