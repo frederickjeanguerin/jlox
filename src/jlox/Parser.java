@@ -260,6 +260,22 @@ public class Parser {
             Expr right = unary();
             return new Expr.Unary(operator, right);
         }
+        // from ++i, transform to: i = i + 1
+        if (match(PLUS_PLUS, MINUS_MINUS)) {
+            Token operator = previous();
+            Expr lvalue = unary();
+            if (lvalue instanceof Expr.Variable var) {
+                Token name = var.name;
+                Token pseudoOperator = new Token(operator.type() == PLUS_PLUS ? PLUS : MINUS,
+                        operator.lexeme().substring(1), null, operator.line());
+                Expr value = new Expr.Binary(
+                        new Expr.TypeCheck(var, Double.class, name),
+                        pseudoOperator,
+                        new Expr.Literal(1.0));
+                return new Expr.Assign(name, value);
+            }
+            error(operator, "Invalid increment/decrement target.");
+        }
         return primaryOrError();
     }
 
@@ -306,7 +322,6 @@ public class Parser {
         return false;
     }
 
-    @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
     private Token consume(TokenType type, String message) {
         if (peek(type)) return advance();
         throw error(peek(), message);

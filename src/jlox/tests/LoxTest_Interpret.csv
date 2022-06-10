@@ -16,7 +16,7 @@ Simple number with block and line comment ¤ /* comment */ 456 // comment ¤ 456
 # Unary
 Unary minus ¤ -55 ¤ -55
 Unary bang ¤ !true ¤ false
-Unary multiple ¤ ---55 ¤ -55
+Unary multiple ¤ - - -55 ¤ -55
 
 # Truthiness
 Truthiness false is false ¤ !false ¤ true
@@ -146,3 +146,9 @@ Break from for ¤ for (var a = 9; a > 0; a = a - 1) { print a; if (a == 7) break
 # Continue
 # Continue in while ¤ var a = 1; while (a < 7) { a = a + 1; if (a % 2) continue; print a; } ¤ 2 4 6
 # Continue in for ¤ for (var a = 1; a < 7; a = a + 1) { if (a % 2) continue; print a; } ¤ 2 4 6
+
+# Increment & Decrement
+Increment ¤ var i = 0; ++i; print i; ¤ 1
+Increment double ¤ var i = 0; ++i; ++i; i ¤ 2
+Increment prefix ¤ var i = 0; var a = ++i; print a + i; ¤ 2
+Decrement prefix ¤ var i = 0; var a = --i; print a + i; ¤ -2

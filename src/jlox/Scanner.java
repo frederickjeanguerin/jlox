@@ -59,14 +59,8 @@ class Scanner {
             case '.':
                 addToken(DOT);
                 break;
-            case '-':
-                addToken(MINUS);
-                break;
             case '%':
                 addToken(PERCENT);
-                break;
-            case '+':
-                addToken(PLUS);
                 break;
             case '?':
                 addToken(QUESTION);
@@ -90,6 +84,12 @@ class Scanner {
                 break;
             case '>':
                 addToken(match('=') ? GREATER_EQUAL : GREATER);
+                break;
+            case '-':
+                addToken(match('-') ? MINUS_MINUS : MINUS);
+                break;
+            case '+':
+                addToken(match('+') ? PLUS_PLUS : PLUS);
                 break;
 
             // slash or comment

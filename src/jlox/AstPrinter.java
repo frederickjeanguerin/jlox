@@ -70,6 +70,7 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     @Override
     public Void visitGroupingExpr(Expr.Grouping expr) {
         parenthesize("group", expr.expression);
+        // append('('); append(expr.expression); append(')');
         return null;
     }
 
@@ -94,6 +95,12 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     @Override
     public Void visitTernaryExpr(Expr.Ternary expr) {
         parenthesize(expr.leftOp.lexeme() + expr.rightOp.lexeme(), expr.left, expr.middle, expr.right);
+        return null;
+    }
+
+    @Override
+    public Void visitTypeCheckExpr(Expr.TypeCheck expr) {
+        parenthesize(expr.type.getSimpleName()); append(expr.value);
         return null;
     }
 

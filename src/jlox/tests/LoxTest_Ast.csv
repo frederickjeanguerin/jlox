@@ -16,7 +16,7 @@ Simple number with block and line comment ¤ /* comment */ 456 // comment ¤ 456
 # Unary
 Unary minus ¤ -55 ¤ (- 55)
 Unary bang ¤ !true ¤ (! true)
-Unary multiple ¤ ---55 ¤ (- (- (- 55)))
+Unary multiple ¤ - - -55 ¤ (- (- (- 55)))
 
 # Factor
 Factor star ¤ 23 * 89 ¤ (* 23 89)
@@ -119,3 +119,7 @@ For loop missing body ¤ for(1; 2; 3) ; ¤ { 1; while (2) 3; }
 # Break and Continue
 Break ¤ while (1) break; ¤ while (1) break;
 Continue ¤ while (1) continue; ¤ while (1) { CC: continue; }
+
+# Increment & Decrement
+Increment ¤ ++i ¤ (= i (+ (Double)i 1))
+Decrement ¤ --i ¤ (= i (- (Double)i 1))

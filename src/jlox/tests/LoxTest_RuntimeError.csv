@@ -38,6 +38,7 @@ Undefined variable out of scope ¤ var b = 20; { var a = 10; } b + a ¤ undefine
 # For loop
 For loop local variable out of scope ¤ for (var a = 0; a < 5; a = a + 1); a ¤ undefined variable 'a'
 
-# Break & Continue
-# Break outside loop ¤ break; ¤ at 'break', break outside loop
-# Continue outside loop ¤ continue; ¤ at 'continue', continue outside loop
+# Increment & Decrement
+Increment boolean ¤ var i = true; ++i ¤ at 'i', expect type Double
+Decrement string ¤ var str = "a"; --str ¤ at 'str', expect type Double
+Decrement nil ¤ var str = nil; --str ¤ at 'str', expect type Double

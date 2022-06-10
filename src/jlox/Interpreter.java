@@ -229,6 +229,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return isTruthy(evaluate(expr.left)) ? evaluate(expr.middle) : evaluate(expr.right);
     }
 
+    @Override
+    public Object visitTypeCheckExpr(Expr.TypeCheck expr) {
+        var value = evaluate(expr.value);
+        if (!expr.type.isInstance(value))
+            throw new RuntimeError(expr.name,
+                    "Expect type " + expr.type.getSimpleName() + " ");
+        return value;
+    }
+
     private void execute(Stmt stmt) {
         stmt.visit(this);
     }

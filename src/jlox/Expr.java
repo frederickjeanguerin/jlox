@@ -10,6 +10,7 @@ abstract class Expr {
     R visitGroupingExpr(Grouping expr);
     R visitLiteralExpr(Literal expr);
     R visitTernaryExpr(Ternary expr);
+    R visitTypeCheckExpr(TypeCheck expr);
     R visitUnaryExpr(Unary expr);
     R visitVariableExpr(Variable expr);
   }
@@ -90,6 +91,23 @@ abstract class Expr {
     @Override
     <R> R visit(Visitor<R> visitor) {
       return visitor.visitTernaryExpr(this);
+    }
+  }
+
+  static class TypeCheck extends Expr {
+    final Expr value;
+    final Class<?> type;
+    final Token name;
+
+    TypeCheck ( Expr value, Class<?> type, Token name ) {
+      this.value = value;
+      this.type = type;
+      this.name = name;
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+      return visitor.visitTypeCheckExpr(this);
     }
   }
 
