@@ -25,20 +25,20 @@ Division by zero ¤ 1.5 % 0 ¤ at '%', division by zero
 # Unary operator
 Unary - ¤ - true ¤ at '-', right operand, number expected
 
-# Undefined variables
-Undefined variable in expression ¤ a ¤ at 'a', undefined variable 'a'
-Undefined variable in multiple expression ¤ b + a ¤ at 'b', undefined variable 'b'
-Undefined variable in assignment ¤ a = 10 ¤ at 'a', undefined variable 'a'
-Undefined variable in chained assignment ¤ var a; c = b = a = 10 ¤ at 'b', undefined variable 'b'
+# Undefined variables (symbols)
+Undefined symbol in expression ¤ a ¤ at 'a', undefined symbol 'a'
+Undefined symbol in multiple expression ¤ b + a ¤ at 'b', undefined symbol 'b'
+Undefined symbol in assignment ¤ a = 10 ¤ at 'a', undefined symbol 'a'
+Undefined symbol in chained assignment ¤ var a; c = b = a = 10 ¤ at 'b', undefined symbol 'b'
 Uninitialized variable ¤ var a; 10 + a + 5 ¤ at 'a', uninitialized variable 'a'
 
 # Block scope
-Undefined variable out of scope ¤ var b = 20; { var a = 10; } b + a ¤ undefined variable 'a'
+Undefined variable out of scope ¤ var b = 20; { var a = 10; } b + a ¤ undefined symbol 'a'
 
 # For loop
-For loop local variable out of scope ¤ for (var a = 0; a < 5; a = a + 1); a ¤ undefined variable 'a'
+For loop local variable out of scope ¤ for (var a = 0; a < 5; a = a + 1); a ¤ undefined symbol 'a'
 
 # Increment & Decrement
-Increment boolean ¤ var i = true; ++i ¤ at 'i', expect type Double
-Decrement string ¤ var str = "a"; --str ¤ at 'str', expect type Double
-Decrement nil ¤ var str = nil; --str ¤ at 'str', expect type Double
+Increment boolean ¤ var i = true; ++i ¤ at 'i', expected 'Double' but got 'Boolean'
+Decrement string ¤ var str = "a"; --str ¤ at 'str', expected 'Double' but got 'String'
+Decrement nil ¤ var str = nil; --str ¤ at 'str', expected 'Double' but got 'Void'

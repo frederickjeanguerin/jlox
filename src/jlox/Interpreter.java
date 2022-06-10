@@ -16,6 +16,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         public RuntimeError(Token token) { this(token, "Unhandled exception (internal error)"); }
     }
 
+    static class TypeMismatchError extends RuntimeError {
+        public TypeMismatchError(Token token, Class<?> expected, Class<?> given) {
+            this(token, expected, given, "");
+        }
+        public TypeMismatchError(Token token, Class<?> expected, Class<?> given, String moreInfo) {
+            super(token, "Type mismatch. Expected '%s' but got '%s'. %s"
+                    .formatted(expected.getSimpleName(), given.getSimpleName(), moreInfo));
+        }
+    }
+
     static class BreakException extends RuntimeError {
         public BreakException(Token token) {
             super(token);
@@ -46,7 +56,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     interface Callable {
         int arity();
-        Object call(Interpreter interpreter, List<Object> arguments);
+        Object call(Interpreter interpreter, Token leftPar, List<Object> arguments);
     }
 
     private static final Object UNINITIALIZED = new Object();
@@ -123,7 +133,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (stmt.initializer != null) {
             value = evaluate(stmt.initializer);
         }
-        environment.defineVar(stmt.name.lexeme(), value);
+        environment.defineSymbol(stmt.name.lexeme(), value);
         return null;
     }
 
@@ -149,7 +159,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitAssignExpr(Expr.Assign expr) {
         Object result = evaluate(expr.value);
-        environment.assignVar(expr.name, result);
+        environment.assignSymbol(expr.name, result);
         return result;
     }
 
@@ -213,7 +223,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 arguments.add(evaluate(arg));
             }
 
-            return function.call(this, arguments);
+            return function.call(this, expr.leftPar, arguments);
         }
         throw new RuntimeError(expr.leftPar, "Can only call function and classes");
     }
@@ -243,7 +253,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        var value = environment.getVar(expr.name);
+        var value = environment.getSymbol(expr.name);
         if (value == UNINITIALIZED) {
             throw new RuntimeError(expr.name, "Uninitialized variable '%s'".formatted(expr.name.lexeme()));
         }
@@ -259,8 +269,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Object visitTypeCheckExpr(Expr.TypeCheck expr) {
         var value = evaluate(expr.value);
         if (!expr.type.isInstance(value))
-            throw new RuntimeError(expr.name,
-                    "Expect type " + expr.type.getSimpleName() + " ");
+            throw new TypeMismatchError(expr.name, expr.type, value != null ? value.getClass(): Void.class);
         return value;
     }
 
