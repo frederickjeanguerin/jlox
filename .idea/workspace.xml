@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 10.3 (++) - Added readonly symbol in global scope.">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Added scope swapping.">
+      <change afterPath="$PROJECT_DIR$/src/jlox/LoxCallable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Environment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +66,9 @@
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
+    </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="jlox" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="jlox.tests" />
@@ -512,7 +517,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654936519894</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Added scope swapping.">
+      <created>1654938188024</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1654938188024</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -527,7 +539,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 8.3 - Interpreting variables (tested, but not for errors)" />
     <MESSAGE value="Chapter 8.4 - Variable assignment (tested)" />
     <MESSAGE value="REFACTORING test without newline" />
     <MESSAGE value="REFACTORING instanceof" />
@@ -552,6 +563,7 @@
     <MESSAGE value="Chapter 10.3 - Function declarations" />
     <MESSAGE value="Chapter 10.3 (+) - Added check for parameter redefinition." />
     <MESSAGE value="Chapter 10.3 (++) - Added readonly symbol in global scope." />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 10.3 (++) - Added readonly symbol in global scope." />
+    <MESSAGE value="Added scope swapping." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added scope swapping." />
   </component>
 </project>

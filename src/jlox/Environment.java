@@ -113,56 +113,9 @@ public class Environment {
         static final Scope GLOBAL = new Scope(null, true);
 
         static {
-            GLOBAL.define("clock", new Interpreter.Callable(){
-
-                @Override
-                public int arity() {
-                    return 0;
-                }
-
-                @Override
-                public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
-                    return System.currentTimeMillis()/1000.0;
-                }
-
-                @Override
-                public String toString() { return "<native fun: clock>"; }
-
-            });
-            GLOBAL.define("lineSeparator", new Interpreter.Callable(){
-
-                @Override
-                public int arity() {
-                    return 0;
-                }
-
-                @Override
-                public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
-                    return System.lineSeparator();
-                }
-
-                @Override
-                public String toString() { return "<native fun: lineSeparator>"; }
-
-            });
-            GLOBAL.define("exit", new Interpreter.Callable(){
-
-                @Override
-                public int arity() {
-                    return 1;
-                }
-
-                @Override
-                public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
-                    if (arguments.get(0) instanceof Double exitCode)
-                        System.exit(exitCode.intValue());
-                    throw new Interpreter.TypeMismatchError(leftPar, Double.class, arguments.get(0), "First argument.");
-                }
-
-                @Override
-                public String toString() { return "<native fun: exit>"; }
-
-            });
+            GLOBAL.define("clock", LoxCallable.Native.clock);
+            GLOBAL.define("lineSeparator", LoxCallable.Native.localSeparator);
+            GLOBAL.define("exit", LoxCallable.Native.exit);
         }
     }
 }

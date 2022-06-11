@@ -56,11 +56,6 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
-    interface Callable {
-        int arity();
-        Object call(Interpreter interpreter, Token leftPar, List<Object> arguments);
-    }
-
     private static final Object UNINITIALIZED = new Object();
     public final Stdio stdio = new Stdio();
     public final Environment environment = new Environment();
@@ -219,7 +214,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitCallExpr(Expr.Call expr) {
         Object callee = evaluate((expr.callee));
-        if (callee instanceof  Callable function) {
+        if (callee instanceof  LoxCallable function) {
             // Check arity
             if (function.arity() != expr.arguments.size()) {
                 throw new RuntimeError(expr.leftPar,
