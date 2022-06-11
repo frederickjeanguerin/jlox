@@ -71,21 +71,23 @@ class LoxTest {
     @ValueSource(strings = {
             "chap8-block-and-scope",
             "chap9-fibonacci",
+            "chap10-fibonacci-recursive"
     })
     void testSnapShot(String fileName) throws IOException {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");
         Path targetPath = Path.of("src/jlox/tests/snapshots/" + fileName + ".txt");
         var source = Files.readString(sourcePath);
         var result = Lox.testInterpreter(source);
-        assertEquals("", result.errors());
+        var given = result.prints() + "\n\n" + result.errors();
         if (Files.exists(targetPath)){
             var expected = Files.readString(targetPath);
-            assertLinesMatch(List.of(expected.split("\n")), List.of(result.prints().split("\n")));
+            assertLinesMatch(List.of(expected.split("\n")), List.of(given.split("\n")));
         } else {
-            Files.writeString(targetPath, result.prints());
+            Files.writeString(targetPath, given);
             //noinspection ConstantConditions
             Assumptions.assumeTrue(false, "new snapshot created");
         }
+        assertEquals("", result.errors());
     }
 
     private static String transform(String input) {

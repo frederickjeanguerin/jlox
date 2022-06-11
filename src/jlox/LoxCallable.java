@@ -25,6 +25,7 @@ interface LoxCallable {
         @Override
         public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
             var environment = interpreter.environment;
+            // TODO swap without new scope if no parameters or join parameters with locals in block
             environment.swap(scoping);
             try {
                 for (int i = 0; i < arity(); i++) {
@@ -32,6 +33,8 @@ interface LoxCallable {
                             declaration.parameters.get(i).lexeme(), arguments.get(i));
                 }
                 interpreter.executeBlock(declaration.body);
+            } catch (Interpreter.ReturnException ex) {
+                return ex.value;
             } finally {
                 environment.unswap();
             }

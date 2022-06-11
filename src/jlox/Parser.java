@@ -14,7 +14,11 @@ public class Parser {
     private final Stdio stdio;
     private final List<Token> tokens;
     private int current = 0;
+
+    // TODO push/pop loopNesting inside function body
     private int loopNesting = 0;
+
+    // TODO what happens inside functions ?
     private boolean hasContinue = false;
 
     Parser(List<Token> tokens, Stdio stdio) {
@@ -83,9 +87,19 @@ public class Parser {
         if (match(IF)) return ifStatement();
         if (match(LEFT_BRACE)) return new Stmt.Block(block());
         if (match(PRINT)) return printStatement();
+        if (match(RETURN)) return returnStatement();
         if (match(SEMICOLON)) return null;
         if (match(WHILE)) return whileStatement();
         return expressionStatement();
+    }
+
+    private Stmt returnStatement() {
+        // TODO check if return in function body
+        // TODO check for unreachable code
+        Token token = previous();
+        Expr value = peek(SEMICOLON)? null : expression();
+        semicolon();
+        return new Stmt.Return(token, value);
     }
 
     private Stmt keywordStatement() {
@@ -168,13 +182,16 @@ public class Parser {
 
     private Stmt loopBody() {
         loopNesting++;
-        var body = statement();
-        loopNesting--;
-        if (hasContinue) {
-            hasContinue = false;
-            body = new Stmt.ContinueCatcher(body);
+        try {
+            var body = statement();
+            if (hasContinue) {
+                hasContinue = false;
+                body = new Stmt.ContinueCatcher(body);
+            }
+            return body;
+        } finally {
+            loopNesting--;
         }
-        return body;
     }
 
     private Stmt ifStatement() {

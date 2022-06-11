@@ -1,0 +1,14 @@
+
+print "The first 11 fibonacci numbers:
+";
+
+fun fibonacci(n) {
+    return n <= 1
+        ? n
+        : fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+for (var i = 0; i <= 10; ++i ) {
+    print "fib(" + i + ") = " + fibonacci(i);
+    // print fibonacci(i);
+}

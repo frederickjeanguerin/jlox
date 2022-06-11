@@ -42,6 +42,11 @@ Term minus ¤ 6 - 8 ¤ -2
 Term and factor ¤ 11 + -4 * 5 ¤ -9
 Term multiple ¤ 1 - 2 + 3 - 4 ¤ -2
 
+# String concatenation
+Concat string + string ¤ ""alpha"" + "" beta"" ¤ alpha beta
+Concat string + number ¤ ""alpha"" + 2 ¤ alpha2
+Concat number + string ¤ 2 + ""alpha"" ¤ 2alpha
+
 # Comparison
 Comparison < ¤ 1 < 2 ¤ true
 Comparison < ¤ 2 < 2 ¤ false
@@ -168,3 +173,8 @@ Function with lexical scope 2 ¤ var x = 10; { var x = 20; fun inc_x(){ ++x; }; 
 Function capture local scope ¤ var fn; { var x = 10; fun xx() { print x; }; fn = xx; } fn(); ¤ 10
 Function closure ¤ var fn; fun close() { var x = 0; fun inc_x() {++x; print x;} fn = inc_x; } close(); fn(); fn(); close(); fn(); ¤ 1 2 1
 
+# Return
+Return simple value ¤ fun two() { return 2; }; two() ¤ 2
+Return complex value ¤ fun plus(a, b) { return a + b; }; plus(3, 4) ¤ 7
+Return no value ¤ fun four() { print 4; if (true) return; print 5; }; four(); ¤ 4
+Return recursive ¤ fun fact(n) { return n <= 2 ? n : n * fact(n - 1); } print fact(3); print fact(4); ¤ 6 24

@@ -40,6 +40,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
+    static class ReturnException extends RuntimeError {
+
+        final Object value;
+        public ReturnException(Token token, Object value) {
+            super(token);
+            this.value = value;
+        }
+    }
+
     static class Lazy {
         private static final Object Uninitialized = new Object();
         private final Supplier<Object> supplier;
@@ -132,6 +141,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitReturnStmt(Stmt.Return stmt) {
+        throw new ReturnException(stmt.keyword, stmt.value == null ? null : evaluate(stmt.value));
+    }
+
+    @Override
     public Void visitVarStmt(Stmt.Var stmt) {
         Object value = UNINITIALIZED;
         if (stmt.initializer != null) {
@@ -197,7 +211,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                     yield a + b;
                 // Challenge 7.2
                 if (left instanceof String || right.get() instanceof String)
-                    yield Stdio.stringify(left) + Stdio.stringify(right);
+                    yield Stdio.stringify(left) + Stdio.stringify(right.get());
                 throw new RuntimeError(expr.operator, "Operands cannot be added.");
             }
             case SLASH -> {
@@ -283,6 +297,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     void executeBlock(List<Stmt> statements) {
+        // TODO do not push if no local variable
         environment.push();
         try {
             for (var stmt : statements ) {

@@ -182,6 +182,17 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitReturnStmt(Stmt.Return stmt) {
+        append("return");
+        if (stmt.value != null) {
+            append(" ");
+            append(stmt.value);
+        }
+        eos();
+        return null;
+    }
+
+    @Override
     public Void visitVarStmt(Stmt.Var stmt) {
         append("var "); append(stmt.name.lexeme());
         if (stmt.initializer != null) {

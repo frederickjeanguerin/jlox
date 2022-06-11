@@ -137,4 +137,7 @@ Function 1 arg ¤ fun ff(aa){} ¤ fun ff(aa) { }
 Function many args ¤ fun fff ( aa, bb, cc ) {} ¤ fun fff(aa, bb, cc) { }
 Function 1 arg with body ¤ fun ff(aa){ print a ; } ¤ fun ff(aa) { print a; }
 
-
+# Return
+Function with return no expr ¤ fun pr(a) { print a; return; } ¤ fun pr(a) { print a; return; }
+Function with return expr ¤ fun plus(a, b) { return a + b; } ¤ fun plus(a, b) { return (+ a b); }
+Function with return expr ¤ fun plus(a, b) { var sum = a + b; return sum; } ¤ fun plus(a, b) { var sum = (+ a b); return sum; }
