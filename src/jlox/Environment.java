@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static jlox.Environment.Scope.Result.*;
+
 public class Environment {
 
     private Scope scope;
@@ -13,11 +15,11 @@ public class Environment {
     }
 
     void reset() {
-        scope = new Scope(Scope.global());
+        scope = new Scope(Scope.GLOBAL, false);
     }
 
     void push() {
-        scope = new Scope(scope);
+        scope = new Scope(scope, false);
     }
 
     void pop() {
@@ -33,7 +35,7 @@ public class Environment {
     Object getSymbol(Token symbol) {
         var name = symbol.lexeme();
         var value = scope.get(name);
-        if (value == Scope.NOT_FOUND) {
+        if (value == NOT_FOUND) {
             throw new Interpreter.RuntimeError(symbol, "Undefined symbol '%s'.".formatted(name));
         }
         return value;
@@ -41,19 +43,23 @@ public class Environment {
 
     void assignSymbol(Token symbol, Object value) {
         var name = symbol.lexeme();
-        if (!scope.modify(name, value)) {
-            throw new Interpreter.RuntimeError(symbol, "Undefined symbol '%s'.".formatted(name));
+        switch (scope.modify(name, value)) {
+            case MODIFIED -> {} // OK
+            case NOT_FOUND -> throw new Interpreter.RuntimeError(symbol, "Undefined symbol '%s'.".formatted(name));
+            case READ_ONLY -> throw new Interpreter.RuntimeError(symbol, "Readonly symbol '%s'.".formatted(name));
+            default -> throw new IllegalStateException("Unexpected value when assigning '%s'.".formatted(name));
         }
     }
 
-    private static class Scope {
+    static class Scope {
         private final Map<String, Object> symbols = new HashMap<>();
         private final Scope outer;
+        private final boolean readonly;
+        enum Result { NOT_FOUND, READ_ONLY, MODIFIED }
 
-        private static final Object NOT_FOUND = new Object();
-
-        private Scope(Scope outer) {
+        private Scope(Scope outer, boolean readonly) {
             this.outer = outer;
+            this.readonly = readonly;
         }
 
         void define(String name, Object value) {
@@ -70,21 +76,22 @@ public class Environment {
             return NOT_FOUND;
         }
 
-        boolean modify(String name, Object value) {
-            // Note: global symbols can be modified (should they be?)
+        Result modify(String name, Object value) {
             if (symbols.containsKey(name)) {
+                if (readonly) return READ_ONLY;
                 symbols.put(name, value);
-                return true;
+                return MODIFIED;
             }
             if (outer != null) {
                 return outer.modify(name, value);
             }
-            return false;
+            return NOT_FOUND;
         }
 
-        static Scope global() {
-            var scope = new Scope(null);
-            scope.define("clock", new Interpreter.Callable(){
+        static final Scope GLOBAL = new Scope(null, true);
+
+        static {
+            GLOBAL.define("clock", new Interpreter.Callable(){
 
                 @Override
                 public int arity() {
@@ -100,7 +107,7 @@ public class Environment {
                 public String toString() { return "<native fun: clock>"; }
 
             });
-            scope.define("lineSeparator", new Interpreter.Callable(){
+            GLOBAL.define("lineSeparator", new Interpreter.Callable(){
 
                 @Override
                 public int arity() {
@@ -116,7 +123,7 @@ public class Environment {
                 public String toString() { return "<native fun: lineSeparator>"; }
 
             });
-            scope.define("exit", new Interpreter.Callable(){
+            GLOBAL.define("exit", new Interpreter.Callable(){
 
                 @Override
                 public int arity() {
@@ -134,7 +141,6 @@ public class Environment {
                 public String toString() { return "<native fun: exit>"; }
 
             });
-            return scope;
         }
     }
 }
