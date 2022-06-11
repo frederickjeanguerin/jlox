@@ -3,12 +3,14 @@ package jlox;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
-import static jlox.Environment.Scope.Result.*;
+import static jlox.Environment.Result.*;
 
 public class Environment {
 
     private Scope scope;
+    private final Stack<Scope> swapped = new Stack<>();
 
     Environment() {
         reset();
@@ -25,6 +27,17 @@ public class Environment {
     void pop() {
         scope = scope.outer;
         assert scope.outer != null; // We don't want to pop to the global scope!
+    }
+
+    Scoping getScoping() { return new Scoping(scope); }
+
+    void swap(Scoping scoping) {
+        swapped.push(scope);
+        scope = scoping.scope;
+    }
+
+    void unswap() {
+        scope = swapped.pop();
     }
 
     void defineSymbol(String name, Object value) {
@@ -51,11 +64,20 @@ public class Environment {
         }
     }
 
-    static class Scope {
+    static class Scoping {
+        private final Scope scope;
+
+        Scoping(Scope scope) {
+            this.scope = scope;
+        }
+    }
+
+    enum Result { NOT_FOUND, READ_ONLY, MODIFIED }
+
+    private static class Scope {
         private final Map<String, Object> symbols = new HashMap<>();
         private final Scope outer;
         private final boolean readonly;
-        enum Result { NOT_FOUND, READ_ONLY, MODIFIED }
 
         private Scope(Scope outer, boolean readonly) {
             this.outer = outer;
