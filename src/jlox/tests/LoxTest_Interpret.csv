@@ -165,5 +165,6 @@ Function name ¤ fun bidule(){}; bidule ¤ <fun: bidule>
 Function name ¤ fun bidule(){}; print bidule; ¤ <fun: bidule>
 Function with lexical scope 1 ¤ var x = 10; fun inc_x(){ ++x; }; { var x = 20; inc_x(); print x; } print x; ¤ 20 11
 Function with lexical scope 2 ¤ var x = 10; { var x = 20; fun inc_x(){ ++x; }; inc_x(); print x; } print x; ¤ 21 10
-Function with local scope capture ¤ var fn; { var x = 10; fun xx() { print x; }; fn = xx; } fn(); ¤ 10
+Function capture local scope ¤ var fn; { var x = 10; fun xx() { print x; }; fn = xx; } fn(); ¤ 10
+Function closure ¤ var fn; fun close() { var x = 0; fun inc_x() {++x; print x;} fn = inc_x; } close(); fn(); fn(); close(); fn(); ¤ 1 2 1
 
