@@ -78,5 +78,4 @@ Function too many parameters ¤ fun f (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, 
 Function missing ) ¤ fun f(a {} ¤ at '[{]', expect '[)]' after parameters
 Function missing { ¤ fun f() } ¤ at '[}]', expect '[{]' before function body
 Function missing } ¤ fun f() { ¤ at end, expect '[}]' after
-
-
+Function parameter already used ¤ fun f(a, b, c, b, e, c){} ¤ at 'b', at 'c', parameter 'b' already defined
