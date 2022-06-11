@@ -1,7 +1,6 @@
 package jlox;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -31,12 +30,21 @@ public class Environment {
 
     Scoping getScoping() { return new Scoping(scope); }
 
+    /**
+     * Save the current scope and replace with a new one (function call).
+     * @param scoping from @getScoping
+     */
     void swap(Scoping scoping) {
         swapped.push(scope);
         scope = scoping.scope;
+        push();
     }
 
+    /**
+     * Call to reestablish a previously swapped scope.
+     */
     void unswap() {
+        pop();
         scope = swapped.pop();
     }
 

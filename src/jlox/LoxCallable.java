@@ -7,6 +7,42 @@ interface LoxCallable {
 
     Object call(Interpreter interpreter, Token leftPar, List<Object> arguments);
 
+    class Function implements LoxCallable {
+
+        private final Stmt.Function declaration;
+        private final Environment.Scoping scoping;
+
+        public Function(Stmt.Function declaration, Environment.Scoping scoping) {
+            this.declaration = declaration;
+            this.scoping = scoping;
+        }
+
+        @Override
+        public int arity() {
+            return declaration.parameters.size();
+        }
+
+        @Override
+        public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
+            var environment = interpreter.environment;
+            environment.swap(scoping);
+            try {
+                for (int i = 0; i < arity(); i++) {
+                    environment.defineSymbol(
+                            declaration.parameters.get(i).lexeme(), arguments.get(i));
+                }
+                interpreter.executeBlock(declaration.body);
+            } finally {
+                environment.unswap();
+            }
+            return null;
+        }
+
+        @Override
+        public String toString() { return "<fun: %s>".formatted(declaration.name.lexeme()); }
+
+    }
+
     class Native {
         static final LoxCallable clock = new LoxCallable(){
 

@@ -99,7 +99,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
-        // TODO Implement
+        var function = new LoxCallable.Function(stmt, environment.getScoping());
+        environment.defineSymbol(stmt.name.lexeme(), function);
         return null;
     }
 
@@ -276,11 +277,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         return value;
     }
 
-    private void execute(Stmt stmt) {
-        stmt.visit(this);
+    void execute(Stmt stmt) {
+        if (stmt != null)
+            stmt.visit(this);
     }
 
-    private void executeBlock(List<Stmt> statements) {
+    void executeBlock(List<Stmt> statements) {
         environment.push();
         try {
             for (var stmt : statements ) {
@@ -291,7 +293,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
-    private Object evaluate(Expr expr) {
+    Object evaluate(Expr expr) {
         return expr.visit(this);
     }
 
