@@ -150,6 +150,17 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitFunctionStmt(Stmt.Function stmt) {
+        append("fun "); append(stmt.name.lexeme()); append("(");
+        for (var token : stmt.parameters) {
+            if (token != stmt.parameters.get(0)) append(", ");
+            append(token.lexeme());
+        }
+        append (") "); append(new Stmt.Block(stmt.body));
+        return null;
+    }
+
+    @Override
     public Void visitIfStmt(Stmt.If stmt) {
         append("if ("); append(stmt.condition); append(") "); append(stmt.then);
         if (stmt.else_ != null) {

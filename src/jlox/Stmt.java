@@ -8,6 +8,7 @@ abstract class Stmt {
     R visitBlockStmt(Block stmt);
     R visitContinueCatcherStmt(ContinueCatcher stmt);
     R visitExpressionStmt(Expression stmt);
+    R visitFunctionStmt(Function stmt);
     R visitIfStmt(If stmt);
     R visitKeywordStmt(Keyword stmt);
     R visitLastStmt(Last stmt);
@@ -52,6 +53,23 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
       return visitor.visitExpressionStmt(this);
+    }
+  }
+
+  static class Function extends Stmt {
+    final Token name;
+    final List<Token> parameters;
+    final List<Stmt> body;
+
+    Function ( Token name, List<Token> parameters, List<Stmt> body ) {
+      this.name = name;
+      this.parameters = parameters;
+      this.body = body;
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+      return visitor.visitFunctionStmt(this);
     }
   }
 

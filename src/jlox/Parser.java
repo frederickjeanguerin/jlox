@@ -35,13 +35,32 @@ public class Parser {
 
     private Stmt declaration() {
         try {
-            if (match(VAR))
-                return varDeclaration();
+            if (match(FUN)) return funDeclaration("function");
+            if (match(VAR)) return varDeclaration();
             return statement();
         } catch (ParseError error) {
             synchronize();
             return null;
         }
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private Stmt funDeclaration(String kind) {
+        var name = consume(IDENTIFIER, "Expect %s name".formatted(kind));
+        consume(LEFT_PAREN, "Expect '(' after %s name".formatted(kind));
+        List<Token> parameters = new ArrayList<>();
+        if (!peek(RIGHT_PAREN)) {
+            do {
+                if (parameters.size() >= 255) {
+                    error(peek(), "%s can't have more than 255 parameters".formatted(kind));
+                }
+                parameters.add(consume(IDENTIFIER, "Expect parameter name"));
+            } while (match(COMMA));
+        }
+        consume(RIGHT_PAREN, "Expect ')' after parameters");
+        consume(LEFT_BRACE, "Expect '{' before %s body".formatted(kind));
+        var body = block();
+        return new Stmt.Function(name, parameters, body);
     }
 
     private Stmt varDeclaration() {

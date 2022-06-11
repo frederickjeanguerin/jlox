@@ -131,3 +131,10 @@ Call 1 arg ¤ func ( a ) ¤ func(a)
 Call 3 args ¤ func ( a, b, c ) ¤ func(a, b, c)
 Call call ¤ f () (a) (b, c, d) ¤ f()(a)(b, c, d)
 
+# Function declaration
+Function empty ¤ fun f(){} ¤ fun f() { }
+Function 1 arg ¤ fun ff(aa){} ¤ fun ff(aa) { }
+Function many args ¤ fun fff ( aa, bb, cc ) {} ¤ fun fff(aa, bb, cc) { }
+Function 1 arg with body ¤ fun ff(aa){ print a ; } ¤ fun ff(aa) { print a; }
+
+
