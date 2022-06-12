@@ -5,6 +5,17 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 abstract class Expr {
+  interface Visitor<R> {
+    R visitAssignExpr(Assign assign);
+    R visitBinaryExpr(Binary binary);
+    R visitCallExpr(Call call);
+    R visitGroupingExpr(Grouping grouping);
+    R visitLiteralExpr(Literal literal);
+    R visitTernaryExpr(Ternary ternary);
+    R visitTypeCheckExpr(TypeCheck typeCheck);
+    R visitUnaryExpr(Unary unary);
+    R visitVariableExpr(Variable variable);
+  }
   interface VoidVisitor {
     void visitAssignExpr(Assign assign);
     void visitBinaryExpr(Binary binary);
@@ -16,16 +27,25 @@ abstract class Expr {
     void visitUnaryExpr(Unary unary);
     void visitVariableExpr(Variable variable);
   }
-  interface Visitor<R> {
-    R visitAssignExpr(Assign assign);
-    R visitBinaryExpr(Binary binary);
-    R visitCallExpr(Call call);
-    R visitGroupingExpr(Grouping grouping);
-    R visitLiteralExpr(Literal literal);
-    R visitTernaryExpr(Ternary ternary);
-    R visitTypeCheckExpr(TypeCheck typeCheck);
-    R visitUnaryExpr(Unary unary);
-    R visitVariableExpr(Variable variable);
+  interface WalkVisitor {
+    void enterAssignExpr(Assign assign);
+    void leaveAssignExpr(Assign assign);
+    void enterBinaryExpr(Binary binary);
+    void leaveBinaryExpr(Binary binary);
+    void enterCallExpr(Call call);
+    void leaveCallExpr(Call call);
+    void enterGroupingExpr(Grouping grouping);
+    void leaveGroupingExpr(Grouping grouping);
+    void enterLiteralExpr(Literal literal);
+    void leaveLiteralExpr(Literal literal);
+    void enterTernaryExpr(Ternary ternary);
+    void leaveTernaryExpr(Ternary ternary);
+    void enterTypeCheckExpr(TypeCheck typeCheck);
+    void leaveTypeCheckExpr(TypeCheck typeCheck);
+    void enterUnaryExpr(Unary unary);
+    void leaveUnaryExpr(Unary unary);
+    void enterVariableExpr(Variable variable);
+    void leaveVariableExpr(Variable variable);
   }
 
   static class Assign extends Expr {
@@ -40,6 +60,16 @@ abstract class Expr {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitAssignExpr(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterAssignExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveAssignExpr(this);
     }
 
     @Override
@@ -62,6 +92,16 @@ abstract class Expr {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitBinaryExpr(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterBinaryExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveBinaryExpr(this);
     }
 
     @Override
@@ -89,6 +129,16 @@ abstract class Expr {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterCallExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveCallExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitCallExpr(this);
     }
@@ -107,6 +157,16 @@ abstract class Expr {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterGroupingExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveGroupingExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitGroupingExpr(this);
     }
@@ -122,6 +182,16 @@ abstract class Expr {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitLiteralExpr(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterLiteralExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveLiteralExpr(this);
     }
 
     @Override
@@ -151,6 +221,16 @@ abstract class Expr {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterTernaryExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveTernaryExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitTernaryExpr(this);
     }
@@ -170,6 +250,16 @@ abstract class Expr {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitTypeCheckExpr(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterTypeCheckExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveTypeCheckExpr(this);
     }
 
     @Override
@@ -193,6 +283,16 @@ abstract class Expr {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterUnaryExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveUnaryExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitUnaryExpr(this);
     }
@@ -211,6 +311,16 @@ abstract class Expr {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterVariableExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveVariableExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitVariableExpr(this);
     }
@@ -220,4 +330,7 @@ abstract class Expr {
 
     @SuppressWarnings("UnusedReturnValue")
     abstract <R> R visit(Visitor<R> visitor);
+
+    abstract void enter(WalkVisitor visitor);
+    abstract void leave(WalkVisitor visitor);
 }

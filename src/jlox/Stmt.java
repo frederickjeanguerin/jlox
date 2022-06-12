@@ -5,19 +5,6 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 abstract class Stmt {
-  interface VoidVisitor {
-    void visitBlockStmt(Block stmt);
-    void visitContinueCatcherStmt(ContinueCatcher stmt);
-    void visitExpressionStmt(Expression stmt);
-    void visitFunctionStmt(Function stmt);
-    void visitIfStmt(If stmt);
-    void visitKeywordStmt(Keyword stmt);
-    void visitLastStmt(Last stmt);
-    void visitPrintStmt(Print stmt);
-    void visitReturnStmt(Return stmt);
-    void visitVarStmt(Var stmt);
-    void visitWhileStmt(While stmt);
-  }
   interface Visitor<R> {
     R visitBlockStmt(Block stmt);
     R visitContinueCatcherStmt(ContinueCatcher stmt);
@@ -31,6 +18,43 @@ abstract class Stmt {
     R visitVarStmt(Var stmt);
     R visitWhileStmt(While stmt);
   }
+  interface VoidVisitor {
+    void visitBlockStmt(Block stmt);
+    void visitContinueCatcherStmt(ContinueCatcher stmt);
+    void visitExpressionStmt(Expression stmt);
+    void visitFunctionStmt(Function stmt);
+    void visitIfStmt(If stmt);
+    void visitKeywordStmt(Keyword stmt);
+    void visitLastStmt(Last stmt);
+    void visitPrintStmt(Print stmt);
+    void visitReturnStmt(Return stmt);
+    void visitVarStmt(Var stmt);
+    void visitWhileStmt(While stmt);
+  }
+  interface WalkVisitor {
+    void enterBlockStmt(Block stmt);
+    void leaveBlockStmt(Block stmt);
+    void enterContinueCatcherStmt(ContinueCatcher stmt);
+    void leaveContinueCatcherStmt(ContinueCatcher stmt);
+    void enterExpressionStmt(Expression stmt);
+    void leaveExpressionStmt(Expression stmt);
+    void enterFunctionStmt(Function stmt);
+    void leaveFunctionStmt(Function stmt);
+    void enterIfStmt(If stmt);
+    void leaveIfStmt(If stmt);
+    void enterKeywordStmt(Keyword stmt);
+    void leaveKeywordStmt(Keyword stmt);
+    void enterLastStmt(Last stmt);
+    void leaveLastStmt(Last stmt);
+    void enterPrintStmt(Print stmt);
+    void leavePrintStmt(Print stmt);
+    void enterReturnStmt(Return stmt);
+    void leaveReturnStmt(Return stmt);
+    void enterVarStmt(Var stmt);
+    void leaveVarStmt(Var stmt);
+    void enterWhileStmt(While stmt);
+    void leaveWhileStmt(While stmt);
+  }
 
   static class Block extends Stmt {
     final List<Stmt> statements;
@@ -42,6 +66,16 @@ abstract class Stmt {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitBlockStmt(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterBlockStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveBlockStmt(this);
     }
 
     @Override
@@ -63,6 +97,16 @@ abstract class Stmt {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterContinueCatcherStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveContinueCatcherStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitContinueCatcherStmt(this);
     }
@@ -78,6 +122,16 @@ abstract class Stmt {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitExpressionStmt(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterExpressionStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveExpressionStmt(this);
     }
 
     @Override
@@ -103,6 +157,16 @@ abstract class Stmt {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterFunctionStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveFunctionStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitFunctionStmt(this);
     }
@@ -125,6 +189,16 @@ abstract class Stmt {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterIfStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveIfStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitIfStmt(this);
     }
@@ -140,6 +214,16 @@ abstract class Stmt {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitKeywordStmt(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterKeywordStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveKeywordStmt(this);
     }
 
     @Override
@@ -161,6 +245,16 @@ abstract class Stmt {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterLastStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveLastStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitLastStmt(this);
     }
@@ -176,6 +270,16 @@ abstract class Stmt {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitPrintStmt(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterPrintStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leavePrintStmt(this);
     }
 
     @Override
@@ -199,6 +303,16 @@ abstract class Stmt {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterReturnStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveReturnStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitReturnStmt(this);
     }
@@ -216,6 +330,16 @@ abstract class Stmt {
     @Override
     void voidVisit(VoidVisitor visitor) {
         visitor.visitVarStmt(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterVarStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveVarStmt(this);
     }
 
     @Override
@@ -239,6 +363,16 @@ abstract class Stmt {
     }
 
     @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterWhileStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveWhileStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitWhileStmt(this);
     }
@@ -248,4 +382,7 @@ abstract class Stmt {
 
     @SuppressWarnings("UnusedReturnValue")
     abstract <R> R visit(Visitor<R> visitor);
+
+    abstract void enter(WalkVisitor visitor);
+    abstract void leave(WalkVisitor visitor);
 }

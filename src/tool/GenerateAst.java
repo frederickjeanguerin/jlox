@@ -56,8 +56,9 @@ public class GenerateAst {
                     """.formatted(baseName)
             );
 
-            defineVisitor(writer, baseName, types, true, nameFromClassName);
-            defineVisitor(writer, baseName, types, false, nameFromClassName);
+            defineVisitor(writer, baseName, types, VisitorType.Return, nameFromClassName);
+            defineVisitor(writer, baseName, types, VisitorType.Void, nameFromClassName);
+            defineVisitor(writer, baseName, types, VisitorType.Walk, nameFromClassName);
 
             for (String type : types) {
                 if (type == null || type.equals("") || type.startsWith("//")) continue;
@@ -74,6 +75,9 @@ public class GenerateAst {
 
                         @SuppressWarnings("UnusedReturnValue")
                         abstract <R> R visit(Visitor<R> visitor);
+                        
+                        abstract void enter(WalkVisitor visitor);
+                        abstract void leave(WalkVisitor visitor);
                     }
                     """
             );
@@ -107,7 +111,17 @@ public class GenerateAst {
                     
                     @Override
                     void voidVisit(VoidVisitor visitor) {
-                        visitor.visit%s%s(this);
+                        visitor.visit%1$s%2$s(this);
+                    }
+
+                    @Override
+                    void enter(WalkVisitor visitor) {
+                        visitor.enter%1$s%2$s(this);
+                    }
+
+                    @Override
+                    void leave(WalkVisitor visitor) {
+                        visitor.leave%1$s%2$s(this);
                     }
 
                     @Override
@@ -121,24 +135,31 @@ public class GenerateAst {
         writer.println("  }");
     }
 
+    private enum VisitorType { Return, Void, Walk }
+
     private static void defineVisitor(PrintWriter writer,
                                       String baseName,
                                       List<String> types,
-                                      boolean returnVoid,
+                                      VisitorType visitorType,
                                       boolean nameFromClassName) {
         // Interface start
-        writer.println(returnVoid
-                ? "  interface VoidVisitor {"
-                : "  interface Visitor<R> {");
+        writer.println( "  interface " + switch (visitorType) {
+            case Return -> "Visitor<R>";
+            case Void -> "VoidVisitor";
+            case Walk -> "WalkVisitor";
+        } + " {");
 
         // Methods
         for (String type : types) {
             if (type == null || type.equals("") || type.startsWith("//")) continue;
             String className = type.split(":")[0].trim();
-            writer.println(
-                    (returnVoid ? "    void visit%s%s(%s %s);" : "    R visit%s%s(%s %s);")
-                            .formatted(className, baseName, className,
-                                    uncapitalize(nameFromClassName ? className : baseName)));
+            String methods = switch (visitorType) {
+                case Return -> "    R visit%s%s(%s %s);";
+                case Void -> "    void visit%s%s(%s %s);";
+                case Walk -> "    void enter%1$s%2$s(%3$s %4$s);\n    void leave%1$s%2$s(%3$s %4$s);";
+            };
+            writer.println(methods.formatted(className, baseName, className,
+                        uncapitalize(nameFromClassName ? className : baseName)));
         }
 
         // Interface end
