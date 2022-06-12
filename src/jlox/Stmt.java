@@ -3,7 +3,21 @@
 package jlox;
 import java.util.List;
 
+@SuppressWarnings("unused")
 abstract class Stmt {
+  interface VoidVisitor {
+    void visitBlockStmt(Block stmt);
+    void visitContinueCatcherStmt(ContinueCatcher stmt);
+    void visitExpressionStmt(Expression stmt);
+    void visitFunctionStmt(Function stmt);
+    void visitIfStmt(If stmt);
+    void visitKeywordStmt(Keyword stmt);
+    void visitLastStmt(Last stmt);
+    void visitPrintStmt(Print stmt);
+    void visitReturnStmt(Return stmt);
+    void visitVarStmt(Var stmt);
+    void visitWhileStmt(While stmt);
+  }
   interface Visitor<R> {
     R visitBlockStmt(Block stmt);
     R visitContinueCatcherStmt(ContinueCatcher stmt);
@@ -26,8 +40,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitBlockStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitBlockStmt(this);
+        return visitor.visitBlockStmt(this);
     }
   }
 
@@ -39,8 +58,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitContinueCatcherStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitContinueCatcherStmt(this);
+        return visitor.visitContinueCatcherStmt(this);
     }
   }
 
@@ -52,8 +76,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitExpressionStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitExpressionStmt(this);
+        return visitor.visitExpressionStmt(this);
     }
   }
 
@@ -69,8 +98,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitFunctionStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitFunctionStmt(this);
+        return visitor.visitFunctionStmt(this);
     }
   }
 
@@ -86,8 +120,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitIfStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitIfStmt(this);
+        return visitor.visitIfStmt(this);
     }
   }
 
@@ -99,8 +138,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitKeywordStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitKeywordStmt(this);
+        return visitor.visitKeywordStmt(this);
     }
   }
 
@@ -112,8 +156,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitLastStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitLastStmt(this);
+        return visitor.visitLastStmt(this);
     }
   }
 
@@ -125,8 +174,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitPrintStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitPrintStmt(this);
+        return visitor.visitPrintStmt(this);
     }
   }
 
@@ -140,8 +194,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitReturnStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitReturnStmt(this);
+        return visitor.visitReturnStmt(this);
     }
   }
 
@@ -155,8 +214,13 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitVarStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitVarStmt(this);
+        return visitor.visitVarStmt(this);
     }
   }
 
@@ -170,10 +234,17 @@ abstract class Stmt {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitWhileStmt(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitWhileStmt(this);
+        return visitor.visitWhileStmt(this);
     }
   }
+
+    abstract void voidVisit(VoidVisitor visitor);
 
     @SuppressWarnings("UnusedReturnValue")
     abstract <R> R visit(Visitor<R> visitor);

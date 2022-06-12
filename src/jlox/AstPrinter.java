@@ -4,7 +4,7 @@ import java.util.List;
 
 import static jlox.TokenType.COMMA;
 
-public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
+public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     private final String EOL;
     private final StringBuilder sb = new StringBuilder();
@@ -18,7 +18,7 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     private void append(Expr expr) {
-        expr.visit(this);
+        expr.voidVisit(this);
     }
 
     private void eol() {
@@ -31,7 +31,7 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
     private void append(Stmt stmt) {
         if (stmt != null)
-            stmt.visit(this);
+            stmt.voidVisit(this);
         else
             append(';');
     }
@@ -57,68 +57,59 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     @Override
-    public Void visitAssignExpr(Expr.Assign expr) {
+    public void visitAssignExpr(Expr.Assign expr) {
         append("(= ");append(expr.name.lexeme());append(" ");
         append(expr.value);append(")");
-        return null;
     }
 
     @Override
-    public Void visitBinaryExpr(Expr.Binary expr) {
+    public void visitBinaryExpr(Expr.Binary expr) {
         if (expr.operator.type() == COMMA) {
             append(expr.left); append(", "); append(expr.right);
         } else {
             parenthesize(expr.operator.lexeme(), expr.left, expr.right);
         }
-        return null;
     }
 
     @Override
-    public Void visitCallExpr(Expr.Call expr) {
+    public void visitCallExpr(Expr.Call expr) {
         append(expr.callee); append("(");
         for (var arg : expr.arguments) {
             if (arg != expr.arguments.get(0)) append(", ");
             append(arg);
         }
         append(')');
-        return null;
     }
 
     @Override
-    public Void visitGroupingExpr(Expr.Grouping expr) {
+    public void visitGroupingExpr(Expr.Grouping expr) {
         parenthesize("group", expr.expression);
         // append('('); append(expr.expression); append(')');
-        return null;
     }
 
     @Override
-    public Void visitLiteralExpr(Expr.Literal expr) {
+    public void visitLiteralExpr(Expr.Literal expr) {
         append(Stdio.stringify(expr.value));
-        return null;
     }
 
     @Override
-    public Void visitUnaryExpr(Expr.Unary expr) {
+    public void visitUnaryExpr(Expr.Unary expr) {
         parenthesize(expr.operator.lexeme(), expr.right);
-        return null;
     }
 
     @Override
-    public Void visitVariableExpr(Expr.Variable expr) {
+    public void visitVariableExpr(Expr.Variable expr) {
         append(expr.name.lexeme());
-        return null;
     }
 
     @Override
-    public Void visitTernaryExpr(Expr.Ternary expr) {
+    public void visitTernaryExpr(Expr.Ternary expr) {
         parenthesize(expr.leftOp.lexeme() + expr.rightOp.lexeme(), expr.left, expr.middle, expr.right);
-        return null;
     }
 
     @Override
-    public Void visitTypeCheckExpr(Expr.TypeCheck expr) {
+    public void visitTypeCheckExpr(Expr.TypeCheck expr) {
         parenthesize(expr.type.getSimpleName()); append(expr.value);
-        return null;
     }
 
     private void parenthesize(String name, Expr... exprs) {
@@ -130,88 +121,77 @@ public class AstPrinter implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     }
 
     @Override
-    public Void visitBlockStmt(Stmt.Block stmt) {
+    public void visitBlockStmt(Stmt.Block stmt) {
         append('{'); eol();
         append(stmt.statements);
         append('}'); eol();
-        return null;
     }
 
     @Override
-    public Void visitContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
+    public void visitContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
         append("{ CC: "); append(stmt.statement); append("}");
-        return null;
     }
 
     @Override
-    public Void visitExpressionStmt(Stmt.Expression stmt) {
+    public void visitExpressionStmt(Stmt.Expression stmt) {
         append(stmt.expression); eos();
-        return null;
     }
 
     @Override
-    public Void visitFunctionStmt(Stmt.Function stmt) {
+    public void visitFunctionStmt(Stmt.Function stmt) {
         append("fun "); append(stmt.name.lexeme()); append("(");
         for (var token : stmt.parameters) {
             if (token != stmt.parameters.get(0)) append(", ");
             append(token.lexeme());
         }
         append (") "); append(new Stmt.Block(stmt.body));
-        return null;
     }
 
     @Override
-    public Void visitIfStmt(Stmt.If stmt) {
+    public void visitIfStmt(Stmt.If stmt) {
         append("if ("); append(stmt.condition); append(") "); append(stmt.then);
         if (stmt.else_ != null) {
             append("else "); append(stmt.else_);
         }
-        return null;
     }
 
     @Override
-    public Void visitKeywordStmt(Stmt.Keyword stmt) {
+    public void visitKeywordStmt(Stmt.Keyword stmt) {
         append(stmt.keyword.lexeme()); eos();
-        return null;
     }
 
     @Override
-    public Void visitPrintStmt(Stmt.Print stmt) {
+    public void visitPrintStmt(Stmt.Print stmt) {
         append("print "); append(stmt.expression); eos();
-        return null;
     }
 
     @Override
-    public Void visitReturnStmt(Stmt.Return stmt) {
+    public void visitReturnStmt(Stmt.Return stmt) {
         append("return");
         if (stmt.value != null) {
             append(" ");
             append(stmt.value);
         }
         eos();
-        return null;
     }
 
     @Override
-    public Void visitVarStmt(Stmt.Var stmt) {
+    public void visitVarStmt(Stmt.Var stmt) {
         append("var "); append(stmt.name.lexeme());
         if (stmt.initializer != null) {
             append(" = "); append(stmt.initializer);
         }
         eos();
-        return null;
     }
 
     @Override
-    public Void visitWhileStmt(Stmt.While stmt) {
+    public void visitWhileStmt(Stmt.While stmt) {
         append("while ("); append(stmt.condition); append(") "); append(stmt.body);
-        return null;
     }
 
     @Override
-    public Void visitLastStmt(Stmt.Last stmt) {
+    public void visitLastStmt(Stmt.Last stmt) {
         append(stmt.expression); append(' ');
-        return null;
     }
 
     public static void main(String[] args) {

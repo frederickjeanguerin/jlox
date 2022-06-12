@@ -20,12 +20,12 @@ public class GenerateAst {
         // Generate expressions
         Path exprPath = Path.of("src/tool/expressions.txt");
         var expressions = Files.readString(exprPath).split("\n");
-        defineAst(outputDir, "Expr", List.of(expressions));
+        defineAst(outputDir, "Expr", List.of(expressions), true);
 
         // generate statements
         Path stmtPath = Path.of("src/tool/statements.txt");
         var statements = Files.readString(stmtPath).split("\n");
-        defineAst(outputDir, "Stmt", List.of(statements));
+        defineAst(outputDir, "Stmt", List.of(statements), false);
     }
 
     @SuppressWarnings("unused")
@@ -35,8 +35,13 @@ public class GenerateAst {
         System.out.println("Current absolute path is: " + s);
     }
 
+    private static String uncapitalize(String string) {
+        return Character.toLowerCase(string.charAt(0)) + string.substring(1);
+    }
+
     @SuppressWarnings("SameParameterValue") // baseName
-    private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException {
+    private static void defineAst(String outputDir, String baseName, List<String> types, boolean nameFromClassName)
+            throws IOException {
         String path = outputDir + '/' + baseName + ".java";
         try (var writer = new PrintWriter(path, StandardCharsets.UTF_8)) {
             writer.print(
@@ -45,12 +50,14 @@ public class GenerateAst {
                                     
                     package jlox;
                     import java.util.List;
-                                    
+                                        
+                    @SuppressWarnings("unused")
                     abstract class %s {
                     """.formatted(baseName)
             );
 
-            defineVisitor(writer, baseName, types);
+            defineVisitor(writer, baseName, types, true, nameFromClassName);
+            defineVisitor(writer, baseName, types, false, nameFromClassName);
 
             for (String type : types) {
                 if (type == null || type.equals("") || type.startsWith("//")) continue;
@@ -63,14 +70,14 @@ public class GenerateAst {
             writer.print(
                     """
                               
+                        abstract void voidVisit(VoidVisitor visitor);
+
                         @SuppressWarnings("UnusedReturnValue")
                         abstract <R> R visit(Visitor<R> visitor);
                     }
                     """
             );
         }
-
-
     }
 
     private static void defineType(PrintWriter writer, String baseName, String className, String fields) {
@@ -95,13 +102,17 @@ public class GenerateAst {
         // > Constructor end
         writer.println("    }");
 
-        // Visit override method
         writer.print(
                 """
                     
                     @Override
+                    void voidVisit(VoidVisitor visitor) {
+                        visitor.visit%s%s(this);
+                    }
+
+                    @Override
                     <R> R visit(Visitor<R> visitor) {
-                      return visitor.visit%s%s(this);
+                        return visitor.visit%1$s%2$s(this);
                     }
                 """.formatted(className, baseName)
         );
@@ -110,20 +121,27 @@ public class GenerateAst {
         writer.println("  }");
     }
 
-    private static void defineVisitor(PrintWriter writer, String baseName, List<String> types) {
+    private static void defineVisitor(PrintWriter writer,
+                                      String baseName,
+                                      List<String> types,
+                                      boolean returnVoid,
+                                      boolean nameFromClassName) {
         // Interface start
-        writer.println("  interface Visitor<R> {");
+        writer.println(returnVoid
+                ? "  interface VoidVisitor {"
+                : "  interface Visitor<R> {");
 
         // Methods
         for (String type : types) {
             if (type == null || type.equals("") || type.startsWith("//")) continue;
             String className = type.split(":")[0].trim();
-            writer.println("    R visit%s%s(%s %s);"
-                    .formatted(className, baseName, className, baseName.toLowerCase()));
+            writer.println(
+                    (returnVoid ? "    void visit%s%s(%s %s);" : "    R visit%s%s(%s %s);")
+                            .formatted(className, baseName, className,
+                                    uncapitalize(nameFromClassName ? className : baseName)));
         }
 
         // Interface end
         writer.println("  }");
     }
-
 }

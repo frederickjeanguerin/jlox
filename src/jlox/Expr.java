@@ -3,17 +3,29 @@
 package jlox;
 import java.util.List;
 
+@SuppressWarnings("unused")
 abstract class Expr {
+  interface VoidVisitor {
+    void visitAssignExpr(Assign assign);
+    void visitBinaryExpr(Binary binary);
+    void visitCallExpr(Call call);
+    void visitGroupingExpr(Grouping grouping);
+    void visitLiteralExpr(Literal literal);
+    void visitTernaryExpr(Ternary ternary);
+    void visitTypeCheckExpr(TypeCheck typeCheck);
+    void visitUnaryExpr(Unary unary);
+    void visitVariableExpr(Variable variable);
+  }
   interface Visitor<R> {
-    R visitAssignExpr(Assign expr);
-    R visitBinaryExpr(Binary expr);
-    R visitCallExpr(Call expr);
-    R visitGroupingExpr(Grouping expr);
-    R visitLiteralExpr(Literal expr);
-    R visitTernaryExpr(Ternary expr);
-    R visitTypeCheckExpr(TypeCheck expr);
-    R visitUnaryExpr(Unary expr);
-    R visitVariableExpr(Variable expr);
+    R visitAssignExpr(Assign assign);
+    R visitBinaryExpr(Binary binary);
+    R visitCallExpr(Call call);
+    R visitGroupingExpr(Grouping grouping);
+    R visitLiteralExpr(Literal literal);
+    R visitTernaryExpr(Ternary ternary);
+    R visitTypeCheckExpr(TypeCheck typeCheck);
+    R visitUnaryExpr(Unary unary);
+    R visitVariableExpr(Variable variable);
   }
 
   static class Assign extends Expr {
@@ -26,8 +38,13 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitAssignExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitAssignExpr(this);
+        return visitor.visitAssignExpr(this);
     }
   }
 
@@ -43,8 +60,13 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitBinaryExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitBinaryExpr(this);
+        return visitor.visitBinaryExpr(this);
     }
   }
 
@@ -62,8 +84,13 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitCallExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitCallExpr(this);
+        return visitor.visitCallExpr(this);
     }
   }
 
@@ -75,8 +102,13 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitGroupingExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitGroupingExpr(this);
+        return visitor.visitGroupingExpr(this);
     }
   }
 
@@ -88,8 +120,13 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitLiteralExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitLiteralExpr(this);
+        return visitor.visitLiteralExpr(this);
     }
   }
 
@@ -109,8 +146,13 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitTernaryExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitTernaryExpr(this);
+        return visitor.visitTernaryExpr(this);
     }
   }
 
@@ -126,8 +168,13 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitTypeCheckExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitTypeCheckExpr(this);
+        return visitor.visitTypeCheckExpr(this);
     }
   }
 
@@ -141,8 +188,13 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitUnaryExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitUnaryExpr(this);
+        return visitor.visitUnaryExpr(this);
     }
   }
 
@@ -154,10 +206,17 @@ abstract class Expr {
     }
 
     @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitVariableExpr(this);
+    }
+
+    @Override
     <R> R visit(Visitor<R> visitor) {
-      return visitor.visitVariableExpr(this);
+        return visitor.visitVariableExpr(this);
     }
   }
+
+    abstract void voidVisit(VoidVisitor visitor);
 
     @SuppressWarnings("UnusedReturnValue")
     abstract <R> R visit(Visitor<R> visitor);
