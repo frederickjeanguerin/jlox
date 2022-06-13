@@ -50,9 +50,23 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
         sb.append(c);
     }
 
+    private void trimend() {
+        while (sb.length() > 0 && sb.charAt(sb.length() - 1) == ' ') {
+            sb.setLength(sb.length() - 1);
+        }
+    }
+
     public String print(List<Stmt> statements) {
         sb.setLength(0);
         append(statements);
+        trimend();
+        return sb.toString();
+    }
+
+    public String print(Stmt statement) {
+        sb.setLength(0);
+        append(statement);
+        trimend();
         return sb.toString();
     }
 

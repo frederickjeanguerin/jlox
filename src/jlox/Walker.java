@@ -3,6 +3,7 @@ package jlox;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
 
@@ -16,6 +17,8 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
         void enterSequence(List<Stmt> stmts);
         void leaveSequence(List<Stmt> stmts);
 
+        void enterStmt(Stmt stmt);
+        void leaveStmt(Stmt stmt);
         void InjectWalker(WalkerData walker);
     }
 
@@ -23,6 +26,9 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
     private final List<AstVisitor> reversedVisitors;
 
     private final Stdio stdio;
+    private int scopeDepth = 0;
+
+    private final Stack<Stmt> stmtStack = new Stack<>();
 
     public Walker(List<AstVisitor> visitors, Stdio stdio) {
         this.visitors = visitors;
@@ -49,23 +55,46 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
 
     public void walk(Stmt stmt) {
         if (stmt != null) {
-            for (var visitor : visitors) visitor.enter(stmt);
+            for (var visitor : visitors)  {
+                visitor.enterStmt(stmt);
+                visitor.enter(stmt);
+                stmtStack.push(stmt);
+            }
             stmt.voidVisit(this);
-            for (var visitor : reversedVisitors) visitor.leave(stmt);
+            for (var visitor : reversedVisitors)  {
+                stmtStack.pop();
+                visitor.leave(stmt);
+                visitor.leaveStmt(stmt);
+            }
         }
     }
 
     public void walk(List<Stmt> stmts) {
         if (stmts != null) {
+            scopeDepth ++;
             for (var visitor : visitors) visitor.enterSequence(stmts);
             for (var stmt : stmts) walk(stmt);
             for (var visitor : reversedVisitors) visitor.leaveSequence(stmts);
+            scopeDepth--;
         }
     }
 
     @Override
     public Stdio stdio() {
         return stdio;
+    }
+
+    @Override
+    public int scopeDepth() {
+        return scopeDepth;
+    }
+
+    @Override
+    public Stmt parentStmt(int depth) {
+        assert depth >= 0;
+        if (stmtStack.size() > depth)
+            return stmtStack.get(stmtStack.size() - 1 - depth);
+        return null;
     }
 
     @Override

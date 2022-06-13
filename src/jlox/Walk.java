@@ -28,6 +28,9 @@ public class Walk implements Walker.AstVisitor {
         private WalkerData walker;
 
         protected Stdio stdio() { return walker.stdio(); }
+        protected int scopeDepth() { return walker.scopeDepth(); }
+        @SuppressWarnings("SameParameterValue")
+        protected Stmt parentStmt(int depth) { return walker.parentStmt(depth); }
 
         @Override
         public void InjectWalker(WalkerData walker) { this.walker = walker; }
@@ -42,6 +45,16 @@ public class Walk implements Walker.AstVisitor {
 
     @Override
     public void leaveSequence(List<Stmt> stmts) {
+
+    }
+
+    @Override
+    public void enterStmt(Stmt stmt) {
+
+    }
+
+    @Override
+    public void leaveStmt(Stmt stmt) {
 
     }
 
