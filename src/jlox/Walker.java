@@ -4,23 +4,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-interface AstVisitor extends Stmt.WalkVisitor, Expr.WalkVisitor {
+public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
 
-    default void enter(Expr expr) { expr.enter(this); }
-    default void enter(Stmt stmt) { stmt.enter(this); }
-    default void leave(Expr expr) { expr.leave(this); }
-    default void leave(Stmt stmt) { stmt.leave(this); }
-}
+    interface AstVisitor extends Stmt.WalkVisitor, Expr.WalkVisitor {
 
-public class AstWalker implements Stmt.VoidVisitor, Expr.VoidVisitor {
+        default void enter(Expr expr) { expr.enter(this); }
+        default void enter(Stmt stmt) { stmt.enter(this); }
+        default void leave(Expr expr) { expr.leave(this); }
+        default void leave(Stmt stmt) { stmt.leave(this); }
+
+        void enterSequence(List<Stmt> stmts);
+        void leaveSequence(List<Stmt> stmts);
+
+        void InjectWalker(WalkerData walker);
+    }
 
     private final List<AstVisitor> visitors;
     private final List<AstVisitor> reversedVisitors;
 
-    public AstWalker(List<AstVisitor> visitors) {
+    private final Stdio stdio;
+
+    public Walker(List<AstVisitor> visitors, Stdio stdio) {
         this.visitors = visitors;
+        this.stdio = stdio;
         this.reversedVisitors = new ArrayList<>(visitors);
         Collections.reverse(this.reversedVisitors);
+        for (var visitor : visitors) {
+            visitor.InjectWalker(this);
+        }
     }
 
     public void walk(Expr expr) {
@@ -45,8 +56,16 @@ public class AstWalker implements Stmt.VoidVisitor, Expr.VoidVisitor {
     }
 
     public void walk(List<Stmt> stmts) {
-        if (stmts != null)
+        if (stmts != null) {
+            for (var visitor : visitors) visitor.enterSequence(stmts);
             for (var stmt : stmts) walk(stmt);
+            for (var visitor : reversedVisitors) visitor.leaveSequence(stmts);
+        }
+    }
+
+    @Override
+    public Stdio stdio() {
+        return stdio;
     }
 
     @Override

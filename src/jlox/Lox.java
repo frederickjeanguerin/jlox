@@ -44,9 +44,15 @@ public class Lox {
 
     private static void run(String source) {
         boolean astOnly = false;
+        boolean walkOnly = false;
+
         if (source.startsWith("#ast")) {
             source = source.substring(4);
             astOnly = true;
+        }
+        if (source.startsWith("#walk")) {
+            source = source.substring(5);
+            walkOnly = true;
         }
         Scanner scanner = new Scanner(source, STDIO);
         List<Token> tokens = scanner.scanTokens();
@@ -57,6 +63,12 @@ public class Lox {
         }
         if (STDIO.report() || astOnly) return;
 
+        Analyzer.analyse(ast, STDIO);
+        if (walkOnly && !STDIO.hasError()) {
+            System.out.println("Analysis: OK");
+        }
+        if (STDIO.report() || walkOnly) return;
+
         interpreter.interpret(ast);
         interpreter.stdio.report();
     }
@@ -64,7 +76,6 @@ public class Lox {
     // ------ Test helpers ------
 
     public record TestParserResult(String ast, String errors){}
-
     public static TestParserResult testParser(String source) {
         var error = new Stdio();
         Scanner scanner = new Scanner(source, error);

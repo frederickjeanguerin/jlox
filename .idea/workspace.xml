@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTOR Added VoidVisitor">
-      <change afterPath="$PROJECT_DIR$/src/jlox/AstWalker.java" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED AstWalker">
+      <change afterPath="$PROJECT_DIR$/src/jlox/Analyzer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/Walk.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/WalkReturn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/WalkerData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/GenerateAst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/AstWalker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +68,7 @@
       <recent name="jlox.Stdio" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="jlox" />
       <recent name="" />
     </key>
     <key name="MoveInnerDialog.RECENTS_KEY">
@@ -74,9 +77,23 @@
     <key name="CreateTestDialog.RecentsKey">
       <recent name="jlox.tests" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="jlox" />
+    </key>
   </component>
-  <component name="RunManager" selected="JUnit.LoxTest">
-    <configuration name="AstPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.jlox.Lox">
+    <configuration name="GenerateAst" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="tool.GenerateAst" />
+      <module name="Lox" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tool.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2" />
+    </configuration>
+    <configuration name="jlox.AstPrinter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="jlox.AstPrinter" />
       <module name="Lox" />
       <extension name="coverage">
@@ -89,18 +106,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GenerateAst" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="tool.GenerateAst" />
-      <module name="Lox" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tool.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2" />
-    </configuration>
-    <configuration name="Lox" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="jlox.Lox" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="jlox.Lox" />
       <module name="Lox" />
       <extension name="coverage">
@@ -177,9 +183,9 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.jlox.Lox" />
       <item itemvalue="Application.GenerateAst" />
-      <item itemvalue="Application.Lox" />
-      <item itemvalue="Application.AstPrinter" />
+      <item itemvalue="Application.jlox.AstPrinter" />
       <item itemvalue="JUnit.LoxTest" />
       <item itemvalue="JUnit.LoxTest.testSnapShot" />
       <item itemvalue="JUnit.LoxTest.testInterpreter" />
@@ -188,7 +194,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.LoxTest.testSnapShot" />
-        <item itemvalue="Application.AstPrinter" />
+        <item itemvalue="Application.jlox.AstPrinter" />
         <item itemvalue="JUnit.LoxTest.testInterpreter" />
         <item itemvalue="JUnit.LoxTest.testSyntaxError" />
       </list>
@@ -202,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Chapter 4 - Scanning (non nesting block comments)">
-      <created>1654256590966</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1654256590966</updated>
     </task>
     <task id="LOCAL-00004" summary="Chapter 4 - Scanning (non nesting block comments)">
       <created>1654256695625</created>
@@ -546,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655014136921</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="ADDED AstWalker">
+      <created>1655036307698</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1655036307698</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -561,7 +567,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="REFACTORING AstPrinter based on StringBuilder" />
     <MESSAGE value="Chapter 8.5 - Block and Scope (tested)" />
     <MESSAGE value="Chapter 8 - Challenge 2 (uninitialized variable)" />
     <MESSAGE value="Chapter 9.2 - If then else (tested)" />
@@ -586,6 +591,7 @@
     <MESSAGE value="Chapter 10.4 (+) - Function closure tested" />
     <MESSAGE value="Chapter 10.5 - Return statement" />
     <MESSAGE value="REFACTOR Added VoidVisitor" />
-    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR Added VoidVisitor" />
+    <MESSAGE value="ADDED AstWalker" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED AstWalker" />
   </component>
 </project>
