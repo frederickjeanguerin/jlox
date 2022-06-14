@@ -1,0 +1,7 @@
+Using lambda as closures (Challenge 2):
+
+2
+4
+6
+
+

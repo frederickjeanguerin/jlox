@@ -25,6 +25,16 @@ public class WalkReturn extends Walk.Base<WalkReturn.State> {
     }
 
     @Override
+    public void enterLambdaExpr(Expr.Lambda lambda) {
+        enterState(new State(true));
+    }
+
+    @Override
+    public void leaveLambdaExpr(Expr.Lambda expr) {
+        leaveState();
+    }
+
+    @Override
     public void enterReturnStmt(Stmt.Return stmt) {
         if (!state().returnPermitted()) {
             stdio().errorAtToken(stmt.keyword, "Return outside function.");

@@ -51,25 +51,34 @@ public class Parser {
     @SuppressWarnings("SameParameterValue")
     private Stmt funDeclaration(String kind) {
         var name = consume(IDENTIFIER, "Expect %s name".formatted(kind));
-        consume(LEFT_PAREN, "Expect '(' after %s name".formatted(kind));
-        List<Token> parameters = new ArrayList<>();
+        return new Stmt.Function(name, parameters(kind), body(false));
+    }
+
+    private List<Token> parameters(String kind) {
+        consume(LEFT_PAREN, "Expect '(' to introduce %s parameters".formatted(kind));
+        List<Token> params = new ArrayList<>();
         if (!peek(RIGHT_PAREN)) {
             do {
-                if (parameters.size() >= 255) {
+                if (params.size() >= 255) {
                     error(peek(), "%s can't have more than 255 parameters".formatted(kind));
                 }
                 var parameter = consume(IDENTIFIER, "Expect parameter name");
-                if (parameters.stream().map(Token::lexeme).anyMatch(lexeme -> lexeme.equals(parameter.lexeme()))) {
+                if (params.stream().map(Token::lexeme).anyMatch(lexeme -> lexeme.equals(parameter.lexeme()))) {
                     error(parameter, "Parameter '%s' already defined.".formatted(parameter.lexeme()));
                 }
-                parameters.add(parameter);
+                params.add(parameter);
             } while (match(COMMA));
         }
         consume(RIGHT_PAREN, "Expect ')' after parameters");
-        Stmt body = peek(LEFT_BRACE)
+        return params;
+    }
+
+    private Stmt body(boolean isExpr) {
+        return peek(LEFT_BRACE)
                 ? statement()
-                : expressionStatement();
-        return new Stmt.Function(name, parameters, body);
+                : isExpr
+                    ? new Stmt.Expression(lambda())
+                    : expressionStatement();
     }
 
     private Stmt varDeclaration() {
@@ -244,7 +253,7 @@ public class Parser {
     }
 
     private Expr assignment() {
-        Expr expr = ternary();
+        Expr expr = lambda();
 
         if (match(EQUAL)) {
             Token equals = previous();
@@ -256,6 +265,13 @@ public class Parser {
             error(equals, "Invalid assignment target (asa lvalue).");
         }
         return expr;
+    }
+
+    private Expr lambda() {
+        if (match(FUN)) {
+            return new Expr.Lambda(parameters("lambda"), body(true));
+        }
+        return ternary();
     }
 
     // Challenge 2, Chap 6 : Ternary

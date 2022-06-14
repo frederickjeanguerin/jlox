@@ -2,6 +2,7 @@ Assign      : Token name, Expr value
 Binary      : Expr left, Token operator, Expr right
 Call        : Expr callee, Token leftPar, List<Expr> arguments, Token rightPar
 Grouping    : Expr expression
+Lambda      : List<Token> parameters, Stmt body
 Literal     : Object value
 Ternary     : Expr left, Token leftOp, Expr middle, Token rightOp, Expr right
 TypeCheck   : Expr value, Class<?> type, Token name

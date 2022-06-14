@@ -10,6 +10,7 @@ abstract class Expr {
     R visitBinaryExpr(Binary binary);
     R visitCallExpr(Call call);
     R visitGroupingExpr(Grouping grouping);
+    R visitLambdaExpr(Lambda lambda);
     R visitLiteralExpr(Literal literal);
     R visitTernaryExpr(Ternary ternary);
     R visitTypeCheckExpr(TypeCheck typeCheck);
@@ -21,6 +22,7 @@ abstract class Expr {
     void visitBinaryExpr(Binary binary);
     void visitCallExpr(Call call);
     void visitGroupingExpr(Grouping grouping);
+    void visitLambdaExpr(Lambda lambda);
     void visitLiteralExpr(Literal literal);
     void visitTernaryExpr(Ternary ternary);
     void visitTypeCheckExpr(TypeCheck typeCheck);
@@ -36,6 +38,8 @@ abstract class Expr {
     void leaveCallExpr(Call call);
     void enterGroupingExpr(Grouping grouping);
     void leaveGroupingExpr(Grouping grouping);
+    void enterLambdaExpr(Lambda lambda);
+    void leaveLambdaExpr(Lambda lambda);
     void enterLiteralExpr(Literal literal);
     void leaveLiteralExpr(Literal literal);
     void enterTernaryExpr(Ternary ternary);
@@ -169,6 +173,36 @@ abstract class Expr {
     @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitGroupingExpr(this);
+    }
+  }
+
+  static class Lambda extends Expr {
+    final List<Token> parameters;
+    final Stmt body;
+
+    Lambda ( List<Token> parameters, Stmt body ) {
+      this.parameters = parameters;
+      this.body = body;
+    }
+
+    @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitLambdaExpr(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterLambdaExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveLambdaExpr(this);
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+        return visitor.visitLambdaExpr(this);
     }
   }
 

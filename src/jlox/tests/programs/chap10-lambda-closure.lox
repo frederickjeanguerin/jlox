@@ -1,0 +1,11 @@
+
+print "Using lambda as closures (Challenge 2):
+";
+
+var newCounter = fun() { var x = 0; return fun() { ++x; return x; }; };
+
+var i = newCounter();
+var j = newCounter();
+print i() + j();    // 2
+print i() + j();    // 4
+print i() + j();    // 6

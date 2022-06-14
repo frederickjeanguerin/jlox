@@ -183,3 +183,11 @@ Return recursive ¤ fun fact(n) { return n <= 2 ? n : n * fact(n - 1); } print f
 Function one-liner simple ¤ fun five() 5; print five(); ¤ 5
 Function one-liner identity ¤ fun id(x) x; print id(4); ¤ 4
 Function one-liner plus ¤ fun plus(a, b) a + b; print plus(4, 6); ¤ 10
+
+# Lambda
+lambda empty ¤ var noop = fun(){}; noop(); print noop; ¤ <lambda>
+Lambda simple ¤ var f = fun() { print 10; }; f(); ¤ 10
+Lambda capture ¤ var a = 0; var inc = fun() { ++a; }; inc(); inc(); a ¤ 2
+Lambda return ¤ var plus = fun(a, b) { return a + b; }; plus(3, 4) ¤ 7
+Lambda expression ¤ var plus = fun(a, b) a + b; plus(3, 4) ¤ 7
+lambda returning lambda ¤ var ff = fun () fun () 5; ff()() ¤ 5

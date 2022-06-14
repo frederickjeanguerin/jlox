@@ -9,17 +9,27 @@ interface LoxCallable {
 
     class Function implements LoxCallable {
 
-        private final Stmt.Function declaration;
+        private final String name;
+        private final List<Token> parameters;
+        private final Stmt body;
         private final Environment.Scoping scoping;
 
         public Function(Stmt.Function declaration, Environment.Scoping scoping) {
-            this.declaration = declaration;
+            this.name = declaration.name.lexeme();
+            this.parameters = declaration.parameters;
+            this.body = declaration.body;
             this.scoping = scoping;
         }
 
+        public Function(Expr.Lambda lambda, Environment.Scoping scoping) {
+            this.name = null;
+            this.parameters = lambda.parameters;
+            this.body = lambda.body;
+            this.scoping = scoping;
+        }
         @Override
         public int arity() {
-            return declaration.parameters.size();
+            return parameters.size();
         }
 
         @Override
@@ -30,12 +40,12 @@ interface LoxCallable {
             try {
                 for (int i = 0; i < arity(); i++) {
                     environment.defineSymbol(
-                            declaration.parameters.get(i).lexeme(), arguments.get(i));
+                            parameters.get(i).lexeme(), arguments.get(i));
                 }
-                if (declaration.body instanceof Stmt.Expression expr) {
+                if (body instanceof Stmt.Expression expr) {
                     return interpreter.evaluate(expr.expression);
                 } else {
-                    interpreter.execute(declaration.body);
+                    interpreter.execute(body);
                 }
             } catch (Interpreter.ReturnException ex) {
                 return ex.value;
@@ -46,7 +56,7 @@ interface LoxCallable {
         }
 
         @Override
-        public String toString() { return "<fun: %s>".formatted(declaration.name.lexeme()); }
+        public String toString() { return name != null ? "<fun: %s>".formatted(name) : "<lambda>"; }
 
     }
 

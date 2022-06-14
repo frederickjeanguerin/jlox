@@ -70,7 +70,7 @@ Call has too many arguments ¤ call(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4,
 
 # Function declaration
 Function missing name ¤ fun () {} ¤ at '[(]', expect function name
-Function missing ( ¤ fun f ) {} ¤ at '[)]', expect '[(]' after function name
+Function missing ( ¤ fun f ) {} ¤ at '[)]', expect '[(]'
 Function missing param ¤ fun f(,a) {} ¤ at '[,]', expect parameter name
 Function missing param ¤ fun f(a,) {} ¤ at '[)]', expect parameter name
 Function bad param TODO ¤ fun f(a + b) {} ¤ at '[+]', expect '[)]' after parameters

@@ -78,7 +78,8 @@ class LoxTest {
     @ValueSource(strings = {
             "chap8-block-and-scope",
             "chap9-fibonacci",
-            "chap10-fibonacci-recursive"
+            "chap10-fibonacci-recursive",
+            "chap10-lambda-closure"
     })
     void testSnapShot(String fileName) throws IOException {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");

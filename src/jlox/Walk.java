@@ -104,6 +104,16 @@ public class Walk implements Walker.AstVisitor {
     }
 
     @Override
+    public void enterLambdaExpr(Expr.Lambda lambda) {
+
+    }
+
+    @Override
+    public void leaveLambdaExpr(Expr.Lambda lambda) {
+
+    }
+
+    @Override
     public void enterLiteralExpr(Expr.Literal literal) {
 
     }

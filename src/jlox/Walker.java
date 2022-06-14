@@ -120,6 +120,11 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
     }
 
     @Override
+    public void visitLambdaExpr(Expr.Lambda lambda) {
+        walk(lambda.body);
+    }
+
+    @Override
     public void visitLiteralExpr(Expr.Literal literal) {
         // done
     }
