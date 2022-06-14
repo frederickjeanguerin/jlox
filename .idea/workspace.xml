@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED Dead code warning for Return (tested but 2ERR)">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED Dead code warning for Return (tested)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,13 +203,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Chapter 6 - Parser (Challenge 1 - C comma expression)">
-      <created>1654425198234</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1654425198234</updated>
     </task>
     <task id="LOCAL-00009" summary="Chapter 6 - Parser (Challenge 2 - Ternary operator)">
       <created>1654426905247</created>
@@ -548,7 +540,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655208183448</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="ADDED Dead code warning for Return (tested)">
+      <created>1655215955318</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1655215955318</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -563,7 +562,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 9.3 - Logical and, or (tested)" />
     <MESSAGE value="Chapter 9.4 - While loop (tested)" />
     <MESSAGE value="Chapter 9.5 - For loop (tested)" />
     <MESSAGE value="Chapter 9 - Challenge 3 - Break (tested)" />
@@ -588,6 +586,7 @@
     <MESSAGE value="ADDED WalkReturn (complete, untested)" />
     <MESSAGE value="ADDED WalkReturn (partial complete, partial tested)" />
     <MESSAGE value="ADDED Dead code warning for Return (tested but 2ERR)" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADDED Dead code warning for Return (tested but 2ERR)" />
+    <MESSAGE value="ADDED Dead code warning for Return (tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED Dead code warning for Return (tested)" />
   </component>
 </project>

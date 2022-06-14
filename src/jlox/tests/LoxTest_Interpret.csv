@@ -178,3 +178,8 @@ Return simple value ¤ fun two() { return 2; }; two() ¤ 2
 Return complex value ¤ fun plus(a, b) { return a + b; }; plus(3, 4) ¤ 7
 Return no value ¤ fun four() { print 4; if (true) return; print 5; }; four(); ¤ 4
 Return recursive ¤ fun fact(n) { return n <= 2 ? n : n * fact(n - 1); } print fact(3); print fact(4); ¤ 6 24
+
+# Function one-liner
+Function one-liner simple ¤ fun five() 5; print five(); ¤ 5
+Function one-liner identity ¤ fun id(x) x; print id(4); ¤ 4
+Function one-liner plus ¤ fun plus(a, b) a + b; print plus(4, 6); ¤ 10
