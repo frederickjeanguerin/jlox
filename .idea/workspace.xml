@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED WalkReturn (partial, untested)">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED WalkReturn (complete, untested)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Stdio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stdio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Walk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/WalkReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkReturn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Walker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/WalkerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkerData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +80,7 @@
       <recent name="jlox" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.jlox.Lox">
+  <component name="RunManager" selected="JUnit.LoxTest">
     <configuration name="GenerateAst" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="tool.GenerateAst" />
       <module name="Lox" />
@@ -208,13 +207,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Chapter 5 - AST classes generator">
-      <created>1654373559762</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1654373559762</updated>
     </task>
     <task id="LOCAL-00006" summary="Chapter 5 - AST classes generator (done)">
       <created>1654373814515</created>
@@ -552,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655103460634</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="ADDED WalkReturn (complete, untested)">
+      <created>1655140576857</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1655140576857</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -567,7 +566,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 8 - Challenge 2 (uninitialized variable)" />
     <MESSAGE value="Chapter 9.2 - If then else (tested)" />
     <MESSAGE value="Added lazy interpretation for right side of binary expression." />
     <MESSAGE value="Chapter 9.3 - Logical and, or (tested)" />
@@ -592,6 +590,7 @@
     <MESSAGE value="REFACTOR Added VoidVisitor" />
     <MESSAGE value="ADDED AstWalker" />
     <MESSAGE value="ADDED WalkReturn (partial, untested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADDED WalkReturn (partial, untested)" />
+    <MESSAGE value="ADDED WalkReturn (complete, untested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED WalkReturn (complete, untested)" />
   </component>
 </project>

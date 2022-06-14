@@ -1,5 +1,6 @@
 package jlox.tests;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -23,9 +24,9 @@ class LoxTest {
     void testAst(String description, String input, String expectedAst) {
         input = transform(input);
         expectedAst = transform(expectedAst);
-        var result = Lox.testParser(input);
-        assertEquals(expectedAst, result.ast().replace('\n', ' ').stripTrailing(), description);
-        assertEquals("", result.errors());
+        var stdio = Lox.run(input, Lox.RunPhase.AST);
+        assertEquals(expectedAst, stdio.stdout().replace('\n', ' ').stripTrailing(), description);
+        assertEquals("", stdio.stderr());
     }
 
     @ParameterizedTest
@@ -35,9 +36,9 @@ class LoxTest {
             delimiter = '¤')
     void testSyntaxError(String description, String input, String expectedErrors) {
         input = transform(input);
-        var result = Lox.testParser(input);
+        var result = Lox.run(input, Lox.RunPhase.AST);
         for (String expectedError : expectedErrors.split(", ")) {
-            assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.errors()), description);
+            assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.stderr()), description);
         }
     }
 
@@ -49,9 +50,9 @@ class LoxTest {
     void testInterpreter(String description, String input, String expectedResult) {
         input = transform(input);
         expectedResult = transform(expectedResult);
-        var result = Lox.testInterpreter(input);
-        assertEquals(expectedResult, result.prints().replace('\n', ' ').stripTrailing(), description);
-        assertEquals("", result.errors());
+        var result = Lox.run(input);
+        assertEquals(expectedResult, result.stdout().replace('\n', ' ').stripTrailing(), description);
+        assertEquals("", result.stderr());
     }
 
     @ParameterizedTest
@@ -61,9 +62,15 @@ class LoxTest {
             delimiter = '¤')
     void testRuntimeError(String description, String input, String expectedErrors) {
         input = transform(input);
-        var result = Lox.testInterpreter(input);
+        var result = Lox.run(input);
         for (String expectedError : expectedErrors.split(", ")) {
-            assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.errors()), description);
+            if (expectedError.startsWith("*")) {
+                assertLinesMatch(
+                        List.of("(?is).*" + expectedError.substring(1) + ".*"),
+                        List.of(result.stdout()), description);
+            } else {
+                assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.stderr()), description);
+            }
         }
     }
 
@@ -77,8 +84,8 @@ class LoxTest {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");
         Path targetPath = Path.of("src/jlox/tests/snapshots/" + fileName + ".txt");
         var source = Files.readString(sourcePath);
-        var result = Lox.testInterpreter(source);
-        var given = result.prints() + "\n\n" + result.errors();
+        var result = Lox.run(source);
+        var given = result.stdout() + "\n\n" + result.stderr();
         if (Files.exists(targetPath)){
             var expected = Files.readString(targetPath);
             assertLinesMatch(List.of(expected.split("\n")), List.of(given.split("\n")));
@@ -87,7 +94,6 @@ class LoxTest {
             //noinspection ConstantConditions
             Assumptions.assumeTrue(false, "new snapshot created");
         }
-        assertEquals("", result.errors());
     }
 
     private static String transform(String input) {

@@ -53,3 +53,12 @@ Native exit expect number arg ¤ exit(false) ¤ at '[(]', type mismatch, expecte
 Native exit expect number arg ¤ exit(""string"") ¤ at '[(]', type mismatch, expected 'double', got 'string'
 Native exit expect number arg ¤ exit(nil) ¤ at '[(]', type mismatch, expected 'double', got 'void'
 
+# Return
+# TODO move to Static Analysis, because not really  runtime checks
+Return outside any function 1 ¤ return; ¤ return outside function
+Return outside any function 2 ¤ { return; } ¤ return outside function
+Dead code 1 ¤ fun f() { print 30; return; 10; 20; } f(); ¤ warning, unreachable code, 10, 20, *30
+# TODO make it work for 20 as well, because not working now
+Dead code 1 ¤ fun f() { print 30; { return; print 10; } print 20; } f(); ¤ warning, unreachable code, print 10, *30
+
+

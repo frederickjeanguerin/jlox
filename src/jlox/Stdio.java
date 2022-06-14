@@ -18,20 +18,20 @@ public class Stdio {
         return str;
     }
 
-    String stderr() {
+    public String stderr() {
         return _stderr.toString();
     }
-    String stdout() {
+    public String stdout() {
         return _stdout.toString();
     }
 
-    boolean hasError() {
+    public boolean hasError() {
         return errorCount > 0;
     }
-    boolean hasWarning() {
+    public boolean hasWarning() {
         return warningCount > 0;
     }
-    boolean hasPrint() {
+    public boolean hasPrint() {
         return !_stdout.isEmpty();
     }
 
@@ -48,7 +48,7 @@ public class Stdio {
         _stdout.setLength(0);
     }
 
-    boolean report() {
+    Stdio report() {
         if (hasPrint()) {
             System.out.print(stdout());
             System.out.flush();
@@ -59,7 +59,7 @@ public class Stdio {
             System.out.println();
             System.out.flush();
         }
-        return hasError();
+        return this;
     }
 
     // Lexer error

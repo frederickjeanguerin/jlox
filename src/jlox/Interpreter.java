@@ -66,12 +66,12 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     private static final Object UNINITIALIZED = new Object();
-    public final Stdio stdio = new Stdio();
+    public Stdio stdio = null;
     public final Environment environment = new Environment();
 
 
-    public void interpret(List<Stmt> statements) {
-        stdio.reset();
+    public void interpret(List<Stmt> statements, Stdio stdio) {
+        this.stdio = stdio;
         try {
             for (var stmt: statements) {
                 execute(stmt);
@@ -82,7 +82,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     public void reset() {
-        stdio.reset();
+        stdio = null;
         environment.reset();
     }
 

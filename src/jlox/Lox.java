@@ -9,96 +9,75 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Lox {
-    private static final Stdio STDIO = new Stdio();
     private static final Interpreter interpreter = new Interpreter();
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
             System.out.println("Usage: jlox [script]");
             System.exit(64);
-        } else if (args.length == 1) {
-            runFile(args[0]);
         } else {
-            runPrompt();
+            Stdio stdio =  (args.length == 1)
+                ? runFile(args[0])
+                : runPrompt();
+            if (stdio.hasError()) System.exit(65);
         }
-        if (STDIO.hasError() || interpreter.stdio.hasError())  System.exit(65);
     }
 
-    private static void runFile(String path) throws IOException {
+    private static Stdio runFile(String path) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
-        run(new String(bytes, Charset.defaultCharset()));
+        return run(new String(bytes, Charset.defaultCharset())).report();
     }
 
-    private static void runPrompt() throws IOException {
+    private static Stdio runPrompt() throws IOException {
         var input = new InputStreamReader(System.in);
         var reader = new BufferedReader(input);
-
+        Stdio lastStdio = null;
         for(;;){
-            STDIO.reset();
             System.out.print("> ");
             var line = reader.readLine();
             if (line == null) break; // EOF (ctrl+D)
-            run(line);
+            lastStdio = run(line).report();
         }
+        return lastStdio;
     }
 
-    private static void run(String source) {
-        boolean astOnly = false;
-        boolean walkOnly = false;
+    public static Stdio run(String source) {
+        return run(source, RunPhase.INTERPRET);
+    }
+
+    public enum RunPhase { AST, WALK, INTERPRET}
+
+    public static Stdio run(String source, RunPhase phase) {
 
         if (source.startsWith("#ast")) {
             source = source.substring(4);
-            astOnly = true;
+            phase = RunPhase.AST;
         }
         if (source.startsWith("#walk")) {
             source = source.substring(5);
-            walkOnly = true;
+            phase = RunPhase.WALK;
         }
-        Scanner scanner = new Scanner(source, STDIO);
+        boolean astOnly = phase == RunPhase.AST;
+        boolean walkOnly = phase == RunPhase.WALK;
+
+        Stdio stdio = new Stdio();
+        Scanner scanner = new Scanner(source, stdio);
         List<Token> tokens = scanner.scanTokens();
 
-        var ast = new Parser(tokens, STDIO).parse();
-        if (astOnly) {
-            System.out.println(new AstPrinter().print(ast));
+        var ast = new Parser(tokens, stdio).parse();
+        if (astOnly && ast != null) {
+            stdio.print(new AstPrinter().print(ast));
         }
-        if (STDIO.report() || astOnly) return;
+        if (astOnly || stdio.hasError()) return stdio;
 
-        Analyzer.analyse(ast, STDIO);
-        if (walkOnly && !STDIO.hasError()) {
-            System.out.println("Analysis: OK");
+        Analyzer.analyse(ast, stdio);
+        if (walkOnly && !stdio.hasError()) {
+            stdio.print("Analysis: OK");
         }
-        if (STDIO.report() || walkOnly) return;
+        if (stdio.hasError() || walkOnly) return stdio;
 
-        interpreter.interpret(ast);
-        interpreter.stdio.report();
+        interpreter.interpret(ast, stdio);
+        return stdio;
     }
-
-    // ------ Test helpers ------
-
-    public record TestParserResult(String ast, String errors){}
-    public static TestParserResult testParser(String source) {
-        var error = new Stdio();
-        Scanner scanner = new Scanner(source, error);
-        List<Token> tokens = scanner.scanTokens();
-        var ast = new Parser(tokens, error).parse();
-        var astPrint = ast == null ? "" : new AstPrinter().print(ast);
-        return new TestParserResult(astPrint, error.stderr());
-    }
-
-    public record TestInterpreterResult(String prints, String errors){}
-    public static TestInterpreterResult testInterpreter(String source) {
-        var error = new Stdio();
-        Scanner scanner = new Scanner(source, error);
-        List<Token> tokens = scanner.scanTokens();
-        var ast = new Parser(tokens, error).parse();
-        if (error.hasError()) {
-            var astPrint = ast == null ? "(ast is null)" : new AstPrinter().print(ast);
-            return new TestInterpreterResult(astPrint, error.stderr());
-        }
-        interpreter.reset();
-        interpreter.interpret(ast);
-        return new TestInterpreterResult(interpreter.stdio.stdout(), interpreter.stdio.stderr());
-    }
-
 }
 
