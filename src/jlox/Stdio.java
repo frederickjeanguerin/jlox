@@ -9,6 +9,9 @@ public class Stdio {
     private final StringBuilder _stderr = new StringBuilder();
     private final StringBuilder _stdout = new StringBuilder();
 
+    public static final AstPrinter astOneLinePrinter = new AstPrinter(" ");
+    public static final AstPrinter astPrinter = new AstPrinter();
+
     static String stringify(Object value) {
         if (value == null)
             return "nil";

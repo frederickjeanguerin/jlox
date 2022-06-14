@@ -158,7 +158,7 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
             if (token != stmt.parameters.get(0)) append(", ");
             append(token.lexeme());
         }
-        append (") "); append(new Stmt.Block(stmt.body));
+        append (") "); append(stmt.body);
     }
 
     @Override

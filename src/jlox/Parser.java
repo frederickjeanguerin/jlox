@@ -66,8 +66,9 @@ public class Parser {
             } while (match(COMMA));
         }
         consume(RIGHT_PAREN, "Expect ')' after parameters");
-        consume(LEFT_BRACE, "Expect '{' before %s body".formatted(kind));
-        var body = block();
+        Stmt body = peek(LEFT_BRACE)
+                ? statement()
+                : expressionStatement();
         return new Stmt.Function(name, parameters, body);
     }
 

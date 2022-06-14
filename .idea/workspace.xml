@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED WalkReturn (complete, untested)">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED Dead code warning for Return (tested but 2ERR)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Stdio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stdio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -207,20 +204,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Chapter 5 - AST classes generator (done)">
-      <created>1654373814515</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1654373814515</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Chapter 6 - Parser (done)">
-      <created>1654410026303</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1654410026303</updated>
     </task>
     <task id="LOCAL-00008" summary="Chapter 6 - Parser (Challenge 1 - C comma expression)">
       <created>1654425198234</created>
@@ -551,7 +534,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655140576857</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="ADDED WalkReturn (partial complete, partial tested)">
+      <created>1655189993496</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1655189993496</updated>
+    </task>
+    <task id="LOCAL-00056" summary="ADDED Dead code warning for Return (tested but 2ERR)">
+      <created>1655208183448</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1655208183448</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -566,8 +563,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 9.2 - If then else (tested)" />
-    <MESSAGE value="Added lazy interpretation for right side of binary expression." />
     <MESSAGE value="Chapter 9.3 - Logical and, or (tested)" />
     <MESSAGE value="Chapter 9.4 - While loop (tested)" />
     <MESSAGE value="Chapter 9.5 - For loop (tested)" />
@@ -591,6 +586,8 @@
     <MESSAGE value="ADDED AstWalker" />
     <MESSAGE value="ADDED WalkReturn (partial, untested)" />
     <MESSAGE value="ADDED WalkReturn (complete, untested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADDED WalkReturn (complete, untested)" />
+    <MESSAGE value="ADDED WalkReturn (partial complete, partial tested)" />
+    <MESSAGE value="ADDED Dead code warning for Return (tested but 2ERR)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED Dead code warning for Return (tested but 2ERR)" />
   </component>
 </project>

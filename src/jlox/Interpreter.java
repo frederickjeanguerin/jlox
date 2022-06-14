@@ -228,7 +228,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitCallExpr(Expr.Call expr) {
-        Object callee = evaluate((expr.callee));
+        Object callee = evaluate(expr.callee);
         if (callee instanceof  LoxCallable function) {
             // Check arity
             if (function.arity() != expr.arguments.size()) {

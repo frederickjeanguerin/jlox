@@ -143,9 +143,9 @@ abstract class Stmt {
   static class Function extends Stmt {
     final Token name;
     final List<Token> parameters;
-    final List<Stmt> body;
+    final Stmt body;
 
-    Function ( Token name, List<Token> parameters, List<Stmt> body ) {
+    Function ( Token name, List<Token> parameters, Stmt body ) {
       this.name = name;
       this.parameters = parameters;
       this.body = body;

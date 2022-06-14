@@ -32,7 +32,11 @@ interface LoxCallable {
                     environment.defineSymbol(
                             declaration.parameters.get(i).lexeme(), arguments.get(i));
                 }
-                interpreter.executeBlock(declaration.body);
+                if (declaration.body instanceof Stmt.Expression expr) {
+                    return interpreter.evaluate(expr.expression);
+                } else {
+                    interpreter.execute(declaration.body);
+                }
             } catch (Interpreter.ReturnException ex) {
                 return ex.value;
             } finally {

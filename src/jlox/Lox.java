@@ -36,16 +36,14 @@ public class Lox {
             System.out.print("> ");
             var line = reader.readLine();
             if (line == null) break; // EOF (ctrl+D)
-            lastStdio = run(line).report();
+            lastStdio = run(line, RunPhase.INTERPRET_MORE).report();
         }
         return lastStdio;
     }
 
-    public static Stdio run(String source) {
-        return run(source, RunPhase.INTERPRET);
-    }
+    public enum RunPhase { AST, WALK, INTERPRET, INTERPRET_MORE }
 
-    public enum RunPhase { AST, WALK, INTERPRET}
+    public static Stdio run(String source) { return run(source, RunPhase.INTERPRET); }
 
     public static Stdio run(String source, RunPhase phase) {
 
@@ -76,6 +74,7 @@ public class Lox {
         }
         if (stdio.hasError() || walkOnly) return stdio;
 
+        if (phase != RunPhase.INTERPRET_MORE) interpreter.reset();
         interpreter.interpret(ast, stdio);
         return stdio;
     }
