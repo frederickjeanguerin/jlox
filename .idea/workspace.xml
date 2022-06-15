@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 10 - Challenge 2 - Lambda">
-      <change afterPath="$PROJECT_DIR$/src/jlox/Symbol.java" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFAC Added Symbol">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Environment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/LoxCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxCallable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/GenerateAst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tool/expressions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/expressions.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,20 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Added Error class for testing">
-      <created>1654462714327</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1654462714327</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Added test helper method in Parser">
-      <created>1654464110581</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1654464110581</updated>
     </task>
     <task id="LOCAL-00013" summary="Added tests for Parser (ast with no errors only)">
       <created>1654484349518</created>
@@ -550,7 +538,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655238868547</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="REFAC Added Symbol">
+      <created>1655259539026</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1655259539026</updated>
+    </task>
+    <task id="LOCAL-00061" summary="REFAC Added Symbol">
+      <created>1655260374491</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1655260374491</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -565,7 +567,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 9 - Challenge 3 - Break (tested)" />
     <MESSAGE value="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error." />
     <MESSAGE value="Chapter 9 - Challenge 3 - Break &amp; Continue" />
     <MESSAGE value="Chapter 9 - Challenge (4) - Syntactic sugar (++, --)" />
@@ -590,6 +591,7 @@
     <MESSAGE value="ADDED Dead code warning for Return (tested)" />
     <MESSAGE value="ADDED One-liner function (tested)" />
     <MESSAGE value="Chapter 10 - Challenge 2 - Lambda" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 10 - Challenge 2 - Lambda" />
+    <MESSAGE value="REFAC Added Symbol" />
+    <option name="LAST_COMMIT_MESSAGE" value="REFAC Added Symbol" />
   </component>
 </project>

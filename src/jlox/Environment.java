@@ -56,16 +56,20 @@ public class Environment {
     }
 
     Symbol getSymbol(Token symbol) {
+        return getSymbol(symbol, null);
+    }
+
+    Symbol getSymbol(Token symbol, Token target) {
         var name = symbol.lexeme();
-        var value = scope.get(name);
+        var value = scope.get(name, target);
         if (value == null) {
             throw new Interpreter.RuntimeError(symbol, "Undefined symbol '%s'.".formatted(name));
         }
         return value;
     }
 
-    void assignSymbol(Token symbol, Object value) {
-        getSymbol(symbol).setValue(symbol, value);
+    void assignSymbol(Token symbol, Object value, Token target) {
+        getSymbol(symbol, target).setValue(symbol, value);
     }
 
     static class Scoping {
@@ -90,12 +94,13 @@ public class Environment {
             symbols.put(name, new Symbol(token, readonly, value));
         }
 
-        Symbol get(String name) {
+        Symbol get(String name, Token target) {
             if (symbols.containsKey(name)) {
-                return symbols.get(name);
+                Symbol symbol = symbols.get(name);
+                if (target == null || target == symbol.token) return symbol;
             }
             if (outer != null) {
-                return outer.get(name);
+                return outer.get(name, target);
             }
             return null; // not found
         }

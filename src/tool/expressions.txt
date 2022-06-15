@@ -1,4 +1,4 @@
-Assign      : Token name, Expr value
+Assign      : Token name, Expr value, Token target = null
 Binary      : Expr left, Token operator, Expr right
 Call        : Expr callee, Token leftPar, List<Expr> arguments, Token rightPar
 Grouping    : Expr expression
@@ -7,4 +7,4 @@ Literal     : Object value
 Ternary     : Expr left, Token leftOp, Expr middle, Token rightOp, Expr right
 TypeCheck   : Expr value, Class<?> type, Token name
 Unary       : Token operator, Expr right
-Variable    : Token name
+Variable    : Token name, Token target = null

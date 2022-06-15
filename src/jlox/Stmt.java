@@ -55,8 +55,8 @@ abstract class Stmt {
     void enterWhileStmt(While stmt);
     void leaveWhileStmt(While stmt);
   }
-
   static class Block extends Stmt {
+
     final List<Stmt> statements;
 
     Block ( List<Stmt> statements ) {
@@ -83,8 +83,8 @@ abstract class Stmt {
         return visitor.visitBlockStmt(this);
     }
   }
-
   static class ContinueCatcher extends Stmt {
+
     final Stmt statement;
 
     ContinueCatcher ( Stmt statement ) {
@@ -111,8 +111,8 @@ abstract class Stmt {
         return visitor.visitContinueCatcherStmt(this);
     }
   }
-
   static class Expression extends Stmt {
+
     final Expr expression;
 
     Expression ( Expr expression ) {
@@ -139,8 +139,8 @@ abstract class Stmt {
         return visitor.visitExpressionStmt(this);
     }
   }
-
   static class Function extends Stmt {
+
     final Token name;
     final List<Token> parameters;
     final Stmt body;
@@ -171,8 +171,8 @@ abstract class Stmt {
         return visitor.visitFunctionStmt(this);
     }
   }
-
   static class If extends Stmt {
+
     final Expr condition;
     final Stmt then;
     final Stmt else_;
@@ -203,8 +203,8 @@ abstract class Stmt {
         return visitor.visitIfStmt(this);
     }
   }
-
   static class Keyword extends Stmt {
+
     final Token keyword;
 
     Keyword ( Token keyword ) {
@@ -231,8 +231,8 @@ abstract class Stmt {
         return visitor.visitKeywordStmt(this);
     }
   }
-
   static class Last extends Stmt {
+
     final Expr expression;
 
     Last ( Expr expression ) {
@@ -259,8 +259,8 @@ abstract class Stmt {
         return visitor.visitLastStmt(this);
     }
   }
-
   static class Print extends Stmt {
+
     final Expr expression;
 
     Print ( Expr expression ) {
@@ -287,8 +287,8 @@ abstract class Stmt {
         return visitor.visitPrintStmt(this);
     }
   }
-
   static class Return extends Stmt {
+
     final Token keyword;
     final Expr value;
 
@@ -317,8 +317,8 @@ abstract class Stmt {
         return visitor.visitReturnStmt(this);
     }
   }
-
   static class Var extends Stmt {
+
     final Token name;
     final Expr initializer;
 
@@ -347,8 +347,8 @@ abstract class Stmt {
         return visitor.visitVarStmt(this);
     }
   }
-
   static class While extends Stmt {
+
     final Expr condition;
     final Stmt body;
 

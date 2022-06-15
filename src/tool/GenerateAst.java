@@ -6,7 +6,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GenerateAst {
     public static void main(String[] args) throws IOException {
@@ -87,18 +89,29 @@ public class GenerateAst {
     private static void defineType(PrintWriter writer, String baseName, String className, String fields) {
         // Class start
         writer.println(
-                "\n  static class %s extends %s {".formatted(className, baseName));
+                """
+                  static class %s extends %s {
+                """.formatted(className, baseName));
 
         // Fields
         for (String field : fields.split(", ")) {
-            writer.println("    final %s;".formatted(field));
+            if (field.contains("=")) {
+                writer.println("    %s;".formatted(field));
+            } else {
+                writer.println("    final %s;".formatted(field));
+            }
         }
 
         // Constructor start
         writer.println(
-                "\n    %s ( %s ) {".formatted(className, fields));
+                "\n    %s ( %s ) {".formatted(
+                        className,
+                        Arrays.stream(fields.split(", "))
+                                .filter(field -> !field.contains("="))
+                                .collect(Collectors.joining(", "))));
         // > Initialise field
         for (String field : fields.split(", ")) {
+            if (field.contains("=")) continue;
             String name = field.split(" ")[1];
             writer.println(
                     "      this.%s = %s;".formatted(name, name));

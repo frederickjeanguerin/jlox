@@ -177,7 +177,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitAssignExpr(Expr.Assign expr) {
         Object result = evaluate(expr.value);
-        environment.assignSymbol(expr.name, result);
+        environment.assignSymbol(expr.name, result, expr.target);
         return result;
     }
 
@@ -276,7 +276,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        return environment.getSymbol(expr.name).getValue(expr.name);
+        return environment.getSymbol(expr.name, expr.target).getValue(expr.name);
     }
 
     @Override

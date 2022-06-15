@@ -51,10 +51,11 @@ abstract class Expr {
     void enterVariableExpr(Variable variable);
     void leaveVariableExpr(Variable variable);
   }
-
   static class Assign extends Expr {
+
     final Token name;
     final Expr value;
+    Token target = null;
 
     Assign ( Token name, Expr value ) {
       this.name = name;
@@ -81,8 +82,8 @@ abstract class Expr {
         return visitor.visitAssignExpr(this);
     }
   }
-
   static class Binary extends Expr {
+
     final Expr left;
     final Token operator;
     final Expr right;
@@ -113,8 +114,8 @@ abstract class Expr {
         return visitor.visitBinaryExpr(this);
     }
   }
-
   static class Call extends Expr {
+
     final Expr callee;
     final Token leftPar;
     final List<Expr> arguments;
@@ -147,8 +148,8 @@ abstract class Expr {
         return visitor.visitCallExpr(this);
     }
   }
-
   static class Grouping extends Expr {
+
     final Expr expression;
 
     Grouping ( Expr expression ) {
@@ -175,8 +176,8 @@ abstract class Expr {
         return visitor.visitGroupingExpr(this);
     }
   }
-
   static class Lambda extends Expr {
+
     final List<Token> parameters;
     final Stmt body;
 
@@ -205,8 +206,8 @@ abstract class Expr {
         return visitor.visitLambdaExpr(this);
     }
   }
-
   static class Literal extends Expr {
+
     final Object value;
 
     Literal ( Object value ) {
@@ -233,8 +234,8 @@ abstract class Expr {
         return visitor.visitLiteralExpr(this);
     }
   }
-
   static class Ternary extends Expr {
+
     final Expr left;
     final Token leftOp;
     final Expr middle;
@@ -269,8 +270,8 @@ abstract class Expr {
         return visitor.visitTernaryExpr(this);
     }
   }
-
   static class TypeCheck extends Expr {
+
     final Expr value;
     final Class<?> type;
     final Token name;
@@ -301,8 +302,8 @@ abstract class Expr {
         return visitor.visitTypeCheckExpr(this);
     }
   }
-
   static class Unary extends Expr {
+
     final Token operator;
     final Expr right;
 
@@ -331,9 +332,10 @@ abstract class Expr {
         return visitor.visitUnaryExpr(this);
     }
   }
-
   static class Variable extends Expr {
+
     final Token name;
+    Token target = null;
 
     Variable ( Token name ) {
       this.name = name;
