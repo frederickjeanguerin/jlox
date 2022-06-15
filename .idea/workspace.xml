@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED One-liner function (tested)">
-      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap10-lambda-closure.lox" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 10 - Challenge 2 - Lambda">
+      <change afterPath="$PROJECT_DIR$/src/jlox/Symbol.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Environment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/LoxCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxCallable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Walk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/WalkReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkReturn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Walker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_SyntaxError.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/expressions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/expressions.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,13 +206,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Chapter 6 - Parser (Challenge 3 - Error production)">
-      <created>1654431218085</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1654431218085</updated>
     </task>
     <task id="LOCAL-00011" summary="Added Error class for testing">
       <created>1654462714327</created>
@@ -559,7 +543,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655216624456</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Chapter 10 - Challenge 2 - Lambda">
+      <created>1655238868547</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1655238868547</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -574,7 +565,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 9.5 - For loop (tested)" />
     <MESSAGE value="Chapter 9 - Challenge 3 - Break (tested)" />
     <MESSAGE value="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error." />
     <MESSAGE value="Chapter 9 - Challenge 3 - Break &amp; Continue" />
@@ -599,6 +589,7 @@
     <MESSAGE value="ADDED Dead code warning for Return (tested but 2ERR)" />
     <MESSAGE value="ADDED Dead code warning for Return (tested)" />
     <MESSAGE value="ADDED One-liner function (tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADDED One-liner function (tested)" />
+    <MESSAGE value="Chapter 10 - Challenge 2 - Lambda" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 10 - Challenge 2 - Lambda" />
   </component>
 </project>

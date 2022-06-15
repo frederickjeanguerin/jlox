@@ -65,7 +65,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
-    private static final Object UNINITIALIZED = new Object();
+
     public Stdio stdio = null;
     public final Environment environment = new Environment();
 
@@ -109,7 +109,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
         var function = new LoxCallable.Function(stmt, environment.getScoping());
-        environment.defineSymbol(stmt.name.lexeme(), function);
+        environment.defineSymbol(stmt.name, function);
         return null;
     }
 
@@ -147,11 +147,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitVarStmt(Stmt.Var stmt) {
-        Object value = UNINITIALIZED;
-        if (stmt.initializer != null) {
-            value = evaluate(stmt.initializer);
+        if (stmt.initializer == null) {
+            environment.defineUninitializedSymbol(stmt.name);
+        } else {
+            environment.defineSymbol(stmt.name, evaluate(stmt.initializer));
         }
-        environment.defineSymbol(stmt.name.lexeme(), value);
         return null;
     }
 
@@ -276,11 +276,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        var value = environment.getSymbol(expr.name);
-        if (value == UNINITIALIZED) {
-            throw new RuntimeError(expr.name, "Uninitialized variable '%s'".formatted(expr.name.lexeme()));
-        }
-        return value;
+        return environment.getSymbol(expr.name).getValue(expr.name);
     }
 
     @Override
