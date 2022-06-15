@@ -63,9 +63,9 @@ public class Parser {
                     error(peek(), "%s can't have more than 255 parameters".formatted(kind));
                 }
                 var parameter = consume(IDENTIFIER, "Expect parameter name");
-                if (params.stream().map(Token::lexeme).anyMatch(lexeme -> lexeme.equals(parameter.lexeme()))) {
-                    error(parameter, "Parameter '%s' already defined.".formatted(parameter.lexeme()));
-                }
+//                if (params.stream().map(Token::lexeme).anyMatch(lexeme -> lexeme.equals(parameter.lexeme()))) {
+//                    error(parameter, "Parameter '%s' already defined.".formatted(parameter.lexeme()));
+//                }
                 params.add(parameter);
             } while (match(COMMA));
         }

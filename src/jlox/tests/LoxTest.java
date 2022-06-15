@@ -24,7 +24,7 @@ class LoxTest {
     void testAst(String description, String input, String expectedAst) {
         input = transform(input);
         expectedAst = transform(expectedAst);
-        var stdio = Lox.run(input, Lox.RunPhase.AST);
+        var stdio = Lox.parse(input);
         assertEquals(expectedAst, stdio.stdout().replace('\n', ' ').stripTrailing(), description);
         assertEquals("", stdio.stderr());
     }
@@ -36,7 +36,7 @@ class LoxTest {
             delimiter = '¤')
     void testSyntaxError(String description, String input, String expectedErrors) {
         input = transform(input);
-        var result = Lox.run(input, Lox.RunPhase.AST);
+        var result = Lox.parse(input);
         for (String expectedError : expectedErrors.split(", ")) {
             assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.stderr()), description);
         }
@@ -51,7 +51,10 @@ class LoxTest {
         input = transform(input);
         expectedResult = transform(expectedResult);
         var result = Lox.run(input);
-        assertEquals(expectedResult, result.stdout().replace('\n', ' ').stripTrailing(), description);
+        assertEquals(
+                expectedResult,
+                result.stdout().replace('\n', ' ').stripTrailing(),
+                description + "\n\n >> stderr: %s\n".formatted(result.stderr()));
         assertEquals("", result.stderr());
     }
 
@@ -63,13 +66,45 @@ class LoxTest {
     void testRuntimeError(String description, String input, String expectedErrors) {
         input = transform(input);
         var result = Lox.run(input);
+        var stdout = result.stdout().trim();
+        var stderr = result.stderr().trim();
+        description += "\n >> stdout: %s'%s'\n".formatted(
+                stdout.contains("\n") ? "\n" : "",
+                stdout);
+        description += " >> stderr: %s%s\n".formatted(
+                stderr.contains("\n") ? "\n" : "",
+                stderr);
         for (String expectedError : expectedErrors.split(", ")) {
             if (expectedError.startsWith("*")) {
                 assertLinesMatch(
                         List.of("(?is).*" + expectedError.substring(1) + ".*"),
-                        List.of(result.stdout()), description);
+                        List.of(result.stdout()),
+                        description);
+            } else if (expectedError.startsWith("/E")) {
+                assertEquals(
+                        expectedError,
+                        "/E" + result.getErrorCount(),
+                        description);
+            } else if (expectedError.startsWith("/P")) {
+                assertEquals(
+                        expectedError,
+                        "/P" + result.getPrintCount(),
+                        description);
+            } else if (expectedError.startsWith("/W")) {
+                assertEquals(
+                        expectedError,
+                        "/W" + result.getWarningCount(),
+                        description);
+            } else if (expectedError.startsWith("/")) {
+                assertEquals(
+                        expectedError,
+                        "/" + result.getPrintCount() + result.getWarningCount() + result.getErrorCount(),
+                        description);
             } else {
-                assertLinesMatch(List.of("(?is).*" + expectedError + ".*"), List.of(result.stderr()), description);
+                assertLinesMatch(
+                        List.of("(?is).*" + expectedError + ".*"),
+                        List.of(result.stderr()),
+                        description);
             }
         }
     }

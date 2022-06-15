@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFAC Added Symbol">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 11 - Lexical scoping (tested)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Environment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/GenerateAst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/expressions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/expressions.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/LoxCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxCallable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Symbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,34 +209,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Added tests for Parser (ast with no errors only)">
-      <created>1654484349518</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1654484349518</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Added tests for Parser (ast with errors)">
-      <created>1654524166411</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1654524166411</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Chapter 7 - Interpreter (basic working only)">
-      <created>1654536981831</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1654536981831</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Chapter 7 - Interpreter (working but untested)">
-      <created>1654567846248</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1654567846248</updated>
     </task>
     <task id="LOCAL-00017" summary="Chapter 7 - Interpreter (challenges 2 + 3)">
       <created>1654569101658</created>
@@ -552,7 +525,35 @@
       <option name="project" value="LOCAL" />
       <updated>1655260374491</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="REFAC Added Symbol target">
+      <created>1655277623392</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1655277623392</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Chapter 11 - Variable local scoping (untested)">
+      <created>1655282836088</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1655282836088</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Chapter 11 - Lexical scoping (almost tested)">
+      <created>1655291280247</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1655291280247</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Chapter 11 - Lexical scoping (almost tested)">
+      <created>1655326565781</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1655326565782</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -567,10 +568,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error." />
-    <MESSAGE value="Chapter 9 - Challenge 3 - Break &amp; Continue" />
-    <MESSAGE value="Chapter 9 - Challenge (4) - Syntactic sugar (++, --)" />
-    <MESSAGE value="Chapter 10.1.1 - Parsing function call" />
     <MESSAGE value="Chapter 10.1.4 - Runtime arity check (untested)" />
     <MESSAGE value="Chapter 10.2 - Native call (untested)" />
     <MESSAGE value="Chapter 10.2 - Native call (tested)" />
@@ -592,6 +589,10 @@
     <MESSAGE value="ADDED One-liner function (tested)" />
     <MESSAGE value="Chapter 10 - Challenge 2 - Lambda" />
     <MESSAGE value="REFAC Added Symbol" />
-    <option name="LAST_COMMIT_MESSAGE" value="REFAC Added Symbol" />
+    <MESSAGE value="REFAC Added Symbol target" />
+    <MESSAGE value="Chapter 11 - Variable local scoping (untested)" />
+    <MESSAGE value="Chapter 11 - Lexical scoping (almost tested)" />
+    <MESSAGE value="Chapter 11 - Lexical scoping (tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 11 - Lexical scoping (tested)" />
   </component>
 </project>

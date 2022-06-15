@@ -32,20 +32,25 @@ public class Lox {
         var input = new InputStreamReader(System.in);
         var reader = new BufferedReader(input);
         Stdio lastStdio = null;
+        Environment globalSymbols = new Environment();
         for(;;){
             System.out.print("> ");
             var line = reader.readLine();
             if (line == null) break; // EOF (ctrl+D)
-            lastStdio = run(line, RunPhase.INTERPRET_MORE).report();
+            lastStdio = run(line, RunPhase.INTERPRET_MORE, globalSymbols).report();
         }
         return lastStdio;
     }
 
     public enum RunPhase { AST, WALK, INTERPRET, INTERPRET_MORE }
 
-    public static Stdio run(String source) { return run(source, RunPhase.INTERPRET); }
+    public static Stdio parse(String source) { return run(source, RunPhase.AST, null); }
+    public static Stdio run(String source) { return run(source, RunPhase.INTERPRET, null); }
 
-    public static Stdio run(String source, RunPhase phase) {
+    public static Stdio run(String source, RunPhase phase, Environment globalSymbols) {
+
+        if (globalSymbols == null)
+            globalSymbols = new Environment();
 
         if (source.startsWith("#ast")) {
             source = source.substring(4);
@@ -68,7 +73,7 @@ public class Lox {
         }
         if (astOnly || stdio.hasError()) return stdio;
 
-        Analyzer.analyse(ast, stdio);
+        Analyzer.analyse(ast, stdio, globalSymbols);
         if (walkOnly && !stdio.hasError()) {
             stdio.print("Analysis: OK");
         }

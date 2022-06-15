@@ -6,17 +6,7 @@ import java.util.function.Supplier;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
-    static class RuntimeError extends RuntimeException {
-        final Token token;
-        public RuntimeError(Token token, String message) {
-            super(message);
-            this.token = token;
-        }
-
-        public RuntimeError(Token token) { this(token, "Unhandled exception (internal error)"); }
-    }
-
-    static class TypeMismatchError extends RuntimeError {
+    static class TypeMismatchError extends LoxError {
         public TypeMismatchError(Token token, Class<?> expected, Object given) {
             this(token, expected, given, "");
         }
@@ -28,19 +18,19 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
-    static class BreakException extends RuntimeError {
+    static class BreakException extends LoxError {
         public BreakException(Token token) {
             super(token);
         }
     }
 
-    static class ContinueException extends RuntimeError {
+    static class ContinueException extends LoxError {
         public ContinueException(Token token) {
             super(token);
         }
     }
 
-    static class ReturnException extends RuntimeError {
+    static class ReturnException extends LoxError {
 
         final Object value;
         public ReturnException(Token token, Object value) {
@@ -76,7 +66,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             for (var stmt: statements) {
                 execute(stmt);
             }
-        } catch (RuntimeError error) {
+        } catch (LoxError error) {
             stdio.errorAtToken(error.token, error.getMessage());
         }
     }
@@ -109,7 +99,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
         var function = new LoxCallable.Function(stmt, environment.getScoping());
-        environment.defineSymbol(stmt.name, function);
+        environment.defineSymbol(stmt.name, function, Symbol.Type.FUN);
         return null;
     }
 
@@ -148,9 +138,9 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitVarStmt(Stmt.Var stmt) {
         if (stmt.initializer == null) {
-            environment.defineUninitializedSymbol(stmt.name);
+            environment.defineUninitializedVariable(stmt.name);
         } else {
-            environment.defineSymbol(stmt.name, evaluate(stmt.initializer));
+            environment.defineSymbol(stmt.name, evaluate(stmt.initializer), Symbol.Type.VAR);
         }
         return null;
     }
@@ -203,7 +193,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             case PERCENT -> {
                 double divisor = rightNumber.get();
                 if (divisor == 0)
-                    throw new RuntimeError(expr.operator, "Division by zero.");
+                    throw new LoxError(expr.operator, "Division by zero.");
                 yield leftNumber.get() % divisor;
             }
             case PLUS -> {
@@ -212,13 +202,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 // Challenge 7.2
                 if (left instanceof String || right.get() instanceof String)
                     yield Stdio.stringify(left) + Stdio.stringify(right.get());
-                throw new RuntimeError(expr.operator, "Operands cannot be added.");
+                throw new LoxError(expr.operator, "Operands cannot be added.");
             }
             case SLASH -> {
                 // Challenge 7.3
                 double divisor = rightNumber.get();
                 if (divisor == 0)
-                    throw new RuntimeError(expr.operator, "Division by zero.");
+                    throw new LoxError(expr.operator, "Division by zero.");
                 yield leftNumber.get() / divisor;
             }
             case STAR -> leftNumber.get() * rightNumber.get();
@@ -232,7 +222,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (callee instanceof  LoxCallable function) {
             // Check arity
             if (function.arity() != expr.arguments.size()) {
-                throw new RuntimeError(expr.leftPar,
+                throw new LoxError(expr.leftPar,
                         "Call expect %d arguments, but got %d.".formatted(function.arity(), expr.arguments.size()));
             }
             // Evaluate arguments
@@ -243,7 +233,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
             return function.call(this, expr.leftPar, arguments);
         }
-        throw new RuntimeError(expr.leftPar, "Can only call function and classes");
+        throw new LoxError(expr.leftPar, "Can only call function and classes");
     }
 
     @Override
@@ -328,7 +318,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (type.isInstance(value))
             //noinspection unchecked
             return (T) value;
-        throw new RuntimeError(token, position + ": " +  typeName + " expected.");
+        throw new LoxError(token, position + ": " +  typeName + " expected.");
     }
 
     static private double number(Object value, Token token, String position) {
