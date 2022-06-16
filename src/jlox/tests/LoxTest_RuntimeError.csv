@@ -88,4 +88,4 @@ Class declaration unused ¤ { class C { } } ¤ /010, class 'C' is unused
 Class declaration with methods 1 ¤ class CC { write () { \n } \n } print CC; ¤ *class CC
 Class declaration with methods 2 ¤ class CC { write (a) { print a; } } print CC; ¤ *class CC
 Class declaration with methods (local) ¤ { class CC { write () { \n } \n } print CC; } ¤ /110, *class CC, function 'write' is unused
-
+Class instantiation ¤ class D { } D() ¤ /100, *D instance
