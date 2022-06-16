@@ -21,13 +21,15 @@ public class Walk implements Walker.AstVisitor {
             _state = newState;
         }
 
-        protected void leaveState() {
-            _state = states.pop();
+        @SuppressWarnings("UnusedReturnValue")
+        protected S leaveState() {
+            return _state = states.pop();
         }
 
         private WalkerData walker;
 
         protected Stdio stdio() { return walker.stdio(); }
+        @SuppressWarnings("unused")
         protected int scopeDepth() { return walker.scopeDepth(); }
         @SuppressWarnings("SameParameterValue")
         protected Stmt parentStmt(int depth) { return walker.parentStmt(depth); }
@@ -180,6 +182,16 @@ public class Walk implements Walker.AstVisitor {
 
     @Override
     public void leaveContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
+
+    }
+
+    @Override
+    public void enterClassStmt(Stmt.Class stmt) {
+
+    }
+
+    @Override
+    public void leaveClassStmt(Stmt.Class stmt) {
 
     }
 

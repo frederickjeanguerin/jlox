@@ -61,9 +61,9 @@ public class Environment {
         defineSymbol(name, Symbol.UNINITIALIZED, Symbol.Type.VAR);
     }
 
-    void defineSymbol(Token name, Object value, Symbol.Type type) {
+    Symbol defineSymbol(Token name, Object value, Symbol.Type type) {
         // NB Symbol can be redefined without error
-        scope.define(name.lexeme(), name, value, type);
+        return scope.define(name.lexeme(), name, value, type);
     }
 
     Collection<Symbol> localSymbols() {
@@ -88,7 +88,6 @@ public class Environment {
         if (sym == null) {
             throw new LoxError(symbol, "Undefined identifier '%s'.".formatted(name));
         }
-        sym.use();
         return sym;
     }
 
@@ -117,14 +116,16 @@ public class Environment {
             this.oneDefinitionOnly = oneDefinitionOnly;
         }
 
-        void define(String name, Token token, Object value, Symbol.Type type) {
-            Symbol sym = symbols.get(name);
-            if (oneDefinitionOnly && sym != null) {
+        Symbol define(String name, Token token, Object value, Symbol.Type type) {
+            Symbol previousSym = symbols.get(name);
+            if (oneDefinitionOnly && previousSym != null) {
                 throw new LoxError(token,
                         "%s (at line %d) cannot be redeclared as a new %s."
-                                .formatted(sym.name(), sym.token.line(), Symbol.typeName(type)));
+                                .formatted(previousSym.name(), previousSym.token.line(), Symbol.typeName(type)));
             }
-            symbols.put(name, new Symbol(token, readonly, value, type));
+            Symbol newSym = new Symbol(token, readonly, value, type);
+            symbols.put(name, newSym);
+            return newSym;
         }
 
         Symbol get(String name, Token target) {

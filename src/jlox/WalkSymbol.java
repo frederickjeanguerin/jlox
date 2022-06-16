@@ -1,10 +1,13 @@
 package jlox;
 
 import java.util.List;
+import java.util.Stack;
 
 public class WalkSymbol extends Walk.Base<Void> {
 
     private final Environment environment;
+
+    private final Stack<Symbol> functions = new Stack<>();
 
     public WalkSymbol(Environment environment) {
         super(null);
@@ -12,14 +15,25 @@ public class WalkSymbol extends Walk.Base<Void> {
     }
 
     @Override
+    public void enterClassStmt(Stmt.Class stmt) {
+        defineSymbol(stmt.name, Symbol.Type.CLASS);
+    }
+
+    @Override
     public void enterFunctionStmt(Stmt.Function stmt) {
-        defineSymbol(stmt.name, Symbol.Type.FUN);
+        var fun = defineSymbol(stmt.name, Symbol.Type.FUN);
+        functions.push(fun);
         enterFunction(stmt.parameters);
     }
 
     @Override
     public void leaveFunctionStmt(Stmt.Function stmt) {
         pop();
+        var fun = functions.pop();
+        if (fun != null) {
+             // recursive call in a function don't count for function usage
+             fun.resetUseCount();
+        }
     }
 
     @Override
@@ -61,11 +75,14 @@ public class WalkSymbol extends Walk.Base<Void> {
     @Override
     public void enterVariableExpr(Expr.Variable variable) {
         try {
-            variable.target = environment.getSymbol(variable.name).token;
+            var sym = environment.getSymbol(variable.name);
+            sym.use();
+            variable.target = sym.token;
         } catch (LoxError error) {
             stdio().errorAtToken(error.token, error.getMessage());
         }
     }
+
     private void enterFunction(List<Token> parameters) {
         environment.push();
         for (var parameter : parameters) {
@@ -73,12 +90,13 @@ public class WalkSymbol extends Walk.Base<Void> {
         }
     }
 
-    private void defineSymbol(Token token, Symbol.Type type) {
+    private Symbol defineSymbol(Token token, Symbol.Type type) {
         try {
-            environment.defineSymbol(token, token, type);
+            return environment.defineSymbol(token, token, type);
         } catch (LoxError error) {
             stdio().errorAtToken(error.token, error.getMessage());
         }
+        return null;
     }
 
     private void pop() {
@@ -89,7 +107,4 @@ public class WalkSymbol extends Walk.Base<Void> {
         }
         environment.pop();
     }
-
-
-
 }

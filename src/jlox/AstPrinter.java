@@ -42,6 +42,10 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
         }
     }
 
+    private void append(Token token) {
+        append(token.lexeme());
+    }
+
     private void append(String string) {
         sb.append(string);
     }
@@ -155,6 +159,15 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
     @Override
     public void visitContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
         append("{ CC: "); append(stmt.statement); append("}");
+    }
+
+    @Override
+    public void visitClassStmt(Stmt.Class stmt) {
+        append("class "); append(stmt.name); append(" {"); eol();
+        for(var method : stmt.methods) {
+            visitFunctionStmt(method);
+        }
+        append("}"); eol();
     }
 
     @Override

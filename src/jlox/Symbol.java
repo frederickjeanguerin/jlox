@@ -2,7 +2,7 @@ package jlox;
 
 class Symbol {
 
-    enum Type { VAR, FUN, PARAMETER }
+    enum Type { VAR, FUN, PARAMETER, CLASS }
     static final Object UNINITIALIZED = new Object();
 
     final Token token;
@@ -36,6 +36,8 @@ class Symbol {
 
     public boolean isUnused() { return useCount == 0; }
 
+    public void resetUseCount() { useCount = 0; }
+
     public String name() {
         return  typeName() + " '" + token.lexeme() + "'";
     }
@@ -49,6 +51,12 @@ class Symbol {
             case VAR -> "variable";
             case FUN -> "function";
             case PARAMETER -> "parameter";
+            case CLASS -> "class";
         };
+    }
+
+    @Override
+    public String toString() {
+        return name();
     }
 }

@@ -78,3 +78,14 @@ Unused local function bad ¤ { fun f() 10; } ¤ /010, function 'f' is unused
 Unused local parameter bad ¤ { fun f(p) 10; } ¤ /020, function 'f' is unused, parameter 'p' is unused
 Used in sub-block ok ¤ { var b = 10; { print b; } } ¤ /100, *10
 Used in sub-function ok ¤ { var b = 10; fun f(){ print b; }; f(); } ¤ /100, *10
+Unused reflexive function 1 ¤ { fun f() f(); } ¤ /010, function 'f' is unused
+Unused reflexive function 2 ¤ { fun facto(n) n <= 2 ? n : n * facto (n - 1); } ¤ /010, function 'facto' is unused
+Unused sub reflexive ¤ { fun f() { fun g() { f(); } return g; }} ¤  /010, function 'f' is unused
+
+# Class
+Class declaration ¤ class C { } print C; ¤ *class C
+Class declaration unused ¤ { class C { } } ¤ /010, class 'C' is unused
+Class declaration with methods 1 ¤ class CC { write () { \n } \n } print CC; ¤ *class CC
+Class declaration with methods 2 ¤ class CC { write (a) { print a; } } print CC; ¤ *class CC
+Class declaration with methods (local) ¤ { class CC { write () { \n } \n } print CC; } ¤ /110, *class CC, function 'write' is unused
+

@@ -162,6 +162,13 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
     }
 
     @Override
+    public void visitClassStmt(Stmt.Class stmt) {
+        for (var method: stmt.methods) {
+            walk(method);
+        }
+    }
+
+    @Override
     public void visitExpressionStmt(Stmt.Expression stmt) {
         walk(stmt.expression);
     }

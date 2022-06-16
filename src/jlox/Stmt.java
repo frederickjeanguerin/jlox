@@ -8,6 +8,7 @@ abstract class Stmt {
   interface Visitor<R> {
     R visitBlockStmt(Block stmt);
     R visitContinueCatcherStmt(ContinueCatcher stmt);
+    R visitClassStmt(Class stmt);
     R visitExpressionStmt(Expression stmt);
     R visitFunctionStmt(Function stmt);
     R visitIfStmt(If stmt);
@@ -21,6 +22,7 @@ abstract class Stmt {
   interface VoidVisitor {
     void visitBlockStmt(Block stmt);
     void visitContinueCatcherStmt(ContinueCatcher stmt);
+    void visitClassStmt(Class stmt);
     void visitExpressionStmt(Expression stmt);
     void visitFunctionStmt(Function stmt);
     void visitIfStmt(If stmt);
@@ -36,6 +38,8 @@ abstract class Stmt {
     void leaveBlockStmt(Block stmt);
     void enterContinueCatcherStmt(ContinueCatcher stmt);
     void leaveContinueCatcherStmt(ContinueCatcher stmt);
+    void enterClassStmt(Class stmt);
+    void leaveClassStmt(Class stmt);
     void enterExpressionStmt(Expression stmt);
     void leaveExpressionStmt(Expression stmt);
     void enterFunctionStmt(Function stmt);
@@ -109,6 +113,36 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitContinueCatcherStmt(this);
+    }
+  }
+  static class Class extends Stmt {
+
+    final Token name;
+    final List<Stmt.Function> methods;
+
+    Class ( Token name, List<Stmt.Function> methods ) {
+      this.name = name;
+      this.methods = methods;
+    }
+
+    @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitClassStmt(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterClassStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveClassStmt(this);
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+        return visitor.visitClassStmt(this);
     }
   }
   static class Expression extends Stmt {

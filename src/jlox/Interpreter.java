@@ -91,6 +91,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitClassStmt(Stmt.Class stmt) {
+        var loxClass = new LoxClass(stmt.name.lexeme());
+        environment.defineSymbol(stmt.name, loxClass, Symbol.Type.CLASS);
+        return null;
+    }
+
+    @Override
     public Void visitExpressionStmt(Stmt.Expression stmt) {
         evaluate(stmt.expression);
         return null;

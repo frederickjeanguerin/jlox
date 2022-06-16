@@ -1,5 +1,6 @@
 Block           : List<Stmt> statements
 ContinueCatcher : Stmt statement
+Class           : Token name, List<Stmt.Function> methods
 Expression      : Expr expression
 Function        : Token name, List<Token> parameters, Stmt body
 If              : Expr condition, Stmt then, Stmt else_
