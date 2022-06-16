@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 11 - Lexical scoping (tested)">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 11 - Challenge 3 - Report unused variables">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Environment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Symbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Symbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lox.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Lox.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +37,7 @@
     "Downloaded.Files.Path.Enabled": "true",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "true",
-    "Repository.Attach.Sources": "true",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -49,6 +46,9 @@
     "create.test.in.the.same.root": "true",
     "last.edited.regexp": "Sample Text",
     "last_opened_file_path": "C:/Users/fguerin/IdeaProjects/Lox/src/jlox/tests/programs",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.sourceCode.Java"
   }
 }]]></component>
@@ -207,13 +207,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Chapter 8.1 - Basic statements (syntax tested)">
-      <created>1654625102251</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1654625102251</updated>
     </task>
     <task id="LOCAL-00019" summary="Chapter 8.1 - Basic statements (interpreter tested, no errors)">
       <created>1654626651286</created>
@@ -551,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655339605253</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Chapter 11 - Challenge 3 - Report unused variables">
+      <created>1655363066451</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1655363066451</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -566,7 +566,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 10.1.4 - Runtime arity check (untested)" />
     <MESSAGE value="Chapter 10.2 - Native call (untested)" />
     <MESSAGE value="Chapter 10.2 - Native call (tested)" />
     <MESSAGE value="Chapter 10.3 - Function declarations" />
@@ -591,6 +590,7 @@
     <MESSAGE value="Chapter 11 - Variable local scoping (untested)" />
     <MESSAGE value="Chapter 11 - Lexical scoping (almost tested)" />
     <MESSAGE value="Chapter 11 - Lexical scoping (tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 11 - Lexical scoping (tested)" />
+    <MESSAGE value="Chapter 11 - Challenge 3 - Report unused variables" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 11 - Challenge 3 - Report unused variables" />
   </component>
 </project>

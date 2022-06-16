@@ -1,5 +1,15 @@
 package jlox;
 
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.impl.DefaultParser;
+import org.jline.reader.impl.LineReaderImpl;
+import org.jline.reader.impl.completer.StringsCompleter;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+import org.jline.widget.AutopairWidgets;
+import org.jline.widget.AutosuggestionWidgets;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,8 +39,11 @@ public class Lox {
     }
 
     private static Stdio runPrompt() throws IOException {
-        var input = new InputStreamReader(System.in);
-        var reader = new BufferedReader(input);
+        // var input = new InputStreamReader(System.in);
+        //var reader = new BufferedReader(input);
+
+        var reader = getReader();
+
         Stdio lastStdio = null;
         Environment globalSymbols = new Environment();
         for(;;){
@@ -40,6 +53,29 @@ public class Lox {
             lastStdio = run(line, RunPhase.INTERPRET_MORE, globalSymbols).report();
         }
         return lastStdio;
+    }
+
+    private static LineReader getReader() throws IOException {
+        try (Terminal terminal = TerminalBuilder.terminal()) {
+            var completer = new StringsCompleter("#ast", "#walk");
+
+            DefaultParser parser = new DefaultParser();
+            parser.setEofOnUnclosedBracket(DefaultParser.Bracket.CURLY, DefaultParser.Bracket.ROUND, DefaultParser.Bracket.SQUARE);
+
+            LineReader reader = LineReaderBuilder.builder()
+                    .terminal(terminal)
+                    .completer(completer)
+                    .parser(parser)
+                    .variable(LineReader.SECONDARY_PROMPT_PATTERN, "%M%P > ")
+                    .variable(LineReader.INDENTATION, 2)   // indentation size
+                    .option(LineReader.Option.INSERT_BRACKET, true)   // insert closing bracket automatically
+                    .build();
+            AutosuggestionWidgets autosuggestionWidgets = new AutosuggestionWidgets(reader);
+            autosuggestionWidgets.enable();
+            AutopairWidgets autopairWidgets = new AutopairWidgets(reader);
+            autopairWidgets.enable();
+            return reader;
+        }
     }
 
     public enum RunPhase { AST, WALK, INTERPRET, INTERPRET_MORE }
