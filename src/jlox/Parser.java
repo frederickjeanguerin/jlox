@@ -5,9 +5,27 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static jlox.TokenType.*;
+import static jlox.TokenType.AND;
 
 @SuppressWarnings({"ThrowableNotThrown", "UnnecessaryLocalVariable"})
 public class Parser {
+
+    enum ExprType {
+        COMMA,
+        ASSIGNMENT,
+        LAMBDA,
+        TERNARY,
+        OR,
+        AND,
+        EQUALITY,
+        COMPARISON,
+        TERM,
+        FACTOR,
+        UNARY,
+        CALL,
+        PRIMARY_OR_ERROR,
+        PRIMARY,
+    }
 
     private static class ParseError extends RuntimeException {}
 
@@ -24,9 +42,40 @@ public class Parser {
     Parser(List<Token> tokens, Stdio stdio) {
         this.tokens = tokens;
         this.stdio = stdio;
+
+        // Order expressions by precedence
+
+    }
+
+    private ExprType next(ExprType type) {
+        return ExprType.values()[type.ordinal() + 1];
+    }
+
+    private Supplier<Expr> nextExpr(ExprType type) {
+        return supplierOf(next(type));
+    }
+
+    private Supplier<Expr> supplierOf(ExprType type) {
+        return switch(type) {
+            case COMMA -> this::comma;
+            case ASSIGNMENT -> this::assignment;
+            case LAMBDA -> this::lambda;
+            case TERNARY -> this::ternary;
+            case OR -> this::or;
+            case AND -> this::and;
+            case EQUALITY -> this::equality;
+            case COMPARISON -> this::comparison;
+            case TERM -> this::term;
+            case FACTOR -> this::factor;
+            case UNARY -> this::unary;
+            case CALL -> this::call;
+            case PRIMARY_OR_ERROR -> this::primaryOrError;
+            case PRIMARY -> this::primary;
+        };
     }
 
     List<Stmt> parse() {
+
         List<Stmt> statements = new ArrayList<>();
         while (!isAtEnd()) {
             var decl = declaration();
@@ -63,9 +112,6 @@ public class Parser {
                     error(peek(), "%s can't have more than 255 parameters".formatted(kind));
                 }
                 var parameter = consume(IDENTIFIER, "Expect parameter name");
-//                if (params.stream().map(Token::lexeme).anyMatch(lexeme -> lexeme.equals(parameter.lexeme()))) {
-//                    error(parameter, "Parameter '%s' already defined.".formatted(parameter.lexeme()));
-//                }
                 params.add(parameter);
             } while (match(COMMA));
         }
@@ -249,11 +295,11 @@ public class Parser {
 
     // Challenge 1, Chap 6 : C comma expression
     private Expr comma() {
-        return binary(this::assignment, COMMA);
+        return binary(nextExpr(ExprType.COMMA), COMMA);
     }
 
     private Expr assignment() {
-        Expr expr = lambda();
+        Expr expr = nextExpr(ExprType.ASSIGNMENT).get();
 
         if (match(EQUAL)) {
             Token equals = previous();
@@ -271,15 +317,15 @@ public class Parser {
         if (match(FUN)) {
             return new Expr.Lambda(parameters("lambda"), body(true));
         }
-        return ternary();
+        return nextExpr(ExprType.LAMBDA).get();
     }
 
     // Challenge 2, Chap 6 : Ternary
     private Expr ternary() {
-        Expr expr = or();
+        Expr expr = nextExpr(ExprType.TERNARY).get();
         if (match(QUESTION)) {
             Token leftOp = previous();
-            Expr middle = or();
+            Expr middle = nextExpr(ExprType.TERNARY).get();
             Token rightOp = consume(COLON, "Expect ':' in ternary.");
             Expr right = ternary();
             expr =  new Expr.Ternary(expr, leftOp, middle, rightOp, right);
@@ -288,27 +334,27 @@ public class Parser {
     }
 
     private Expr or() {
-        return binary(this::and, OR);
+        return binary(nextExpr(ExprType.OR), OR);
     }
 
     private Expr and() {
-        return binary(this::equality, AND);
+        return binary(nextExpr(ExprType.AND), AND);
     }
 
     private Expr equality() {
-        return binary(this::comparison, BANG_EQUAL, EQUAL_EQUAL);
+        return binary(nextExpr(ExprType.EQUALITY), BANG_EQUAL, EQUAL_EQUAL);
     }
 
     private Expr comparison() {
-        return binary(this::term, GREATER, GREATER_EQUAL, LESS, LESS_EQUAL);
+        return binary(nextExpr(ExprType.COMPARISON), GREATER, GREATER_EQUAL, LESS, LESS_EQUAL);
     }
 
     private Expr term() {
-        return binary(this::factor, MINUS, PLUS);
+        return binary(nextExpr(ExprType.TERM), MINUS, PLUS);
     }
 
     private Expr factor() {
-        return binary(this::unary, SLASH, STAR, PERCENT);
+        return binary(nextExpr(ExprType.FACTOR), SLASH, STAR, PERCENT);
     }
 
     private Expr unary() {
@@ -333,11 +379,11 @@ public class Parser {
             }
             error(operator, "Invalid increment/decrement target.");
         }
-        return call();
+        return nextExpr(ExprType.UNARY).get();
     }
 
     private Expr call() {
-        Expr expr = primaryOrError();
+        Expr expr = nextExpr(ExprType.CALL).get();
 
         while (true) {
             if (match(LEFT_PAREN)) {
@@ -358,7 +404,7 @@ public class Parser {
                     error(peek(), "Function call can't have more than 255 arguments");
                 }
                 // Beware: if we go for expression(), then we will match comma expression...
-                arguments.add(assignment());
+                arguments.add(nextExpr(ExprType.COMMA).get());
             } while (match(COMMA));
         }
         Token rightPar = consume(RIGHT_PAREN, "Expect ')' after arguments");
@@ -367,13 +413,13 @@ public class Parser {
 
     // Challenge 3, Chap 6 : Error production for missing first operand
     private Expr primaryOrError() {
-        if (peek(QUESTION, BANG_EQUAL, EQUAL_EQUAL, GREATER, GREATER_EQUAL,
+        if (peek(QUESTION, BANG_EQUAL, EQUAL, EQUAL_EQUAL, GREATER, GREATER_EQUAL,
                 LESS, LESS_EQUAL, PLUS, PERCENT, SLASH, STAR)) {
             error(peek(), "Expect first operand (expression) before operator.");
             insert(new Token(ERROR, peek().lexeme(), peek().literal(), peek().line()));
-            return ternary(); // retry to parse with added dummy first operand
+            return nextExpr(ExprType.COMMA).get(); // retry to parse with added dummy first operand
         }
-        return primary();
+        return nextExpr(ExprType.PRIMARY_OR_ERROR).get();
     }
 
     private Expr primary() {

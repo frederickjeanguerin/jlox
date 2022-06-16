@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 11 - Challenge 3 - Report unused variables">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED JLine3 support (working ±)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lox.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Lox.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,13 +206,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Chapter 8.1 - Basic statements (interpreter tested, no errors)">
-      <created>1654626651286</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1654626651286</updated>
     </task>
     <task id="LOCAL-00020" summary="Chapter 8.2 - Parsing variables (tested)">
       <created>1654652338843</created>
@@ -551,7 +543,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655363066451</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="ADDED JLine3 support (working ±)">
+      <created>1655391145461</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1655391145461</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -566,7 +565,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 10.2 - Native call (untested)" />
     <MESSAGE value="Chapter 10.2 - Native call (tested)" />
     <MESSAGE value="Chapter 10.3 - Function declarations" />
     <MESSAGE value="Chapter 10.3 (+) - Added check for parameter redefinition." />
@@ -591,6 +589,7 @@
     <MESSAGE value="Chapter 11 - Lexical scoping (almost tested)" />
     <MESSAGE value="Chapter 11 - Lexical scoping (tested)" />
     <MESSAGE value="Chapter 11 - Challenge 3 - Report unused variables" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 11 - Challenge 3 - Report unused variables" />
+    <MESSAGE value="ADDED JLine3 support (working ±)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED JLine3 support (working ±)" />
   </component>
 </project>
