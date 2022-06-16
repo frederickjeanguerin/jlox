@@ -19,7 +19,7 @@ public class WalkSymbol extends Walk.Base<Void> {
 
     @Override
     public void leaveFunctionStmt(Stmt.Function stmt) {
-        environment.pop();
+        pop();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class WalkSymbol extends Walk.Base<Void> {
 
     @Override
     public void leaveLambdaExpr(Expr.Lambda expr) {
-        environment.pop();
+        pop();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class WalkSymbol extends Walk.Base<Void> {
     @Override
     public void leaveBlockStmt(Stmt.Block block) {
         if (environment.hasNoLocalParameters())
-            environment.pop();
+            pop();
     }
 
     @Override
@@ -80,4 +80,16 @@ public class WalkSymbol extends Walk.Base<Void> {
             stdio().errorAtToken(error.token, error.getMessage());
         }
     }
+
+    private void pop() {
+        for(Symbol sym : environment.localSymbols()) {
+            if (sym.isUnused()) {
+                stdio().warningAtToken(sym.token, sym.name() + " is unused.");
+            }
+        }
+        environment.pop();
+    }
+
+
+
 }

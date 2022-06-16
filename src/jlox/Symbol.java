@@ -9,6 +9,7 @@ class Symbol {
     private Object value;
     final boolean readonly;
     final Type type;
+    private int useCount = 0;
 
     Symbol(Token token, boolean readonly, Object value, Type type) {
         this.token = token;
@@ -19,13 +20,35 @@ class Symbol {
 
     public Object getValue(Token emitter) {
         if (value == UNINITIALIZED)
-            throw new LoxError(emitter, "Uninitialized variable '%s'".formatted(emitter.lexeme()));
+            throw new LoxError(emitter, "%s is uninitialized.".formatted(name()));
         return value;
     }
 
     public void setValue(Token receiver, Object value) {
         if (readonly)
-            throw new LoxError(receiver, "Readonly symbol '%s'.".formatted(receiver.lexeme()));
+            throw new LoxError(receiver, "%s is read only.".formatted(name()));
         this.value = value;
+    }
+
+    public void use() {
+        useCount++;
+    }
+
+    public boolean isUnused() { return useCount == 0; }
+
+    public String name() {
+        return  typeName() + " '" + token.lexeme() + "'";
+    }
+
+    public String typeName() {
+        return typeName(type);
+    }
+
+    public static String typeName(Type type) {
+        return switch(type){
+            case VAR -> "variable";
+            case FUN -> "function";
+            case PARAMETER -> "parameter";
+        };
     }
 }

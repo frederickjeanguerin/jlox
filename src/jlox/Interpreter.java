@@ -288,14 +288,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     void executeBlock(List<Stmt> statements) {
-        // TODO do not push if no local variable
-        environment.push();
+        if (environment.hasNoLocalParameters())
+            environment.push();
         try {
             for (var stmt : statements ) {
                 execute(stmt);
             }
         } finally {
-            environment.pop();
+            if (environment.hasNoLocalParameters())
+                environment.pop();
         }
     }
 

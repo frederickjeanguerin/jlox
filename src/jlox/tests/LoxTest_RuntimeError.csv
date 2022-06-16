@@ -26,17 +26,17 @@ Division by zero ¤ 1.5 % 0 ¤ at '%', division by zero
 Unary - ¤ - true ¤ at '-', right operand, number expected
 
 # Undefined variables (symbols)
-Undefined symbol in expression ¤ a ¤ at 'a', undefined symbol 'a'
-Undefined symbol in multiple expression ¤ b + a ¤ at 'b', undefined symbol 'b'
-Undefined symbol in assignment ¤ a = 10 ¤ at 'a', undefined symbol 'a'
-Undefined symbol in chained assignment ¤ var a; c = b = a = 10 ¤ at 'b', undefined symbol 'b'
-Uninitialized variable ¤ var a; 10 + a + 5 ¤ at 'a', uninitialized variable 'a'
+Undefined symbol in expression ¤ a ¤ at 'a', undefined identifier 'a'
+Undefined symbol in multiple expression ¤ b + a ¤ at 'b', undefined identifier 'b'
+Undefined symbol in assignment ¤ a = 10 ¤ at 'a', undefined identifier 'a'
+Undefined symbol in chained assignment ¤ var a; c = b = a = 10 ¤ at 'b', undefined identifier 'b'
+Uninitialized variable ¤ var a; 10 + a + 5 ¤ at 'a', variable 'a' is uninitialized
 
 # Block scope
-Undefined variable out of scope ¤ var b = 20; { var a = 10; print a; } b + a ¤ undefined symbol 'a', /P0
+Undefined variable out of scope ¤ var b = 20; { var a = 10; print a; } b + a ¤ undefined identifier 'a', /P0
 
 # For loop
-For loop local variable out of scope ¤ for (var a = 0; a < 5; a = a + 1); a ¤ undefined symbol 'a'
+For loop local variable out of scope ¤ for (var a = 0; a < 5; a = a + 1); a ¤ undefined identifier 'a'
 
 # Increment & Decrement
 Increment boolean ¤ var i = true; ++i ¤ at 'i', expected 'Double' but got 'Boolean'
@@ -61,12 +61,20 @@ Dead code 1 ¤ fun f() { print 30; return; 10; 20; } f(); ¤ /120, dead code, 10
 Dead code 2 ¤ fun f() { print 30; { return; print 10; } print 20; } f(); ¤ /120, dead code, print 10, print 20, *30
 
 # Lexical scope
-Lexical scope 1 (var after fun)  ¤ fun plus(a) { print a + b; }; var b = 10; plus(5); ¤ /001, at 'b', undefined symbol
+Lexical scope 1 (var after fun)  ¤ fun plus(a) { print a + b; }; var b = 10; plus(5); ¤ /001, at 'b', undefined identifier
 
 # Redefinition
 Redefinition global ok ¤ var a = 10; var a = 20; print a; ¤ /100, *20
-Redefinition local bad ¤ { var a = 10; var a = 20; fun a() {}; } ¤ /002, 'a' cannot be redeclared
-Redefinition parameters bad ¤ fun plus(b, b, b) {} ¤ /002, 'b' cannot be redeclared
+Redefinition local bad ¤ { var a = 10; var a = 20; fun a() {}; print a; } ¤ /002, variable 'a', cannot be redeclared
+Redefinition parameters bad ¤ fun plus(b, b, b) {b;} ¤ /002, parameter 'b', cannot be redeclared
 Redefinition sub block ok ¤ { var a = 10; { var a = 20; print a; } print a; } ¤ /200, *10, *20
-Redefinition parameter in body bad ¤ fun f(a) { var a = 10; print a; } f(5); ¤ /001, 'a' cannot be redeclared
-Redefinition parameter in body bad ¤ var f = fun (a) { var a = 10; print a; }; f(5); ¤ /001, 'a' cannot be redeclared
+Redefinition parameter in body bad ¤ fun f(a) { var a = 10; print a; } f(5); ¤ /001, parameter 'a', cannot be redeclared
+Redefinition parameter in body bad ¤ var f = fun (a) { var a = 10; print a; }; f(5); ¤ /001, parameter 'a', cannot be redeclared
+
+# Unused symbol: variable, parameter, function
+Unused global ok ¤ var a = 10; ¤ /000
+Unused local variable bad ¤ { var b = 10; } ¤ /010, variable 'b' is unused
+Unused local function bad ¤ { fun f() 10; } ¤ /010, function 'f' is unused
+Unused local parameter bad ¤ { fun f(p) 10; } ¤ /020, function 'f' is unused, parameter 'p' is unused
+Used in sub-block ok ¤ { var b = 10; { print b; } } ¤ /100, *10
+Used in sub-function ok ¤ { var b = 10; fun f(){ print b; }; f(); } ¤ /100, *10

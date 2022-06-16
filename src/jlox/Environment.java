@@ -1,5 +1,6 @@
 package jlox;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -65,12 +66,16 @@ public class Environment {
         scope.define(name.lexeme(), name, value, type);
     }
 
+    Collection<Symbol> localSymbols() {
+        return scope.symbols.values();
+    }
+
     /**
      *
      * @return True if the current scope has parameters defined into it
      */
     boolean hasNoLocalParameters() {
-        return scope.symbols.values().stream().noneMatch(sym -> sym.type == Symbol.Type.PARAMETER);
+        return localSymbols().stream().noneMatch(sym -> sym.type == Symbol.Type.PARAMETER);
     }
 
     Symbol getSymbol(Token symbol) {
@@ -78,12 +83,13 @@ public class Environment {
     }
 
     Symbol getSymbol(Token symbol, Token target) {
-        var name = symbol.lexeme();
-        var value = scope.get(name, target);
-        if (value == null) {
-            throw new LoxError(symbol, "Undefined symbol '%s'.".formatted(name));
+        String name = symbol.lexeme();
+        Symbol sym = scope.get(name, target);
+        if (sym == null) {
+            throw new LoxError(symbol, "Undefined identifier '%s'.".formatted(name));
         }
-        return value;
+        sym.use();
+        return sym;
     }
 
     void assignSymbol(Token symbol, Object value, Token target) {
@@ -112,9 +118,11 @@ public class Environment {
         }
 
         void define(String name, Token token, Object value, Symbol.Type type) {
-            if (oneDefinitionOnly && symbols.get(name) != null) {
+            Symbol sym = symbols.get(name);
+            if (oneDefinitionOnly && sym != null) {
                 throw new LoxError(token,
-                        "Symbol '%s' cannot be redeclared.".formatted(token.lexeme()));
+                        "%s (at line %d) cannot be redeclared as a new %s."
+                                .formatted(sym.name(), sym.token.line(), Symbol.typeName(type)));
             }
             symbols.put(name, new Symbol(token, readonly, value, type));
         }
