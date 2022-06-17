@@ -1,7 +1,9 @@
 package jlox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
@@ -92,7 +94,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitClassStmt(Stmt.Class stmt) {
-        var loxClass = new LoxClass(stmt.name.lexeme());
+        Map<String, LoxCallable.Function> methods = new HashMap<>();
+        for (var method : stmt.methods) {
+            methods.put(method.name.lexeme(), new LoxCallable.Function(method, environment.getScoping()));
+        }
+        var loxClass = new LoxClass(stmt.name.lexeme(), methods);
         environment.defineSymbol(stmt.name, loxClass, Symbol.Type.CLASS);
         return null;
     }

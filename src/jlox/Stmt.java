@@ -178,11 +178,13 @@ abstract class Stmt {
     final Token name;
     final List<Token> parameters;
     final Stmt body;
+    final String kind;
 
-    Function ( Token name, List<Token> parameters, Stmt body ) {
+    Function ( Token name, List<Token> parameters, Stmt body, String kind ) {
       this.name = name;
       this.parameters = parameters;
       this.body = body;
+      this.kind = kind;
     }
 
     @Override

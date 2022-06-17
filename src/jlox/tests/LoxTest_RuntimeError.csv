@@ -95,4 +95,6 @@ Class not valid instance ¤ 10.size ¤ /001, left side of '.size' is not an inst
 Class not valid instance ¤ 10.max = 30 ¤ /001, left side of '.max' is not an instance
 Class field chained ¤ class C{} var c = C(); c.alpha = C(); c.alpha.beta = 12; c.alpha.beta ¤ /100, *12
 Class field indirect ¤ class C{} var c = C(); fun f() c; f().gamma = 32; f().gamma ¤ /100, *32
+Class method get ¤ class C { hello(name) { print ""hello "" + name; } } var c = C(); c.hello ¤ /100, *<method: hello>
+Class method call ¤ class C { hello(name) { print ""hello "" + name; } } var c = C(); c.hello(33); ¤ /100, *hello 33
 

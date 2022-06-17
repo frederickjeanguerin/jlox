@@ -109,10 +109,9 @@ public class Parser {
         return new Stmt.Class(name, methods);
     }
 
-    @SuppressWarnings("SameParameterValue")
     private Stmt.Function funDeclaration(String kind) {
         var name = consume(IDENTIFIER, "Expect %s name".formatted(kind));
-        return new Stmt.Function(name, parameters(kind), body(false));
+        return new Stmt.Function(name, parameters(kind), body(false), kind);
     }
 
     private List<Token> parameters(String kind) {

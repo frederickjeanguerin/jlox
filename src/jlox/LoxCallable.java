@@ -8,7 +8,8 @@ interface LoxCallable {
     Object call(Interpreter interpreter, Token leftPar, List<Object> arguments);
 
     class Function implements LoxCallable {
-
+        enum Type { FUN, LAMBDA, METHOD }
+        private final Type type;
         private final String name;
         private final List<Token> parameters;
         private final Stmt body;
@@ -19,6 +20,11 @@ interface LoxCallable {
             this.parameters = declaration.parameters;
             this.body = declaration.body;
             this.scoping = scoping;
+            this.type = switch(declaration.kind) {
+                case "function" -> Type.FUN;
+                case "method" -> Type.METHOD;
+                default -> throw new IllegalStateException("Unexpected value: " + declaration.kind);
+            };
         }
 
         public Function(Expr.Lambda lambda, Environment.Scoping scoping) {
@@ -26,6 +32,7 @@ interface LoxCallable {
             this.parameters = lambda.parameters;
             this.body = lambda.body;
             this.scoping = scoping;
+            this.type = Type.LAMBDA;
         }
         @Override
         public int arity() {
@@ -56,8 +63,13 @@ interface LoxCallable {
         }
 
         @Override
-        public String toString() { return name != null ? "<fun: %s>".formatted(name) : "<lambda>"; }
-
+        public String toString() {
+            return switch (type) {
+                case FUN -> "<fun: %s>".formatted(name);
+                case LAMBDA -> "<lambda>";
+                case METHOD -> "<method: %s>".formatted(name);
+            };
+        }
     }
 
     class Native {
