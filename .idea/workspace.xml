@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 12.7 - Init (tested)">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 13.1 - Superclass basics (tested)">
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap13-superclass-methods.lox" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/LoxClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Walker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,13 +229,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Chapter 8.5 - Block and Scope (tested)">
-      <created>1654703703982</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1654703703982</updated>
     </task>
     <task id="LOCAL-00029" summary="Chapter 8 - Challenge 2 (uninitialized variable)">
       <created>1654712009096</created>
@@ -578,7 +566,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655477915106</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Chapter 13.1 - Superclass basics (tested)">
+      <created>1655499442705</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1655499442705</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -593,7 +588,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="REFACTOR Added VoidVisitor" />
     <MESSAGE value="ADDED AstWalker" />
     <MESSAGE value="ADDED WalkReturn (partial, untested)" />
     <MESSAGE value="ADDED WalkReturn (complete, untested)" />
@@ -618,7 +612,8 @@
     <MESSAGE value="Chapter 12.6 - Class this (tested)" />
     <MESSAGE value="Chapter 12.6 - Self (tested)" />
     <MESSAGE value="Chapter 12.7 - Init (tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 12.7 - Init (tested)" />
+    <MESSAGE value="Chapter 13.1 - Superclass basics (tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 13.1 - Superclass basics (tested)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

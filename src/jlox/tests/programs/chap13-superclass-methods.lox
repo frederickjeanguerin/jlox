@@ -1,0 +1,27 @@
+
+print "Superclass methods are available to subclass instances (Chapter 13.2):
+";
+
+class Base {
+    sayHello() {
+        print "Hello!";
+    }
+    sayHi(to) {
+        print "Hi " + to + "!";
+    }
+    sayNo() {
+        print "No!";
+    }
+}
+
+class Derived < Base {
+    sayNo() {
+        print "No way!";
+    }
+}
+
+var d = Derived();
+d.sayHello();
+d.sayHi("Bob");
+d.sayNo();
+d.notFound();

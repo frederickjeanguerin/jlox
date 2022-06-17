@@ -1,0 +1,8 @@
+Superclass methods are available to subclass instances (Chapter 13.2):
+
+Hello!
+Hi Bob!
+No way!
+
+
+[line 27] Error at 'notFound': Undefined property 'notFound'.

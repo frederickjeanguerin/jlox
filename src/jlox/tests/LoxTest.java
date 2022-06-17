@@ -115,7 +115,8 @@ class LoxTest {
             "chap9-fibonacci",
             "chap10-fibonacci-recursive",
             "chap10-lambda-closure",
-            "chap12-class-self"
+            "chap12-class-self",
+            "chap13-superclass-methods"
     })
     void testSnapShot(String fileName) throws IOException {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");

@@ -21,7 +21,10 @@ public class LoxClass implements LoxCallable {
     }
 
     public Function findMethod(String name) {
-        return methods.getOrDefault(name, null);
+        var method = methods.getOrDefault(name, null);
+        if (method != null) return method;
+        if (superclass != null) return superclass.findMethod(name);
+        return null;
     }
 
     @Override
