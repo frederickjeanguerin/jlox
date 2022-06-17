@@ -173,7 +173,11 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitClassStmt(Stmt.Class stmt) {
-        append("class "); append(stmt.name); append(" {"); eol();
+        append("class "); append(stmt.name);
+        if (stmt.superclass != null) {
+            append(" < "); append(stmt.superclass.name);
+        }
+        append(" {"); eol();
         for(var method : stmt.methods) {
             visitFunctionStmt(method);
         }

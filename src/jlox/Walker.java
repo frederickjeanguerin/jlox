@@ -175,6 +175,7 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
 
     @Override
     public void visitClassStmt(Stmt.Class stmt) {
+        walk(stmt.superclass);
         for (var method: stmt.methods) {
             walk(method);
         }

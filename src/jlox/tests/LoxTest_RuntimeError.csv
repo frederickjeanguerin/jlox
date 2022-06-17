@@ -120,3 +120,8 @@ Init direct invocation ¤ class Bed { init(size) { self.size = size; } } var bed
 Init return self ¤ class Bed { init(size) { self.size = size; } } var bed = Bed(10); bed.init(20).init(30); bed.size ¤ /100, *30
 Init return self upon return ¤ class Bed { init(size) { self.size = size; return; } } var bed = Bed(10); bed.init(20).init(30); bed.size ¤ /100, *30
 Init cannot return a value ¤ class C { init() { return 10; } } ¤ /001, at 'return', initializers cannot return something
+
+# Superclass
+Superclass simple ¤ class Sup { } class Inf < Sup { } print Inf; ¤ /100, *class Inf
+Superclass must be a class ¤ var Value = 10; class C < Value { } ¤ /001, at 'Value', class expected
+Superclass cannot be the class itself ¤ class C < C {} ¤ /001, at 'C', class can't inherit from itself

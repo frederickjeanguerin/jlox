@@ -17,6 +17,9 @@ public class WalkSymbol extends Walk.Base<Void> {
     @Override
     public void enterClassStmt(Stmt.Class stmt) {
         defineSymbol(stmt.name, Symbol.Type.CLASS);
+        if (stmt.superclass != null && stmt.name.lexeme().equals(stmt.superclass.name.lexeme())) {
+            stdio().errorAtToken(stmt.superclass.name, "A class can't inherit from itself");
+        }
         environment.push(true);
         stmt.self = Token.Special("self");
         defineSymbol(stmt.self, Symbol.Type.SPECIAL);

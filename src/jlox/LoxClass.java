@@ -8,13 +8,16 @@ public class LoxClass implements LoxCallable {
     private final Map<String, Function> methods;
     final Stmt.Class classStmt;
 
-    public LoxClass(String name, Map<String, Function> methods, Stmt.Class klass) {
+    final LoxClass superclass;
+
+    public LoxClass(String name, LoxClass superclass, Map<String, Function> methods, Stmt.Class stmt) {
         this.name = name;
         this.methods = methods;
+        this.superclass = superclass;
         for (var method : methods.values()) {
             method.parent = this;
         }
-        classStmt = klass;
+        classStmt = stmt;
     }
 
     public Function findMethod(String name) {
