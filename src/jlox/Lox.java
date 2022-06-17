@@ -39,10 +39,10 @@ public class Lox {
     }
 
     private static Stdio runPrompt() throws IOException {
-        // var input = new InputStreamReader(System.in);
-        //var reader = new BufferedReader(input);
+        var input = new InputStreamReader(System.in);
+        var reader = new BufferedReader(input);
 
-        var reader = getReader();
+        // var reader = getReader();
 
         Stdio lastStdio = null;
         Environment globalSymbols = new Environment();

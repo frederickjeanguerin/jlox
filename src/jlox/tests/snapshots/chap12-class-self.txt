@@ -1,0 +1,7 @@
+Using self with class (Chapter 12.6):
+
+Hello Mary
+Hello Poppins
+Hello Gollum
+
+

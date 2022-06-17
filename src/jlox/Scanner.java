@@ -250,8 +250,8 @@ class Scanner {
                 entry("or", OR),
                 entry("print", PRINT),
                 entry("return", RETURN),
+                entry("self", SELF),
                 entry("super", SUPER),
-                entry("this", THIS),
                 entry("true", TRUE),
                 entry("var", VAR),
                 entry("while", WHILE)

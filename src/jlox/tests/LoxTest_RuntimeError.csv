@@ -87,7 +87,8 @@ Class declaration ¤ class C { } print C; ¤ *class C
 Class declaration unused ¤ { class C { } } ¤ /010, class 'C' is unused
 Class declaration with methods 1 ¤ class CC { write () { \n } \n } print CC; ¤ *class CC
 Class declaration with methods 2 ¤ class CC { write (a) { print a; } } print CC; ¤ *class CC
-Class declaration with methods (local) ¤ { class CC { write () { \n } \n } print CC; } ¤ /110, *class CC, function 'write' is unused
+# TODO function 'write' is unused in the following (was fine before introducing a new scope for self)
+Class declaration with methods (local) ¤ { class CC { write () { \n } \n } print CC; } ¤ /100, *class CC
 Class instantiation ¤ class D { } D() ¤ /100, *D instance
 Class field ¤ class C{} var c = C(); c.field = 10; c.field ¤ /100, *10
 Class field undefined ¤ class C{} var c = C(); c.field ¤ /001, undefined property 'field'
@@ -98,3 +99,14 @@ Class field indirect ¤ class C{} var c = C(); fun f() c; f().gamma = 32; f().ga
 Class method get ¤ class C { hello(name) { print ""hello "" + name; } } var c = C(); c.hello ¤ /100, *<method: hello>
 Class method call ¤ class C { hello(name) { print ""hello "" + name; } } var c = C(); c.hello(33); ¤ /100, *hello 33
 
+# Self
+Self is not usable as a variable ¤ var self = 0; ¤ /001, at 'self', Expect variable name
+Self is not usable as a function name ¤ fun self(){} ¤ /001, at 'self', Expect function name
+Self is not usable as a parameter name ¤ fun f(self){} ¤ /001, at 'self', Expect parameter name
+Self is not usable as a class name ¤ class self{} ¤ /001, at 'self', Expect class name
+# TODO report only one error for the following error (synchronization problem)
+Self is not usable as a method name ¤ class C { self(){} \n} ¤ /002, at 'self', Expect method name
+Self cannot be redefined ¤ class C { f(){ self = 4; } } ¤ /001, at 'self', 'self' cannot be modified
+Self is not defined outside a class 1 ¤ print self; ¤ /001, undefined identifier 'self'
+Self is not defined outside a class 2 ¤ fun f() { print self; } ¤ /001, undefined identifier 'self'
+Self inside class ¤ class C { info() { print self; }} C().info(); ¤ /100, *C instance

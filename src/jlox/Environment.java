@@ -19,7 +19,11 @@ public class Environment {
     }
 
     void push() {
-        scope = new Scope(scope, false, true);
+        push(false);
+    }
+
+    void push(boolean readonly) {
+        scope = new Scope(scope, readonly, true);
     }
 
     void pop() {
@@ -100,6 +104,12 @@ public class Environment {
 
         Scoping(Scope scope) {
             this.scope = scope;
+        }
+
+        Scoping bind(Token self, LoxInstance instance) {
+            Scope bound = new Scope(scope, true, true);
+            bound.define(self.lexeme(), self, instance, Symbol.Type.SPECIAL);
+            return new Scoping(bound);
         }
     }
 

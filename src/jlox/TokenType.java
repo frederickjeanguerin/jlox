@@ -15,7 +15,7 @@ enum TokenType {
 
     // Keywords
     AND, BREAK, CLASS, CONTINUE, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
-    PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
+    PRINT, RETURN, SELF, SUPER, TRUE, VAR, WHILE,
 
     // Special
     EOF, ERROR,

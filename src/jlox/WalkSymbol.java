@@ -17,6 +17,14 @@ public class WalkSymbol extends Walk.Base<Void> {
     @Override
     public void enterClassStmt(Stmt.Class stmt) {
         defineSymbol(stmt.name, Symbol.Type.CLASS);
+        environment.push(true);
+        stmt.self = Token.Special("self");
+        defineSymbol(stmt.self, Symbol.Type.SPECIAL);
+    }
+
+    @Override
+    public void leaveClassStmt(Stmt.Class stmt) {
+        environment.pop();
     }
 
     @Override
@@ -66,7 +74,11 @@ public class WalkSymbol extends Walk.Base<Void> {
     @Override
     public void enterAssignExpr(Expr.Assign assign) {
         try {
-            assign.target = environment.getSymbol(assign.name).token;
+            var assignee = environment.getSymbol(assign.name);
+            if (assignee.readonly) {
+                stdio().errorAtToken(assignee.token, "%s cannot be modified.".formatted(assignee.name()));
+            }
+            assign.target = assignee.token;
         } catch (LoxError error) {
             stdio().errorAtToken(error.token, error.getMessage());
         }
@@ -90,7 +102,27 @@ public class WalkSymbol extends Walk.Base<Void> {
         }
     }
 
+    private boolean checkIdentifierName(Token name, Symbol.Type type) {
+        if (name.type() != TokenType.IDENTIFIER) {
+            switch(type) {
+                case VAR:
+                case FUN:
+                case PARAMETER:
+                case CLASS:
+                    stdio().errorAtToken(name, "'%s' is not a valid identifier for a %s."
+                            .formatted(name.lexeme(), Symbol.typeName(type)));
+                    return false;
+                case SPECIAL:
+                    /* OK */
+                    break;
+            }
+        }
+        return true;
+    }
+
     private Symbol defineSymbol(Token token, Symbol.Type type) {
+        if (! checkIdentifierName(token, type))
+            return null;
         try {
             return environment.defineSymbol(token, token, type);
         } catch (LoxError error) {
@@ -101,7 +133,7 @@ public class WalkSymbol extends Walk.Base<Void> {
 
     private void pop() {
         for(Symbol sym : environment.localSymbols()) {
-            if (sym.isUnused()) {
+            if (sym.isUnused() && sym.type != Symbol.Type.SPECIAL) {
                 stdio().warningAtToken(sym.token, sym.name() + " is unused.");
             }
         }

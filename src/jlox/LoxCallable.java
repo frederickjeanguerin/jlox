@@ -7,13 +7,15 @@ interface LoxCallable {
 
     Object call(Interpreter interpreter, Token leftPar, List<Object> arguments);
 
-    class Function implements LoxCallable {
-        enum Type { FUN, LAMBDA, METHOD }
+    class Function implements LoxCallable, Cloneable {
+
+        private enum Type { FUN, LAMBDA, METHOD}
         private final Type type;
         private final String name;
         private final List<Token> parameters;
         private final Stmt body;
-        private final Environment.Scoping scoping;
+        private Environment.Scoping scoping;
+        public LoxClass parent = null;
 
         public Function(Stmt.Function declaration, Environment.Scoping scoping) {
             this.name = declaration.name.lexeme();
@@ -33,6 +35,17 @@ interface LoxCallable {
             this.body = lambda.body;
             this.scoping = scoping;
             this.type = Type.LAMBDA;
+        }
+
+        public Function bind(LoxInstance instance) {
+            assert this.type == Type.METHOD; // TODO define class Method that inherits from Function
+            try {
+                var clone = (Function)clone();
+                clone.scoping = clone.scoping.bind(parent.classStmt.self, instance);
+                return clone;
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
         }
         @Override
         public int arity() {

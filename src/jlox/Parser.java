@@ -10,32 +10,11 @@ import static jlox.TokenType.AND;
 @SuppressWarnings({"ThrowableNotThrown", "UnnecessaryLocalVariable"})
 public class Parser {
 
-    enum ExprType {
-        COMMA,
-        ASSIGNMENT,
-        LAMBDA,
-        TERNARY,
-        OR,
-        AND,
-        EQUALITY,
-        COMPARISON,
-        TERM,
-        FACTOR,
-        UNARY,
-        CALL,
-        PRIMARY_OR_ERROR,
-        PRIMARY,
-    }
-
-    private static class ParseError extends RuntimeException {}
-
     private final Stdio stdio;
     private final List<Token> tokens;
     private int current = 0;
-
     // TODO push/pop loopNesting inside function body
     private int loopNesting = 0;
-
     // TODO what happens inside functions ?
     private boolean hasContinue = false;
 
@@ -56,7 +35,7 @@ public class Parser {
     }
 
     private Supplier<Expr> supplierOf(ExprType type) {
-        return switch(type) {
+        return switch (type) {
             case COMMA -> this::comma;
             case ASSIGNMENT -> this::assignment;
             case LAMBDA -> this::lambda;
@@ -102,8 +81,12 @@ public class Parser {
         Token name = consume(IDENTIFIER, "Expect class name.");
         consume(LEFT_BRACE, "Expect '{' before class body.");
         List<Stmt.Function> methods = new ArrayList<>();
-        while (!peek(RIGHT_BRACE) && !isAtEnd() ) {
-            methods.add(funDeclaration("method"));
+        while (!peek(RIGHT_BRACE) && !isAtEnd()) {
+            try {
+                methods.add(funDeclaration("method"));
+            } catch (ParseError error) {
+                synchronize();
+            }
         }
         consume(RIGHT_BRACE, "Expect '}' after class body.");
         return new Stmt.Class(name, methods);
@@ -134,8 +117,8 @@ public class Parser {
         return peek(LEFT_BRACE)
                 ? statement()
                 : isExpr
-                    ? new Stmt.Expression(lambda())
-                    : expressionStatement();
+                ? new Stmt.Expression(lambda())
+                : expressionStatement();
     }
 
     private Stmt varDeclaration() {
@@ -164,7 +147,7 @@ public class Parser {
         // TODO check if return in function body
         // TODO check for unreachable code
         Token token = previous();
-        Expr value = peek(SEMICOLON)? null : expression();
+        Expr value = peek(SEMICOLON) ? null : expression();
         semicolon();
         return new Stmt.Return(token, value);
     }
@@ -234,7 +217,7 @@ public class Parser {
         var whileStmt = new Stmt.While(condition, whileBody);
 
         var forStmt = initializer == null ? whileStmt
-            : new Stmt.Block(List.of(initializer, whileStmt));
+                : new Stmt.Block(List.of(initializer, whileStmt));
 
         return forStmt;
     }
@@ -319,7 +302,7 @@ public class Parser {
                 Token name = var.name;
                 return new Expr.Assign(name, value);
             }
-            if (expr instanceof  Expr.Get get) {
+            if (expr instanceof Expr.Get get) {
                 return new Expr.Set(get.object, get.name, value);
             }
             error(equals, "Invalid assignment target (asa lvalue).");
@@ -342,7 +325,7 @@ public class Parser {
             Expr middle = nextExpr(ExprType.TERNARY).get();
             Token rightOp = consume(COLON, "Expect ':' in ternary.");
             Expr right = ternary();
-            expr =  new Expr.Ternary(expr, leftOp, middle, rightOp, right);
+            expr = new Expr.Ternary(expr, leftOp, middle, rightOp, right);
         }
         return expr;
     }
@@ -443,6 +426,7 @@ public class Parser {
         if (match(FALSE)) return new Expr.Literal(false);
         if (match(TRUE)) return new Expr.Literal(true);
         if (match(NIL)) return new Expr.Literal(null);
+        if (match(SELF)) return new Expr.Variable(previous());  // And not Expr.Self!
         if (match(ERROR)) return new Expr.Literal("#Error");
         if (match(NUMBER, STRING)) return new Expr.Literal(previous().literal());
         if (match(IDENTIFIER)) return new Expr.Variable(previous());
@@ -484,19 +468,27 @@ public class Parser {
 
     private void synchronize() {
         advance();
-        while (!isAtEnd()) {
-            if (previous().type() == SEMICOLON || previous().type() == RIGHT_BRACE) return;
 
-            switch(peek().type()) {
+        while (!isAtEnd()) {
+
+            // Restart parsing after these tokens
+            switch (previous().type()) {
+                case SEMICOLON:
+                case RIGHT_BRACE:
+                    return;
+            }
+
+            // Restart parsing at these tokens
+            switch (peek().type()) {
                 case CLASS:
                 case FOR:
                 case FUN:
                 case IF:
+                case LEFT_BRACE:
                 case PRINT:
                 case RETURN:
                 case VAR:
                 case WHILE:
-                case LEFT_BRACE:
                     return;
             }
             advance();
@@ -530,5 +522,25 @@ public class Parser {
 
     private Token previous() {
         return tokens.get(current - 1);
+    }
+
+    enum ExprType {
+        COMMA,
+        ASSIGNMENT,
+        LAMBDA,
+        TERNARY,
+        OR,
+        AND,
+        EQUALITY,
+        COMPARISON,
+        TERM,
+        FACTOR,
+        UNARY,
+        CALL,
+        PRIMARY_OR_ERROR,
+        PRIMARY,
+    }
+
+    private static class ParseError extends RuntimeException {
     }
 }

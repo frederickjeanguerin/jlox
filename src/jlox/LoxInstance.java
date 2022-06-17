@@ -22,7 +22,7 @@ public class LoxInstance {
             return fields.get(lexeme);
         }
         var method = klass.findMethod(lexeme);
-        if (method != null) return method;
+        if (method != null) return method.bind(this);
 
         throw new LoxError(name, "Undefined property '%s'.".formatted(lexeme));
     }

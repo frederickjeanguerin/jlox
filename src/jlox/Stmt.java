@@ -119,6 +119,7 @@ abstract class Stmt {
 
     final Token name;
     final List<Stmt.Function> methods;
+    Token self = null;
 
     Class ( Token name, List<Stmt.Function> methods ) {
       this.name = name;

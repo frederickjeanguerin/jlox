@@ -1,0 +1,23 @@
+
+print "Using self with class (Chapter 12.6):
+";
+
+class Greeting {
+    sayHello() {
+        print "Hello " + self.name;
+    }
+    setName(name) {
+        self.name = name;
+    }
+}
+
+var g = Greeting();
+g.name = "Mary";
+g.sayHello();
+
+var f = g.sayHello;
+g.name = "Poppins";
+f();
+
+g.setName("Gollum");
+f();
