@@ -115,6 +115,11 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
     }
 
     @Override
+    public void visitGetExpr(Expr.Get get) {
+        walk(get.object);
+    }
+
+    @Override
     public void visitGroupingExpr(Expr.Grouping grouping) {
         walk(grouping.expression);
     }
@@ -127,6 +132,13 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
     @Override
     public void visitLiteralExpr(Expr.Literal literal) {
         // done
+    }
+
+    @Override
+    public void visitSetExpr(Expr.Set set) {
+        // Should we walk the value or the object first? The book goes for the value first.
+        walk(set.value);
+        walk(set.object);
     }
 
     @Override

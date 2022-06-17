@@ -100,6 +100,11 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
     }
 
     @Override
+    public void visitGetExpr(Expr.Get get) {
+        append(get.object); append(','); append(get.name);
+    }
+
+    @Override
     public void visitGroupingExpr(Expr.Grouping expr) {
         parenthesize("group", expr.expression);
         // append('('); append(expr.expression); append(')');
@@ -119,6 +124,11 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
     @Override
     public void visitLiteralExpr(Expr.Literal expr) {
         append(Stdio.stringify(expr.value));
+    }
+
+    @Override
+    public void visitSetExpr(Expr.Set set) {
+        append(set.object); append(','); append(set.name); append(" = "); append(set.value);
     }
 
     @Override

@@ -96,6 +96,16 @@ public class Walk implements Walker.AstVisitor {
     }
 
     @Override
+    public void enterGetExpr(Expr.Get get) {
+
+    }
+
+    @Override
+    public void leaveGetExpr(Expr.Get get) {
+
+    }
+
+    @Override
     public void enterGroupingExpr(Expr.Grouping grouping) {
 
     }
@@ -122,6 +132,16 @@ public class Walk implements Walker.AstVisitor {
 
     @Override
     public void leaveLiteralExpr(Expr.Literal literal) {
+
+    }
+
+    @Override
+    public void enterSetExpr(Expr.Set set) {
+
+    }
+
+    @Override
+    public void leaveSetExpr(Expr.Set set) {
 
     }
 

@@ -244,6 +244,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitGetExpr(Expr.Get get) {
+        Object object = evaluate(get.object);
+        if (object instanceof LoxInstance instance) {
+            return instance.get(get.name);
+        }
+        throw new LoxError(get.name, "Left side of '.%s' is not an instance".formatted(get.name.lexeme()));
+    }
+
+    @Override
     public Object visitGroupingExpr(Expr.Grouping expr) {
         return evaluate(expr.expression);
     }
@@ -256,6 +265,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitLiteralExpr(Expr.Literal expr) {
         return expr.value;
+    }
+
+    @Override
+    public Object visitSetExpr(Expr.Set set) {
+        if (evaluate(set.object) instanceof LoxInstance instance ) {
+            return instance.set(set.name, evaluate(set.value));
+        }
+        throw new LoxError(set.name, "Left side of '.%s' is not an instance".formatted(set.name.lexeme()));
     }
 
     @Override

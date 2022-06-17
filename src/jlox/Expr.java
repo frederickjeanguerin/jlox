@@ -9,9 +9,11 @@ abstract class Expr {
     R visitAssignExpr(Assign assign);
     R visitBinaryExpr(Binary binary);
     R visitCallExpr(Call call);
+    R visitGetExpr(Get get);
     R visitGroupingExpr(Grouping grouping);
     R visitLambdaExpr(Lambda lambda);
     R visitLiteralExpr(Literal literal);
+    R visitSetExpr(Set set);
     R visitTernaryExpr(Ternary ternary);
     R visitTypeCheckExpr(TypeCheck typeCheck);
     R visitUnaryExpr(Unary unary);
@@ -21,9 +23,11 @@ abstract class Expr {
     void visitAssignExpr(Assign assign);
     void visitBinaryExpr(Binary binary);
     void visitCallExpr(Call call);
+    void visitGetExpr(Get get);
     void visitGroupingExpr(Grouping grouping);
     void visitLambdaExpr(Lambda lambda);
     void visitLiteralExpr(Literal literal);
+    void visitSetExpr(Set set);
     void visitTernaryExpr(Ternary ternary);
     void visitTypeCheckExpr(TypeCheck typeCheck);
     void visitUnaryExpr(Unary unary);
@@ -36,12 +40,16 @@ abstract class Expr {
     void leaveBinaryExpr(Binary binary);
     void enterCallExpr(Call call);
     void leaveCallExpr(Call call);
+    void enterGetExpr(Get get);
+    void leaveGetExpr(Get get);
     void enterGroupingExpr(Grouping grouping);
     void leaveGroupingExpr(Grouping grouping);
     void enterLambdaExpr(Lambda lambda);
     void leaveLambdaExpr(Lambda lambda);
     void enterLiteralExpr(Literal literal);
     void leaveLiteralExpr(Literal literal);
+    void enterSetExpr(Set set);
+    void leaveSetExpr(Set set);
     void enterTernaryExpr(Ternary ternary);
     void leaveTernaryExpr(Ternary ternary);
     void enterTypeCheckExpr(TypeCheck typeCheck);
@@ -148,6 +156,36 @@ abstract class Expr {
         return visitor.visitCallExpr(this);
     }
   }
+  static class Get extends Expr {
+
+    final Expr object;
+    final Token name;
+
+    Get ( Expr object, Token name ) {
+      this.object = object;
+      this.name = name;
+    }
+
+    @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitGetExpr(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterGetExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveGetExpr(this);
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+        return visitor.visitGetExpr(this);
+    }
+  }
   static class Grouping extends Expr {
 
     final Expr expression;
@@ -232,6 +270,38 @@ abstract class Expr {
     @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitLiteralExpr(this);
+    }
+  }
+  static class Set extends Expr {
+
+    final Expr object;
+    final Token name;
+    final Expr value;
+
+    Set ( Expr object, Token name, Expr value ) {
+      this.object = object;
+      this.name = name;
+      this.value = value;
+    }
+
+    @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitSetExpr(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterSetExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveSetExpr(this);
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+        return visitor.visitSetExpr(this);
     }
   }
   static class Ternary extends Expr {
