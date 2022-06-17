@@ -28,11 +28,21 @@ public class LoxClass implements LoxCallable {
 
     @Override
     public int arity() {
+        // TODO not very efficient, because we need to lookup every time.
+        Function init = findMethod("init");
+        if (init != null) {
+            return init.arity();
+        }
         return 0;
     }
 
     @Override
     public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
-        return new LoxInstance(this);
+        LoxInstance instance = new LoxInstance(this);
+        Function init = findMethod("init");
+        if (init != null) {
+            init.bind(instance).call(interpreter, leftPar, arguments);
+        }
+        return instance;
     }
 }

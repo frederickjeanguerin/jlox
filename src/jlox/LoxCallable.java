@@ -47,6 +47,11 @@ interface LoxCallable {
                 throw new RuntimeException(e);
             }
         }
+
+        private boolean isInit() {
+            return type == Type.METHOD && name.equals("init");
+        }
+
         @Override
         public int arity() {
             return parameters.size();
@@ -57,6 +62,9 @@ interface LoxCallable {
             var environment = interpreter.environment;
             // TODO swap without new scope if no parameters or join parameters with locals in block
             environment.swap(scoping);
+            var self = isInit()
+                    ? environment.getSymbol(parent.classStmt.self, parent.classStmt.self).getValue(leftPar)
+                    : null;
             try {
                 for (int i = 0; i < arity(); i++) {
                     environment.defineSymbol(
@@ -67,8 +75,12 @@ interface LoxCallable {
                 } else {
                     interpreter.execute(body);
                 }
+                if (isInit()) return self;
             } catch (Interpreter.ReturnException ex) {
-                return ex.value;
+                if (ex.value != null) {
+                    return ex.value;
+                }
+                if (isInit()) return self;
             } finally {
                 environment.unswap();
             }

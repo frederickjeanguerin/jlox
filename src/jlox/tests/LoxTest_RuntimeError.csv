@@ -110,3 +110,13 @@ Self cannot be redefined ¤ class C { f(){ self = 4; } } ¤ /001, at 'self', 'se
 Self is not defined outside a class 1 ¤ print self; ¤ /001, undefined identifier 'self'
 Self is not defined outside a class 2 ¤ fun f() { print self; } ¤ /001, undefined identifier 'self'
 Self inside class ¤ class C { info() { print self; }} C().info(); ¤ /100, *C instance
+
+# Constructor (init)
+Init simple ¤ class C { init() { print 10; } } C(); C(); ¤ /200, *10.*10
+Init with params ¤ class Bed { init(size) { self.size = size; } } var bed = Bed(20); bed.size ¤ /100, *20
+Init with bad arity ¤ class Bed { init(size) { self.size = size; } } var bed = Bed(20, 30); bed.size ¤ /001, expect 1
+Init with bad arity ¤ class Bed { init(size) { self.size = size; } } var bed = Bed(); bed.size ¤ /001, expect 1
+Init direct invocation ¤ class Bed { init(size) { self.size = size; } } var bed = Bed(10); bed.init(20); bed.size ¤ /100, *20
+Init return self ¤ class Bed { init(size) { self.size = size; } } var bed = Bed(10); bed.init(20).init(30); bed.size ¤ /100, *30
+Init return self upon return ¤ class Bed { init(size) { self.size = size; return; } } var bed = Bed(10); bed.init(20).init(30); bed.size ¤ /100, *30
+Init cannot return a value ¤ class C { init() { return 10; } } ¤ /001, at 'return', initializers cannot return something

@@ -4,19 +4,21 @@ import java.util.*;
 
 public class WalkReturn extends Walk.Base<WalkReturn.State> {
 
-    record State(boolean insideFunction) {
-        boolean returnPermitted() { return insideFunction; }
+    record State(boolean insideFunction, boolean insideInit) {
+        boolean canReturn() { return insideFunction; }
+        boolean canReturnSomething() { return insideFunction && !insideInit; }
     }
 
     private final Set<Stmt> deadCodes = new HashSet<>();
 
     public WalkReturn() {
-        super(new State(false));
+        super(new State(false, false));
     }
 
     @Override
     public void enterFunctionStmt(Stmt.Function stmt) {
-        enterState(new State(true));
+        boolean isInit = stmt.name.lexeme().equals("init") && stmt.kind.equals("method");
+        enterState(new State(true, isInit));
     }
 
     @Override
@@ -26,7 +28,7 @@ public class WalkReturn extends Walk.Base<WalkReturn.State> {
 
     @Override
     public void enterLambdaExpr(Expr.Lambda lambda) {
-        enterState(new State(true));
+        enterState(new State(true, false));
     }
 
     @Override
@@ -36,8 +38,10 @@ public class WalkReturn extends Walk.Base<WalkReturn.State> {
 
     @Override
     public void enterReturnStmt(Stmt.Return stmt) {
-        if (!state().returnPermitted()) {
+        if (!state().canReturn()) {
             stdio().errorAtToken(stmt.keyword, "Return outside function.");
+        } else if (stmt.value != null && !state().canReturnSomething()) {
+            stdio().errorAtToken(stmt.keyword, "Initializers cannot return something.");
         } else {
             checkDeadCode(0, stmt, stmt.keyword);
         }
