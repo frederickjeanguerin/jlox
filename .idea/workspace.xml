@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 13.1 - Superclass basics (tested)">
-      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap13-superclass-methods.lox" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 13.3 - Super (almost tested)">
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap13-super-constructors.lox" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap13-super-semantics.lox" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/snapshots/chap13-super-semantics.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/LoxClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,6 +170,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LoxTest.testRuntimeError.[92] Super simple, class C { m() { print 10; }} class D &lt; C { f() { super.m(); }} var d = D(); d.f();, /100, *10" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Lox" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jlox.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="jlox.tests" />
+      <option name="MAIN_CLASS_NAME" value="jlox.tests.LoxTest" />
+      <option name="TEST_OBJECT" value="uniqueId" />
+      <uniqueIds>
+        <uniqueId value="[engine:junit-jupiter]/[class:jlox.tests.LoxTest]/[test-template:testRuntimeError(java.lang.String, java.lang.String, java.lang.String)]/[test-template-invocation:#92]" />
+      </uniqueIds>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LoxTest.testSnapShot" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Lox" />
       <extension name="coverage">
@@ -185,39 +204,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LoxTest.testSyntaxError" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Lox" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="jlox.tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="jlox.tests" />
-      <option name="MAIN_CLASS_NAME" value="jlox.tests.LoxTest" />
-      <option name="METHOD_NAME" value="testSyntaxError(java.lang.String,java.lang.String,java.lang.String)" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.jlox.Lox" />
       <item itemvalue="Application.GenerateAst" />
       <item itemvalue="Application.jlox.AstPrinter" />
       <item itemvalue="JUnit.LoxTest" />
       <item itemvalue="JUnit.LoxTest.testRuntimeError.[53] Unused reflexive function, { fun facto(n) n &lt;= 2 ? n : n * facto (n - 1); }, /010, function 'facto' is unused" />
+      <item itemvalue="JUnit.LoxTest.testRuntimeError.[92] Super simple, class C { m() { print 10; }} class D &lt; C { f() { super.m(); }} var d = D(); d.f();, /100, *10" />
       <item itemvalue="JUnit.LoxTest.testSnapShot" />
       <item itemvalue="JUnit.LoxTest.testInterpreter" />
-      <item itemvalue="JUnit.LoxTest.testSyntaxError" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LoxTest.testRuntimeError.[92] Super simple, class C { m() { print 10; }} class D &lt; C { f() { super.m(); }} var d = D(); d.f();, /100, *10" />
         <item itemvalue="JUnit.LoxTest.testRuntimeError.[53] Unused reflexive function, { fun facto(n) n &lt;= 2 ? n : n * facto (n - 1); }, /010, function 'facto' is unused" />
         <item itemvalue="JUnit.LoxTest.testSnapShot" />
         <item itemvalue="Application.jlox.AstPrinter" />
         <item itemvalue="JUnit.LoxTest.testInterpreter" />
-        <item itemvalue="JUnit.LoxTest.testSyntaxError" />
       </list>
     </recent_temporary>
   </component>
@@ -229,20 +232,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Chapter 8 - Challenge 2 (uninitialized variable)">
-      <created>1654712009096</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1654712009097</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Chapter 9.2 - If then else (tested)">
-      <created>1654782644465</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1654782644465</updated>
     </task>
     <task id="LOCAL-00031" summary="Added lazy interpretation for right side of binary expression.">
       <created>1654783930229</created>
@@ -573,7 +562,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655499442705</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="Chapter 13.2 - Inheriting methods (tested)">
+      <created>1655500574322</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1655500574322</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Chapter 13.3 - Super (almost tested)">
+      <created>1655519348497</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1655519348498</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -588,8 +591,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ADDED AstWalker" />
-    <MESSAGE value="ADDED WalkReturn (partial, untested)" />
     <MESSAGE value="ADDED WalkReturn (complete, untested)" />
     <MESSAGE value="ADDED WalkReturn (partial complete, partial tested)" />
     <MESSAGE value="ADDED Dead code warning for Return (tested but 2ERR)" />
@@ -613,17 +614,8 @@
     <MESSAGE value="Chapter 12.6 - Self (tested)" />
     <MESSAGE value="Chapter 12.7 - Init (tested)" />
     <MESSAGE value="Chapter 13.1 - Superclass basics (tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 13.1 - Superclass basics (tested)" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/jlox/Parser.java</url>
-          <line>474</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Chapter 13.2 - Inheriting methods (tested)" />
+    <MESSAGE value="Chapter 13.3 - Super (almost tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 13.3 - Super (almost tested)" />
   </component>
 </project>

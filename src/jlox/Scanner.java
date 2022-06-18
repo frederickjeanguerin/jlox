@@ -190,7 +190,7 @@ class Scanner {
             stdio.errorAtLine(line, "Unterminated string");
         } else {
             String value = source.substring(start + 1, current - 1);
-            addToken(STRING, value);
+            addToken(STRING, value.translateEscapes());
         }
     }
 

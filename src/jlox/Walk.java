@@ -147,6 +147,16 @@ public class Walk implements Walker.AstVisitor {
     }
 
     @Override
+    public void enterSuperExpr(Expr.Super expr) {
+
+    }
+
+    @Override
+    public void leaveSuperExpr(Expr.Super expr) {
+
+    }
+
+    @Override
     public void enterTernaryExpr(Expr.Ternary ternary) {
 
     }

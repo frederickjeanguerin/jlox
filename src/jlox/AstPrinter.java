@@ -132,6 +132,11 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
     }
 
     @Override
+    public void visitSuperExpr(Expr.Super expr) {
+        append(expr.keyword); append('.'); append(expr.method);
+    }
+
+    @Override
     public void visitUnaryExpr(Expr.Unary expr) {
         parenthesize(expr.operator.lexeme(), expr.right);
     }

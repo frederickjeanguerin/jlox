@@ -1,0 +1,58 @@
+print "------ Constructor inheritance semantics ------\n";
+
+class Object {
+    show() { print self.toString(); }
+}
+
+class Person < Object {
+    init(name, age) {
+        self.name = name;
+        self.age = age;
+    }
+    toString() {
+        return self.name + " is " + self.age;
+    }
+}
+
+// Insert a dummy class in the hierarchy to test for searching capability
+class SamePerson < Person { }
+
+class Singer < SamePerson {
+    sing(str) {
+        print "singing: " + str;
+    }
+}
+
+class Jedi < SamePerson {
+    init(name, age, force) {
+        super.init(name, age);
+        self.force = force;
+    }
+    toString() {
+        return super.toString() + " and has force " + self.force;
+    }
+    useForce (forceUsed) {
+        if (forceUsed < 0) {
+            print "ERROR: Cannot use a negative force: " + forceUsed;
+            return;
+        }
+        if (forceUsed > self.force) {
+            print "ERROR: Using " + forceUsed + " force but not enough force remaining: " + self.force;
+            return;
+        }
+        self.force = self.force - forceUsed;
+    }
+}
+
+var singer = Singer("Bruce", 50);
+singer.show();
+singer.sing("The number of the beast!");
+
+var jedi = Jedi("Luke", 20, 35);
+print "\nBefore using force: " + jedi.toString();
+jedi.useForce(15);
+print "After using force: " + jedi.toString();
+
+print "\nSome errors:";
+jedi.useForce(-1);
+jedi.useForce(21);

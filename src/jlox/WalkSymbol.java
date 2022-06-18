@@ -8,6 +8,7 @@ public class WalkSymbol extends Walk.Base<Void> {
     private final Environment environment;
 
     private final Stack<Symbol> functions = new Stack<>();
+    private final Stack<Stmt.Class> classes = new Stack<>();
 
     public WalkSymbol(Environment environment) {
         super(null);
@@ -20,6 +21,7 @@ public class WalkSymbol extends Walk.Base<Void> {
         if (stmt.superclass != null && stmt.name.lexeme().equals(stmt.superclass.name.lexeme())) {
             stdio().errorAtToken(stmt.superclass.name, "A class can't inherit from itself");
         }
+        classes.push(stmt);
         environment.push(true);
         stmt.self = Token.Special("self");
         defineSymbol(stmt.self, Symbol.Type.SPECIAL);
@@ -28,6 +30,7 @@ public class WalkSymbol extends Walk.Base<Void> {
     @Override
     public void leaveClassStmt(Stmt.Class stmt) {
         environment.pop();
+        classes.pop();
     }
 
     @Override
@@ -98,12 +101,28 @@ public class WalkSymbol extends Walk.Base<Void> {
         }
     }
 
+    @Override
+    public void enterSuperExpr(Expr.Super expr) {
+        if (classes.empty()) {
+            stdio().errorAtToken(expr.keyword, "Super used outside any classes");
+            return;
+        }
+        var superclass = classes.peek().superclass;
+        if (superclass == null) {
+            stdio().errorAtToken(expr.keyword, "Class %s has no superclass.".formatted(classes.peek().name.lexeme()));
+            return;
+        }
+        expr.superclassName = superclass.target;
+    }
+
     private void enterFunction(List<Token> parameters) {
         environment.push();
         for (var parameter : parameters) {
             defineSymbol(parameter, Symbol.Type.PARAMETER);
         }
     }
+
+
 
     private boolean checkIdentifierName(Token name, Symbol.Type type) {
         if (name.type() != TokenType.IDENTIFIER) {

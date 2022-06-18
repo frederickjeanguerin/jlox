@@ -142,6 +142,11 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
     }
 
     @Override
+    public void visitSuperExpr(Expr.Super expr) {
+        // done
+    }
+
+    @Override
     public void visitTernaryExpr(Expr.Ternary ternary) {
         walk(ternary.left);
         walk(ternary.middle);

@@ -14,6 +14,7 @@ abstract class Expr {
     R visitLambdaExpr(Lambda lambda);
     R visitLiteralExpr(Literal literal);
     R visitSetExpr(Set set);
+    R visitSuperExpr(Super expr);
     R visitTernaryExpr(Ternary ternary);
     R visitTypeCheckExpr(TypeCheck typeCheck);
     R visitUnaryExpr(Unary unary);
@@ -28,6 +29,7 @@ abstract class Expr {
     void visitLambdaExpr(Lambda lambda);
     void visitLiteralExpr(Literal literal);
     void visitSetExpr(Set set);
+    void visitSuperExpr(Super expr);
     void visitTernaryExpr(Ternary ternary);
     void visitTypeCheckExpr(TypeCheck typeCheck);
     void visitUnaryExpr(Unary unary);
@@ -50,6 +52,8 @@ abstract class Expr {
     void leaveLiteralExpr(Literal literal);
     void enterSetExpr(Set set);
     void leaveSetExpr(Set set);
+    void enterSuperExpr(Super expr);
+    void leaveSuperExpr(Super expr);
     void enterTernaryExpr(Ternary ternary);
     void leaveTernaryExpr(Ternary ternary);
     void enterTypeCheckExpr(TypeCheck typeCheck);
@@ -302,6 +306,37 @@ abstract class Expr {
     @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitSetExpr(this);
+    }
+  }
+  static class Super extends Expr {
+
+    final Token keyword;
+    final Token method;
+    Token superclassName = null;
+
+    Super ( Token keyword, Token method ) {
+      this.keyword = keyword;
+      this.method = method;
+    }
+
+    @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitSuperExpr(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterSuperExpr(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveSuperExpr(this);
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+        return visitor.visitSuperExpr(this);
     }
   }
   static class Ternary extends Expr {

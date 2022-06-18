@@ -12,9 +12,18 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import jlox.Lox;
 
 class LoxTest {
+
+    private static String transform(String input) {
+        return input
+                // string needs to be doubly quoted, because simply quoted have special treatment in csv file
+                .replace("\"\"", "\"")
+                // convert \n to new line
+                .replace("\\n", "\n");
+    }
 
     @ParameterizedTest
     @CsvFileSource(
@@ -116,7 +125,9 @@ class LoxTest {
             "chap10-fibonacci-recursive",
             "chap10-lambda-closure",
             "chap12-class-self",
-            "chap13-superclass-methods"
+            "chap13-superclass-methods",
+            "chap13-super-semantics",
+            "chap13-super-constructors"
     })
     void testSnapShot(String fileName) throws IOException {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");
@@ -124,21 +135,19 @@ class LoxTest {
         var source = Files.readString(sourcePath);
         var result = Lox.run(source);
         var given = result.stdout() + "\n\n" + result.stderr();
-        if (Files.exists(targetPath)){
+        var sourceIsDraft = source.matches("(?is)^//.*draft.*");
+        if (Files.exists(targetPath) && !sourceIsDraft) {
             var expected = Files.readString(targetPath);
-            assertLinesMatch(List.of(expected.split("\n")), List.of(given.split("\n")));
-        } else {
-            Files.writeString(targetPath, given);
-            //noinspection ConstantConditions
-            Assumptions.assumeTrue(false, "new snapshot created");
+            if (!expected.matches("(?is)^//.*draft.*")) {
+                assertLinesMatch(List.of(expected.split("\n")), List.of(given.split("\n")));
+                return;
+            }
         }
-    }
-
-    private static String transform(String input) {
-        return input
-                // string needs to be doubly quoted, because simply quoted have special treatment in csv file
-                .replace("\"\"", "\"")
-                // convert \n to new line
-                .replace("\\n", "\n");
+        if (sourceIsDraft) {
+            given = "// draft mode \n" + given;
+        }
+        Files.writeString(targetPath, given);
+        //noinspection ConstantConditions
+        Assumptions.assumeTrue(false, "new snapshot created");
     }
 }

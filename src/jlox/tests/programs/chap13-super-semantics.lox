@@ -1,0 +1,20 @@
+print "Chap 13.2.2 p227 super semantics
+";
+
+class A {
+    method() {
+        print "A method";
+    }
+}
+
+class B < A {
+    method() {
+        print "B method";
+    }
+    test() {
+        super.method();
+    }
+}
+
+class C < B {}
+C().test();         // A method expected

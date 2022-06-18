@@ -6,11 +6,67 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class GenerateAst {
+    private static final List<String> javaKeyword = List.of(
+            "abstract",
+            "assert",
+            "boolean",
+            "break",
+            "byte",
+            "case",
+            "catch",
+            "char",
+            "class",
+            "const",
+            "continue",
+            "default",
+            "do",
+            "double",
+            "else",
+            "enum",
+            "extends",
+            "false",
+            "final",
+            "finally",
+            "float",
+            "for",
+            "goto",
+            "if",
+            "implements",
+            "import",
+            "instanceof",
+            "int",
+            "interface",
+            "long",
+            "native",
+            "new",
+            "null",
+            "package",
+            "private",
+            "protected",
+            "public",
+            "return",
+            "short",
+            "static",
+            "super",
+            "switch",
+            "synchronized",
+            "this",
+            "throw",
+            "throws",
+            "transient",
+            "true",
+            "try",
+            "void",
+            "volatile",
+            "while",
+            "");
+
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
             System.err.println("Usage: generate_ast [output directory]");
@@ -37,7 +93,9 @@ public class GenerateAst {
         System.out.println("Current absolute path is: " + s);
     }
 
-    private static String uncapitalize(String string) {
+    private static String uncapitalize(boolean preferClassName, String className, String baseName) {
+        preferClassName = preferClassName &&  !javaKeyword.contains(className.toLowerCase());
+        String string = preferClassName ? className : baseName;
         return Character.toLowerCase(string.charAt(0)) + string.substring(1);
     }
 
@@ -172,7 +230,7 @@ public class GenerateAst {
                 case Walk -> "    void enter%1$s%2$s(%3$s %4$s);\n    void leave%1$s%2$s(%3$s %4$s);";
             };
             writer.println(methods.formatted(className, baseName, className,
-                        uncapitalize(nameFromClassName ? className : baseName)));
+                        uncapitalize(nameFromClassName, className, baseName)));
         }
 
         // Interface end

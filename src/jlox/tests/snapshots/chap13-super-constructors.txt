@@ -1,0 +1,13 @@
+------ Constructor inheritance semantics ------
+
+Bruce is 50
+singing: The number of the beast!
+
+Before using force: Luke is 20 and has force 35
+After using force: Luke is 20 and has force 20
+
+Some errors:
+ERROR: Cannot use a negative force: -1
+ERROR: Using 21 force but not enough force remaining: 20
+
+

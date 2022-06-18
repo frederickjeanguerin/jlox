@@ -431,10 +431,16 @@ public class Parser {
         if (match(FALSE)) return new Expr.Literal(false);
         if (match(TRUE)) return new Expr.Literal(true);
         if (match(NIL)) return new Expr.Literal(null);
-        if (match(SELF)) return new Expr.Variable(previous());  // And not Expr.Self!
+        if (match(SELF)) return new Expr.Variable(previous());
         if (match(ERROR)) return new Expr.Literal("#Error");
         if (match(NUMBER, STRING)) return new Expr.Literal(previous().literal());
         if (match(IDENTIFIER)) return new Expr.Variable(previous());
+        if (match(SUPER)) {
+            Token keyword = previous();
+            consume(DOT, "Expect dot after super");
+            Token method = consume(IDENTIFIER, "Expect superclass method name");
+            return new Expr.Super(keyword, method);
+        }
         if (match(LEFT_PAREN)) {
             Expr expr = expression();
             consume(RIGHT_PAREN, "Expect ')' after expression.");
