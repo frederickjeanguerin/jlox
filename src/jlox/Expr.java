@@ -67,7 +67,7 @@ abstract class Expr {
 
     final Token name;
     final Expr value;
-    Token target = null;
+    /** target is the variable token where declared */ Token target = null;
 
     Assign ( Token name, Expr value ) {
       this.name = name;
@@ -312,7 +312,7 @@ abstract class Expr {
 
     final Token keyword;
     final Token method;
-    Token superclassName = null;
+    /** target is the class (name token where declared) that contains the super keyword */ Token targetClass = null;
 
     Super ( Token keyword, Token method ) {
       this.keyword = keyword;
@@ -440,7 +440,7 @@ abstract class Expr {
   static class Variable extends Expr {
 
     final Token name;
-    Token target = null;
+    /** target is the variable token where declared */ Token target = null;
 
     Variable ( Token name ) {
       this.name = name;

@@ -107,12 +107,12 @@ public class WalkSymbol extends Walk.Base<Void> {
             stdio().errorAtToken(expr.keyword, "Super used outside any classes");
             return;
         }
-        var superclass = classes.peek().superclass;
-        if (superclass == null) {
+        var klass = classes.peek();
+        if (klass.superclass == null) {
             stdio().errorAtToken(expr.keyword, "Class %s has no superclass.".formatted(classes.peek().name.lexeme()));
             return;
         }
-        expr.superclassName = superclass.target;
+        expr.targetClass = klass.name;
     }
 
     private void enterFunction(List<Token> parameters) {

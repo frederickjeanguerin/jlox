@@ -286,7 +286,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitSuperExpr(Expr.Super expr) {
         var self = (LoxInstance) environment.getSymbol(Token.Special("self")).getValue(expr.keyword);
-        return self.getSuper(expr.method, expr.superclassName);
+        return self.getSuper(expr.method, expr.targetClass);
     }
 
     @Override

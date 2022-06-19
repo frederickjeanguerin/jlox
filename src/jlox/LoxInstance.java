@@ -27,19 +27,19 @@ public class LoxInstance {
         throw new LoxError(name, "Undefined property '%s'.".formatted(lexeme));
     }
 
-    public LoxCallable.Function getSuper(Token methodName, Token superClassName) {
-        var superClass = klass;
-        while (superClass != null && superClass.classStmt.name != superClassName)
-            superClass = superClass.superclass;
-        if (superClass == null) {
+    public LoxCallable.Function getSuper(Token methodName, Token targetClassName) {
+        var targetClass = klass;
+        while (targetClass != null && targetClass.classStmt.name != targetClassName)
+            targetClass = targetClass.superclass;
+        if (targetClass == null) {
             // this error should not occur if static analysis is fine
-            throw new LoxError(methodName, "Superclass '%s' in not reachable."
-                    .formatted(superClassName.lexeme()));
+            throw new LoxError(methodName, "(Internal Error) Class '%s' in not reachable."
+                    .formatted(targetClassName.lexeme()));
         }
-        var method = superClass.findMethod(methodName.lexeme());
+        var method = targetClass.superclass.findMethod(methodName.lexeme());
         if (method == null) {
             throw new LoxError(methodName, "Superclass '%s' has no available method '%s'."
-                    .formatted(superClassName.lexeme(), methodName.lexeme()));
+                    .formatted(targetClass.superclass.name, methodName.lexeme()));
         }
         return method.bind(this);
     }

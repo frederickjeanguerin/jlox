@@ -1,4 +1,4 @@
-Assign      : Token name, Expr value, Token target = null       // target is the variable token where declared
+Assign      : Token name, Expr value, /** target is the variable token where declared */ Token target = null
 Binary      : Expr left, Token operator, Expr right
 Call        : Expr callee, Token leftPar, List<Expr> arguments, Token rightPar
 Get         : Expr object, Token name
@@ -6,8 +6,8 @@ Grouping    : Expr expression
 Lambda      : List<Token> parameters, Stmt body
 Literal     : Object value
 Set         : Expr object, Token name, Expr value
-Super       : Token keyword, Token method, Token superclassName = null
+Super       : Token keyword, Token method, /** target is the class (name token where declared) that contains the super keyword */ Token targetClass = null
 Ternary     : Expr left, Token leftOp, Expr middle, Token rightOp, Expr right
 TypeCheck   : Expr value, Class<?> type, Token name
 Unary       : Token operator, Expr right
-Variable    : Token name, Token target = null                   // target is the variable token where declared
+Variable    : Token name, /** target is the variable token where declared */ Token target = null

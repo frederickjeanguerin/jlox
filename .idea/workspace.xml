@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 13.3 - Super (fully tested)">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED line comments in GenerateAst">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/GenerateAst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/GenerateAst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/LoxInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tool/expressions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/expressions.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,7 +83,7 @@
       <recent name="jlox" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GenerateAst">
+  <component name="RunManager" selected="JUnit.LoxTest">
     <configuration name="GenerateAst" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="tool.GenerateAst" />
       <module name="Lox" />
@@ -229,13 +232,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Chapter 9.3 - Logical and, or (tested)">
-      <created>1654786338898</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1654786338898</updated>
     </task>
     <task id="LOCAL-00033" summary="Chapter 9.4 - While loop (tested)">
       <created>1654789844985</created>
@@ -573,7 +569,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655542972216</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="ADDED line comments in GenerateAst">
+      <created>1655620493150</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1655620493150</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -588,7 +591,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ADDED WalkReturn (partial complete, partial tested)" />
     <MESSAGE value="ADDED Dead code warning for Return (tested but 2ERR)" />
     <MESSAGE value="ADDED Dead code warning for Return (tested)" />
     <MESSAGE value="ADDED One-liner function (tested)" />
@@ -613,6 +615,7 @@
     <MESSAGE value="Chapter 13.2 - Inheriting methods (tested)" />
     <MESSAGE value="Chapter 13.3 - Super (almost tested)" />
     <MESSAGE value="Chapter 13.3 - Super (fully tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 13.3 - Super (fully tested)" />
+    <MESSAGE value="ADDED line comments in GenerateAst" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED line comments in GenerateAst" />
   </component>
 </project>
