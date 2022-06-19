@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GenerateAst {
     private static final List<String> javaKeyword = List.of(
@@ -77,13 +78,20 @@ public class GenerateAst {
 
         // Generate expressions
         Path exprPath = Path.of("src/tool/expressions.txt");
-        var expressions = Files.readString(exprPath).split("\n");
-        defineAst(outputDir, "Expr", List.of(expressions), true);
+        var expressions = readFile(exprPath);
+        defineAst(outputDir, "Expr", expressions, true);
 
         // generate statements
         Path stmtPath = Path.of("src/tool/statements.txt");
-        var statements = Files.readString(stmtPath).split("\n");
-        defineAst(outputDir, "Stmt", List.of(statements), false);
+        var statements = readFile(stmtPath);
+        defineAst(outputDir, "Stmt", statements, false);
+    }
+
+    private static List<String> readFile(Path path) throws IOException {
+        return Stream.of(Files.readString(path).split("\n"))
+                .map(line -> line.replaceAll("\\s*//.*$", ""))  // strip line comments
+                .filter(line -> !line.isBlank())                                // strip blank lines
+                .toList();
     }
 
     @SuppressWarnings("unused")

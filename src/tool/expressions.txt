@@ -1,4 +1,4 @@
-Assign      : Token name, Expr value, Token target = null
+Assign      : Token name, Expr value, Token target = null       // target is the variable token where declared
 Binary      : Expr left, Token operator, Expr right
 Call        : Expr callee, Token leftPar, List<Expr> arguments, Token rightPar
 Get         : Expr object, Token name
@@ -10,4 +10,4 @@ Super       : Token keyword, Token method, Token superclassName = null
 Ternary     : Expr left, Token leftOp, Expr middle, Token rightOp, Expr right
 TypeCheck   : Expr value, Class<?> type, Token name
 Unary       : Token operator, Expr right
-Variable    : Token name, Token target = null
+Variable    : Token name, Token target = null                   // target is the variable token where declared
