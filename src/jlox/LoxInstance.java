@@ -36,10 +36,10 @@ public class LoxInstance {
             throw new LoxError(methodName, "(Internal Error) Class '%s' in not reachable."
                     .formatted(targetClassName.lexeme()));
         }
-        var method = targetClass.superclass.findMethod(methodName.lexeme());
+        var method = targetClass.findMethod(methodName.lexeme());
         if (method == null) {
             throw new LoxError(methodName, "Superclass '%s' has no available method '%s'."
-                    .formatted(targetClass.superclass.name, methodName.lexeme()));
+                    .formatted(targetClass.name, methodName.lexeme()));
         }
         return method.bind(this);
     }

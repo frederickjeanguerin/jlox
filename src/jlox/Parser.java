@@ -435,18 +435,25 @@ public class Parser {
         if (match(ERROR)) return new Expr.Literal("#Error");
         if (match(NUMBER, STRING)) return new Expr.Literal(previous().literal());
         if (match(IDENTIFIER)) return new Expr.Variable(previous());
-        if (match(SUPER)) {
-            Token keyword = previous();
-            consume(DOT, "Expect dot after super");
-            Token method = consume(IDENTIFIER, "Expect superclass method name");
-            return new Expr.Super(keyword, method);
-        }
+        if (match(SUPER)) return superExpr();
         if (match(LEFT_PAREN)) {
             Expr expr = expression();
             consume(RIGHT_PAREN, "Expect ')' after expression.");
             return new Expr.Grouping(expr);
         }
         throw error(peek(), "Expect expression.");
+    }
+
+    private Expr superExpr() {
+        Token keyword = previous();
+        Token explicitSuperclass = null;
+        if (match(LEFT_PAREN)) {
+            explicitSuperclass = consume(IDENTIFIER, "Expect superclass name");
+            consume(RIGHT_PAREN, "Expect ')' after superclass name");
+        }
+        consume(DOT, "Expect dot after super");
+        Token method = consume(IDENTIFIER, "Expect superclass method name");
+        return new Expr.Super(keyword, method, explicitSuperclass);
     }
 
     private Expr binary(Supplier<Expr> supplier, TokenType... types) {

@@ -133,7 +133,11 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitSuperExpr(Expr.Super expr) {
-        append(expr.keyword); append('.'); append(expr.method);
+        append(expr.keyword);
+        if (expr.explicitSuperclass != null) {
+            append('('); append(expr.explicitSuperclass); append(')');
+        }
+        append('.'); append(expr.method);
     }
 
     @Override

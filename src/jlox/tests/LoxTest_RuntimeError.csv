@@ -130,3 +130,9 @@ Superclass cannot be the class itself ¤ class C < C {} ¤ /001, at 'C', class c
 Super not available outside classes ¤ super.error ¤ /001, at 'super', super used outside any classes
 Super in class must have a superclass ¤ class C { m() { super.error(); } } ¤ /001, at 'super', no superclass
 Super simple ¤ class C { m() { print 10; }} class D < C { f() { super.m(); }} var d = D(); d.f(); ¤ /100, *10
+
+# Explicit super (single inheritance)
+Super explicit not available outside classes ¤ super(C).error ¤ /001, at 'super', super used outside any classes
+Super explicit in class must have a superclass ¤ class C { m() { super(E).error(); } } ¤ /001, at 'super', no superclass
+Super explicit simple ¤ class C { m() { print 10; }} class D < C { f() { super(C).m(); }} var d = D(); d.f(); ¤ /100, *10
+Super explicit target must be a superclass ¤ class C { m() { print 10; }} class D < C { f() { super(E).m(); }} ¤ /001, at 'E', class E is not a direct superclass of D

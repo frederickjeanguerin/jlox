@@ -109,10 +109,20 @@ public class WalkSymbol extends Walk.Base<Void> {
         }
         var klass = classes.peek();
         if (klass.superclass == null) {
-            stdio().errorAtToken(expr.keyword, "Class %s has no superclass.".formatted(classes.peek().name.lexeme()));
+            stdio().errorAtToken(expr.keyword, "Class %s has no superclass.".formatted(klass.name.lexeme()));
             return;
         }
-        expr.targetClass = klass.name;
+        if (expr.explicitSuperclass != null) {
+            // At the moment, the only explicit superclass allowed is the unique one, until multiple inheritance
+            if (!expr.explicitSuperclass.lexeme().equals(klass.superclass.name.lexeme())) {
+                stdio().errorAtToken(expr.explicitSuperclass,
+                        "Class %s is not a direct superclass of %s."
+                                .formatted(expr.explicitSuperclass.lexeme(), klass.name.lexeme()));
+            }
+            expr.targetClass = klass.superclass.target;
+        } else {
+            expr.targetClass = klass.superclass.target;
+        }
     }
 
     private void enterFunction(List<Token> parameters) {

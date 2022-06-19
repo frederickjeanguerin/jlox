@@ -312,11 +312,13 @@ abstract class Expr {
 
     final Token keyword;
     final Token method;
+    final Token explicitSuperclass;
     /** target is the class (name token where declared) that contains the super keyword */ Token targetClass = null;
 
-    Super ( Token keyword, Token method ) {
+    Super ( Token keyword, Token method, Token explicitSuperclass ) {
       this.keyword = keyword;
       this.method = method;
+      this.explicitSuperclass = explicitSuperclass;
     }
 
     @Override
