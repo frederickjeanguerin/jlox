@@ -127,7 +127,10 @@ class LoxTest {
             "chap12-class-self",
             "chap13-superclass-methods",
             "chap13-super-semantics",
-            "chap13-super-constructors"
+            "chap13-super-constructors",
+            "chap13-multiple-inheritance",
+            "chap13-diamond-of-death-ok",
+            "chap13-diamond-of-death-bad"
     })
     void testSnapShot(String fileName) throws IOException {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");

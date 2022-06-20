@@ -1,5 +1,6 @@
 package jlox;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -18,8 +19,15 @@ public class WalkSymbol extends Walk.Base<Void> {
     @Override
     public void enterClassStmt(Stmt.Class stmt) {
         defineSymbol(stmt.name, Symbol.Type.CLASS);
-        if (stmt.superclass != null && stmt.name.lexeme().equals(stmt.superclass.name.lexeme())) {
-            stdio().errorAtToken(stmt.superclass.name, "A class can't inherit from itself");
+        List<String> visited = new ArrayList<>();
+        for (var superclass: stmt.superclasses) {
+            if (stmt.name.lexeme().equals(superclass.name.lexeme())) {
+                stdio().errorAtToken(superclass.name, "A class can't inherit from itself.");
+            }
+            if (visited.contains(superclass.name.lexeme())) {
+                stdio().errorAtToken(superclass.name, "A class can't be inherited more than once.");
+            }
+            visited.add(superclass.name.lexeme());
         }
         classes.push(stmt);
         environment.push(true);
@@ -108,20 +116,22 @@ public class WalkSymbol extends Walk.Base<Void> {
             return;
         }
         var klass = classes.peek();
-        if (klass.superclass == null) {
-            stdio().errorAtToken(expr.keyword, "Class %s has no superclass.".formatted(klass.name.lexeme()));
+        if (klass.superclasses.isEmpty()) {
+            stdio().errorAtToken(expr.keyword, "Class %s has no superclasses.".formatted(klass.name.lexeme()));
             return;
         }
         if (expr.explicitSuperclass != null) {
-            // At the moment, the only explicit superclass allowed is the unique one, until multiple inheritance
-            if (!expr.explicitSuperclass.lexeme().equals(klass.superclass.name.lexeme())) {
-                stdio().errorAtToken(expr.explicitSuperclass,
-                        "Class %s is not a direct superclass of %s."
-                                .formatted(expr.explicitSuperclass.lexeme(), klass.name.lexeme()));
+            for (var superclass : klass.superclasses) {
+                if (expr.explicitSuperclass.lexEquals(superclass.name)) {
+                    expr.targetClass = superclass.target;
+                    return;
+                }
             }
-            expr.targetClass = klass.superclass.target;
+            stdio().errorAtToken(expr.explicitSuperclass,
+                    "Class %s is not a direct superclass of %s."
+                            .formatted(expr.explicitSuperclass.lexeme(), klass.name.lexeme()));
         } else {
-            expr.targetClass = klass.superclass.target;
+            expr.targetClass = klass.name;
         }
     }
 

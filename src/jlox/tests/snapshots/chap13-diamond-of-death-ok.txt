@@ -1,0 +1,12 @@
+------ Multiple inheritance: Diamond of Death (ok) ------
+
+Duke, age 15, can't drink before 18
+Duke, age 15, can't smoke before 16
+Duke, age 16, can't drink before 18
+Duke, age 16, is smoking
+Duke, age 17, can't drink before 18
+Duke, age 17, is smoking
+Duke, age 18, is drinking
+Duke, age 18, is smoking
+
+

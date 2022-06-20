@@ -1,0 +1,75 @@
+
+print "------ Multiple inheritance: a simple example ------\n";
+
+class Object {
+    show() { print self.toString(); }
+}
+
+class Person < Object {
+
+    init(name, age) {
+        self.name = name;
+        self.age = age;
+    }
+
+    toString()
+        self.name + " is " + self.age;
+
+}
+
+class AgingPerson < Person, Object {
+
+    getOlder()
+        // TODO: ++self.age;  (not working with properties)
+        self.age = self.age + 1;
+
+}
+
+class Singer {
+    sing(str) {
+        print "singing: " + str;
+    }
+}
+
+class ForceBearer < Object {
+
+    init(force)
+        self.force = force;
+
+    useForce (forceUsed) {
+        if (forceUsed < 0) {
+            print "ERROR: Cannot use a negative force: " + forceUsed;
+            return;
+        }
+        if (forceUsed > self.force) {
+            print "ERROR: Using " + forceUsed + " force but not enough force remaining: " + self.force;
+            return;
+        }
+        self.force = self.force - forceUsed;
+    }
+
+    toString()
+        "force " + self.force;
+}
+
+class SingingJedi < AgingPerson, Singer, ForceBearer {
+    init(name, age, force) {
+        super.init(name, age);
+        super(ForceBearer).init(force);
+    }
+
+    toString()
+        super.toString() + " and with " + super(ForceBearer).toString();
+}
+
+var jedi = SingingJedi("Luke", 20, 35);
+jedi.sing("Be with the Force forever!");
+
+print "\nBefore using force and aging:\n\t" + jedi.toString();
+
+jedi.useForce(15);
+jedi.getOlder();
+jedi.getOlder();
+
+print "\nAfter...";
+jedi.show();

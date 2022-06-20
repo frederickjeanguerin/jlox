@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFAC super with target subclass instead of superclass.">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 13 - Challenge 1 - Multiple Inheritance (mostly tested)">
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap13-diamond-of-death-bad.lox" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap13-diamond-of-death-ok.lox" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap13-multiple-inheritance.lox" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Expr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/LoxInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/expressions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/expressions.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,20 +231,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Chapter 9.5 - For loop (tested)">
-      <created>1654796750613</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1654796750613</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error.">
-      <created>1654808229177</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1654808229177</updated>
     </task>
     <task id="LOCAL-00036" summary="Chapter 9 - Challenge 3 - Break (partial)&#10;&#10;Runtime error for breaks outside loops instead of syntax error.">
       <created>1654809415322</created>
@@ -578,8 +561,25 @@
       <option name="project" value="LOCAL" />
       <updated>1655622490995</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="ADDED Explicit super">
+      <created>1655624737079</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1655624737079</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Chapter 13 - Challenge 1 - Multiple Inheritance (mostly tested)">
+      <created>1655707556270</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1655707556270</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.csv" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -593,8 +593,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ADDED Dead code warning for Return (tested)" />
-    <MESSAGE value="ADDED One-liner function (tested)" />
     <MESSAGE value="Chapter 10 - Challenge 2 - Lambda" />
     <MESSAGE value="REFAC Added Symbol" />
     <MESSAGE value="REFAC Added Symbol target" />
@@ -618,6 +616,8 @@
     <MESSAGE value="Chapter 13.3 - Super (fully tested)" />
     <MESSAGE value="ADDED line comments in GenerateAst" />
     <MESSAGE value="REFAC super with target subclass instead of superclass." />
-    <option name="LAST_COMMIT_MESSAGE" value="REFAC super with target subclass instead of superclass." />
+    <MESSAGE value="ADDED Explicit super" />
+    <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance (mostly tested)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 13 - Challenge 1 - Multiple Inheritance (mostly tested)" />
   </component>
 </project>

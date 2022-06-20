@@ -1,0 +1,70 @@
+
+print "------ Multiple inheritance: Diamond of Death (bad) ------\n";
+
+class Person {
+
+    init (name, age) {
+        self.name = name;
+        self.age = age;
+    }
+
+    toString()
+        self.name + " is " + self.age;
+}
+
+class AgingPerson < Person {
+
+    getOlder()
+        self.age = self.age + 1;
+
+}
+
+class Drinker < AgingPerson {
+
+    init(name, age, limit)
+        super.init(name, age), self.limit = limit;
+
+    drink() {
+        if (self.age >= self.limit)
+            print self.name + ", age " + self.age + ", is drinking";
+         else
+            print self.name + ", age " + self.age + ", can't drink before " + self.limit;
+    }
+}
+
+class Smoker < AgingPerson {
+
+    init(name, age, limit)
+        super.init(name, age), self.limit = limit;
+
+    smoke() {
+        if (self.age >= self.limit)
+            print self.name + ", age " + self.age + ", is smoking";
+         else
+            print self.name + ", age " + self.age + ", can't smoke before " + self.limit;
+    }
+}
+
+class Bum < Drinker, Smoker {
+
+     init(name, age, drinkLimit, smokeLimit) {
+        // the two limits will step on each one feet
+        super(Drinker).init(name, age, drinkLimit);
+        super(Smoker).init(name, age, smokeLimit);
+     }
+
+     party() {
+        self.drink();
+        self.smoke();
+     }
+}
+
+var bum = Bum("Duke", 15, 18, 16);
+
+bum.party();
+bum.getOlder();
+bum.party();
+bum.getOlder();
+bum.party();
+bum.getOlder();
+bum.party();

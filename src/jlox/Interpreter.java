@@ -95,12 +95,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitClassStmt(Stmt.Class klass) {
         Map<String, LoxCallable.Function> methods = new HashMap<>();
-        LoxClass superclass = klass.superclass == null ? null :
-            downcast(evaluate(klass.superclass), LoxClass.class, "class", klass.superclass.name, "superclass");
+        List<LoxClass> superclasses = new ArrayList<>();
+        for (var superclass : klass.superclasses) {
+           superclasses.add(
+                   downcast(evaluate(superclass), LoxClass.class, "class", superclass.name, "superclass"));
+        }
         for (var method : klass.methods) {
             methods.put(method.name.lexeme(), new LoxCallable.Function(method, environment.getScoping()));
         }
-        var loxClass = new LoxClass(klass.name.lexeme(), superclass, methods, klass);
+        var loxClass = new LoxClass(klass.name.lexeme(), superclasses, methods, klass);
         environment.defineSymbol(klass.name, loxClass, Symbol.Type.CLASS);
         return null;
     }
@@ -286,7 +289,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitSuperExpr(Expr.Super expr) {
         var self = (LoxInstance) environment.getSymbol(Token.Special("self")).getValue(expr.keyword);
-        return self.getSuper(expr.method, expr.targetClass);
+        return self.getSuper(expr.method, expr.targetClass, expr.explicitSuperclass != null);
     }
 
     @Override

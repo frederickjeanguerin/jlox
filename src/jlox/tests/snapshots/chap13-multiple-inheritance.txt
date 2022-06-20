@@ -1,0 +1,11 @@
+------ Multiple inheritance: a simple example ------
+
+singing: Be with the Force forever!
+
+Before using force and aging:
+	Luke is 20 and with force 35
+
+After...
+Luke is 22 and with force 20
+
+

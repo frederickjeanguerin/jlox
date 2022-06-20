@@ -8,22 +8,25 @@ public class LoxClass implements LoxCallable {
     private final Map<String, Function> methods;
     final Stmt.Class classStmt;
 
-    final LoxClass superclass;
+    final List<LoxClass> superclasses;
 
-    public LoxClass(String name, LoxClass superclass, Map<String, Function> methods, Stmt.Class stmt) {
+    public LoxClass(String name, List<LoxClass> superclasses, Map<String, Function> methods, Stmt.Class stmt) {
         this.name = name;
         this.methods = methods;
-        this.superclass = superclass;
+        this.superclasses = superclasses;
         for (var method : methods.values()) {
             method.parent = this;
         }
         classStmt = stmt;
     }
 
-    public Function findMethod(String name) {
+    public Function findMethod(String name, boolean superclassOnly) {
         var method = methods.getOrDefault(name, null);
-        if (method != null) return method;
-        if (superclass != null) return superclass.findMethod(name);
+        if (method != null && ! superclassOnly) return method;
+        for (var superclass: superclasses) {
+            method = superclass.findMethod(name, false);
+            if (method != null) return method;
+        }
         return null;
     }
 
@@ -35,7 +38,7 @@ public class LoxClass implements LoxCallable {
     @Override
     public int arity() {
         // TODO not very efficient, because we need to lookup every time.
-        Function init = findMethod("init");
+        Function init = findMethod("init", false);
         if (init != null) {
             return init.arity();
         }
@@ -45,7 +48,7 @@ public class LoxClass implements LoxCallable {
     @Override
     public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
         LoxInstance instance = new LoxInstance(this);
-        Function init = findMethod("init");
+        Function init = findMethod("init", false);
         if (init != null) {
             init.bind(instance).call(interpreter, leftPar, arguments);
         }
