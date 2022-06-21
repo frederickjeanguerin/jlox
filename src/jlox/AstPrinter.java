@@ -190,6 +190,9 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
             });
         }
         append(" {"); eol();
+        for(var method : stmt.classMethods) {
+            visitFunctionStmt(method);
+        }
         for(var method : stmt.methods) {
             visitFunctionStmt(method);
         }
@@ -203,7 +206,11 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitFunctionStmt(Stmt.Function stmt) {
-        append("fun "); append(stmt.name.lexeme());
+        if (stmt.isClass)
+            append("class ");
+        if (!stmt.kind.equals("lambda"))
+            append("fun ");
+        append(stmt.name.lexeme());
         append("(");
         for (var token : stmt.parameters) {
             if (token != stmt.parameters.get(0)) append(", ");

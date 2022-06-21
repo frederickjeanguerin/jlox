@@ -89,22 +89,28 @@ public class Parser {
         }
         consume(LEFT_BRACE, "Expect '{' before class body.");
         List<Stmt.Function> methods = new ArrayList<>();
+        List<Stmt.Function> classMethods = new ArrayList<>();
         while (!peek(RIGHT_BRACE) && !isAtEnd()) {
             try {
-                methods.add(funDeclaration("method"));
+                var fun = funDeclaration("method");
+                if (fun.isClass)
+                    classMethods.add(fun);
+                else
+                    methods.add(fun);
             } catch (ParseError error) {
                 synchronize();
             }
         }
         consume(RIGHT_BRACE, "Expect '}' after class body.");
-        return new Stmt.Class(name, superclasses, methods);
+        return new Stmt.Class(name, superclasses, methods, classMethods);
     }
 
     private Stmt.Function funDeclaration(String kind) {
+        boolean isClass = kind.equals("method") && match(CLASS);
         var name = consume(IDENTIFIER, "Expect %s name".formatted(kind));
         if (match(COLON))
-            return new Stmt.Function(name, new ArrayList<>(), body(false), kind, true);
-        return new Stmt.Function(name, parameters(kind), body(false), kind, false);
+            return new Stmt.Function(name, new ArrayList<>(), body(false), kind, true, isClass);
+        return new Stmt.Function(name, parameters(kind), body(false), kind, false, isClass);
     }
 
     private List<Token> parameters(String kind) {

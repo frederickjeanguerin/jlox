@@ -120,12 +120,14 @@ abstract class Stmt {
     final Token name;
     final List<Expr.Variable> superclasses;
     final List<Stmt.Function> methods;
+    final List<Stmt.Function> classMethods;
     Token self = null;
 
-    Class ( Token name, List<Expr.Variable> superclasses, List<Stmt.Function> methods ) {
+    Class ( Token name, List<Expr.Variable> superclasses, List<Stmt.Function> methods, List<Stmt.Function> classMethods ) {
       this.name = name;
       this.superclasses = superclasses;
       this.methods = methods;
+      this.classMethods = classMethods;
     }
 
     @Override
@@ -183,13 +185,15 @@ abstract class Stmt {
     final Stmt body;
     final String kind;
     final boolean isProperty;
+    final boolean isClass;
 
-    Function ( Token name, List<Token> parameters, Stmt body, String kind, boolean isProperty ) {
+    Function ( Token name, List<Token> parameters, Stmt body, String kind, boolean isProperty, boolean isClass ) {
       this.name = name;
       this.parameters = parameters;
       this.body = body;
       this.kind = kind;
       this.isProperty = isProperty;
+      this.isClass = isClass;
     }
 
     @Override

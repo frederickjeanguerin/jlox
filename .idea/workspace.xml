@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 13 - Challenge 1 - Multiple Inheritance, the Python way (tested)">
-      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap12-properties.lox" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 12 - Challenge 2 - Properties.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/LoxCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxCallable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/LoxInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/LoxClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
     </list>
@@ -246,20 +244,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Chapter 9 - Challenge 3 - Break &amp; Continue">
-      <created>1654820182294</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1654820182294</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Chapter 9 - Challenge (4) - Syntactic sugar (++, --)">
-      <created>1654828256955</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1654828256955</updated>
     </task>
     <task id="LOCAL-00039" summary="Chapter 10.1.1 - Parsing function call">
       <created>1654883649467</created>
@@ -590,7 +574,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655726235693</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Chapter 12 - Challenge 2 - Properties.">
+      <created>1655807626145</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1655807626145</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Chapter 12 - Challenge 2 - Properties.">
+      <created>1655807647507</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1655807647507</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -608,7 +606,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="REFAC Added Symbol" />
     <MESSAGE value="REFAC Added Symbol target" />
     <MESSAGE value="Chapter 11 - Variable local scoping (untested)" />
     <MESSAGE value="Chapter 11 - Lexical scoping (almost tested)" />
@@ -633,6 +630,7 @@
     <MESSAGE value="ADDED Explicit super" />
     <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance (mostly tested)" />
     <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance, the Python way (tested)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 13 - Challenge 1 - Multiple Inheritance, the Python way (tested)" />
+    <MESSAGE value="Chapter 12 - Challenge 2 - Properties." />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 12 - Challenge 2 - Properties." />
   </component>
 </project>

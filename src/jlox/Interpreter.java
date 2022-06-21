@@ -95,15 +95,22 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitClassStmt(Stmt.Class klass) {
         Map<String, LoxCallable.Function> methods = new HashMap<>();
+        Map<String, LoxCallable.Function> classMethods = new HashMap<>();
         List<LoxClass> superclasses = new ArrayList<>();
         for (var superclass : klass.superclasses) {
            superclasses.add(
                    downcast(evaluate(superclass), LoxClass.class, "class", superclass.name, "superclass"));
         }
+        var scoping = environment.getScoping();
         for (var method : klass.methods) {
-            methods.put(method.name.lexeme(), new LoxCallable.Function(method, environment.getScoping()));
+            methods.put(method.name.lexeme(), new LoxCallable.Function(method, scoping));
         }
-        var loxClass = new LoxClass(klass.name.lexeme(), superclasses, methods, klass);
+        for (var method : klass.classMethods) {
+            var classMethod = new LoxCallable.Function(method, scoping);
+            classMethods.put(method.name.lexeme(), classMethod);
+//            environment.defineSymbol(method.name, classMethod, Symbol.Type.FUN);
+        }
+        var loxClass = new LoxClass(klass.name.lexeme(), superclasses, methods, classMethods, klass);
         environment.defineSymbol(klass.name, loxClass, Symbol.Type.CLASS);
         return null;
     }
@@ -263,8 +270,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return function.call(this, get.name, new ArrayList<>());
             }
             return value;
+        } else if (object instanceof LoxClass klass) {
+            var classMethod = klass.findClassMethod(get.name.lexeme());
+            if (classMethod != null) {
+                if (classMethod.isProperty)
+                    return classMethod.call(this, get.name, new ArrayList<>());
+                return classMethod;
+            }
+            throw new LoxError(get.name, "Undefined class method.");
         }
-        throw new LoxError(get.name, "Left side of '.%s' is not an instance".formatted(get.name.lexeme()));
+        throw new LoxError(get.name, "Left side of '.%s' is not an instance or a class".formatted(get.name.lexeme()));
     }
 
     @Override

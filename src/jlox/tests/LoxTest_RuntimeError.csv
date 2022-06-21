@@ -154,3 +154,7 @@ Global property ¤ var a = 10; fun b : 2 * a; print b; ++a; print b; ¤ /200, *2
 Instance property ¤ class Circle { \n init(radius) self.radius = radius; \n diameter : self.radius * 2; } Circle(10).diameter ¤ /100, *20
 Class properties are readonly ¤ class C { p:10; } var c = C(); print c.p; c.p = 20; ¤ /101, *10, at 'p', cannot change 'p'
 Class methods are readonly ¤ class C { p() 10; } var c = C(); print c.p(); c.p = 20; ¤ /101, *10, at 'p', cannot change 'p'
+
+# Class methods
+Class methods simple ¤ class Math { class pi : 3.14159; class square(x) x * x; } print Math.pi; print Math.square(12); ¤ /200, *3[.]14159, *144
+Class methods undefined ¤ class Math { } print Math.pi; ¤ /001, at 'pi', undefined class method
