@@ -158,3 +158,5 @@ Class methods are readonly ¤ class C { p() 10; } var c = C(); print c.p(); c.p 
 # Class methods
 Class methods simple ¤ class Math { class pi : 3.14159; class square(x) x * x; } print Math.pi; print Math.square(12); ¤ /200, *3[.]14159, *144
 Class methods undefined ¤ class Math { } print Math.pi; ¤ /001, at 'pi', undefined class method
+Instance methods cannot be used directly ¤ class C { ten: 10; twenty: 2*ten; five: twenty / 4; } C().twenty ¤ /002, at 'ten', at 'twenty', undefined identifier
+Class methods cannot use self ¤ class C { class v: self.value; } print C().v; ¤ /001, at 'self', undefined identifier

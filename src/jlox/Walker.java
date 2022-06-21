@@ -183,6 +183,14 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
         for (var superclass : stmt.superclasses) {
             walk(superclass);
         }
+        for (var method: stmt.classMethods) {
+            walk(method);
+        }
+        walk(stmt.methods);
+    }
+
+    @Override
+    public void visitMethodsStmt(Stmt.Methods stmt) {
         for (var method: stmt.methods) {
             walk(method);
         }

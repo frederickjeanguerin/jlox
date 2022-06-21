@@ -30,9 +30,10 @@ public class WalkSymbol extends Walk.Base<Void> {
             visited.add(superclass.name.lexeme());
         }
         classes.push(stmt);
+
+        // Defining class symbols
         environment.push(true);
         stmt.self = Token.Special("self");
-        defineSymbol(stmt.self, Symbol.Type.SPECIAL);
     }
 
     @Override
@@ -42,19 +43,34 @@ public class WalkSymbol extends Walk.Base<Void> {
     }
 
     @Override
+    public void enterMethodsStmt(Stmt.Methods methods) {
+        environment.push(true);
+        defineSymbol(classes.peek().self, Symbol.Type.SPECIAL);
+    }
+
+    @Override
+    public void leaveMethodsStmt(Stmt.Methods methods) {
+        environment.pop();
+    }
+
+    @Override
     public void enterFunctionStmt(Stmt.Function stmt) {
-        var fun = defineSymbol(stmt.name, Symbol.Type.FUN);
-        functions.push(fun);
+        if (!stmt.kind.equals("method") || stmt.isClass) {
+            var fun = defineSymbol(stmt.name, Symbol.Type.FUN);
+            functions.push(fun);
+        }
         enterFunction(stmt.parameters);
     }
 
     @Override
     public void leaveFunctionStmt(Stmt.Function stmt) {
         pop();
-        var fun = functions.pop();
-        if (fun != null) {
-             // recursive call in a function don't count for function usage
-             fun.resetUseCount();
+        if (!stmt.kind.equals("method") || stmt.isClass) {
+            var fun = functions.pop();
+            if (fun != null) {
+                // recursive call in a function don't count for function usage
+                fun.resetUseCount();
+            }
         }
     }
 

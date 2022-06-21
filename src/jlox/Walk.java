@@ -227,6 +227,16 @@ public class Walk implements Walker.AstVisitor {
     }
 
     @Override
+    public void enterMethodsStmt(Stmt.Methods stmt) {
+
+    }
+
+    @Override
+    public void leaveMethodsStmt(Stmt.Methods stmt) {
+
+    }
+
+    @Override
     public void enterExpressionStmt(Stmt.Expression stmt) {
 
     }

@@ -101,17 +101,24 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
            superclasses.add(
                    downcast(evaluate(superclass), LoxClass.class, "class", superclass.name, "superclass"));
         }
+        environment.push(true);
         var scoping = environment.getScoping();
-        for (var method : klass.methods) {
+        for (var method : klass.methods.methods) {
             methods.put(method.name.lexeme(), new LoxCallable.Function(method, scoping));
         }
         for (var method : klass.classMethods) {
             var classMethod = new LoxCallable.Function(method, scoping);
             classMethods.put(method.name.lexeme(), classMethod);
-//            environment.defineSymbol(method.name, classMethod, Symbol.Type.FUN);
+            environment.defineSymbol(method.name, classMethod, Symbol.Type.FUN);
         }
+        environment.pop();
         var loxClass = new LoxClass(klass.name.lexeme(), superclasses, methods, classMethods, klass);
         environment.defineSymbol(klass.name, loxClass, Symbol.Type.CLASS);
+        return null;
+    }
+
+    @Override
+    public Void visitMethodsStmt(Stmt.Methods stmt) {
         return null;
     }
 

@@ -1,0 +1,24 @@
+
+print "===== Class Methods (Chapter 12 challenge 1) =====";
+
+/*
+    Done after Chap 13, and the other challenges.
+*/
+
+class Circle {
+
+    class PI : 3.14159;
+    class TAU : 2 * PI;
+
+    init(radius) {
+        self.radius = radius;
+    }
+
+    area: PI * self.radius * self.radius;
+
+    circumference: TAU * self.radius;
+}
+
+var c = Circle(10);
+print c.area;
+print c.circumference;

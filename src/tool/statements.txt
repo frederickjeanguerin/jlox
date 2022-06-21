@@ -1,6 +1,7 @@
 Block           : List<Stmt> statements
 ContinueCatcher : Stmt statement
-Class           : Token name, List<Expr.Variable> superclasses, List<Stmt.Function> methods, List<Stmt.Function> classMethods, Token self = null
+Class           : Token name, List<Expr.Variable> superclasses, Stmt.Methods methods, List<Stmt.Function> classMethods, Token self = null
+Methods         : List<Stmt.Function> methods
 Expression      : Expr expression
 Function        : Token name, List<Token> parameters, Stmt body, String kind, boolean isProperty, boolean isClass
 If              : Expr condition, Stmt then, Stmt else_

@@ -1,0 +1,5 @@
+===== Class Methods (Chapter 12 challenge 1) =====
+314.159
+62.8318
+
+

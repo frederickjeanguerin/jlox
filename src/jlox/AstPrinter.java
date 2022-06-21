@@ -193,10 +193,15 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
         for(var method : stmt.classMethods) {
             visitFunctionStmt(method);
         }
+        append(stmt.methods);
+        append("}"); eol();
+    }
+
+    @Override
+    public void visitMethodsStmt(Stmt.Methods stmt) {
         for(var method : stmt.methods) {
             visitFunctionStmt(method);
         }
-        append("}"); eol();
     }
 
     @Override

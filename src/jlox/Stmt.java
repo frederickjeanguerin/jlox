@@ -9,6 +9,7 @@ abstract class Stmt {
     R visitBlockStmt(Block stmt);
     R visitContinueCatcherStmt(ContinueCatcher stmt);
     R visitClassStmt(Class stmt);
+    R visitMethodsStmt(Methods stmt);
     R visitExpressionStmt(Expression stmt);
     R visitFunctionStmt(Function stmt);
     R visitIfStmt(If stmt);
@@ -23,6 +24,7 @@ abstract class Stmt {
     void visitBlockStmt(Block stmt);
     void visitContinueCatcherStmt(ContinueCatcher stmt);
     void visitClassStmt(Class stmt);
+    void visitMethodsStmt(Methods stmt);
     void visitExpressionStmt(Expression stmt);
     void visitFunctionStmt(Function stmt);
     void visitIfStmt(If stmt);
@@ -40,6 +42,8 @@ abstract class Stmt {
     void leaveContinueCatcherStmt(ContinueCatcher stmt);
     void enterClassStmt(Class stmt);
     void leaveClassStmt(Class stmt);
+    void enterMethodsStmt(Methods stmt);
+    void leaveMethodsStmt(Methods stmt);
     void enterExpressionStmt(Expression stmt);
     void leaveExpressionStmt(Expression stmt);
     void enterFunctionStmt(Function stmt);
@@ -119,11 +123,11 @@ abstract class Stmt {
 
     final Token name;
     final List<Expr.Variable> superclasses;
-    final List<Stmt.Function> methods;
+    final Stmt.Methods methods;
     final List<Stmt.Function> classMethods;
     Token self = null;
 
-    Class ( Token name, List<Expr.Variable> superclasses, List<Stmt.Function> methods, List<Stmt.Function> classMethods ) {
+    Class ( Token name, List<Expr.Variable> superclasses, Stmt.Methods methods, List<Stmt.Function> classMethods ) {
       this.name = name;
       this.superclasses = superclasses;
       this.methods = methods;
@@ -148,6 +152,34 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitClassStmt(this);
+    }
+  }
+  static class Methods extends Stmt {
+
+    final List<Stmt.Function> methods;
+
+    Methods ( List<Stmt.Function> methods ) {
+      this.methods = methods;
+    }
+
+    @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitMethodsStmt(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterMethodsStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveMethodsStmt(this);
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+        return visitor.visitMethodsStmt(this);
     }
   }
   static class Expression extends Stmt {

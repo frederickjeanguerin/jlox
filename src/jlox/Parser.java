@@ -102,7 +102,7 @@ public class Parser {
             }
         }
         consume(RIGHT_BRACE, "Expect '}' after class body.");
-        return new Stmt.Class(name, superclasses, methods, classMethods);
+        return new Stmt.Class(name, superclasses, new Stmt.Methods(methods), classMethods);
     }
 
     private Stmt.Function funDeclaration(String kind) {

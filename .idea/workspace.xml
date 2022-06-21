@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 12 - Challenge 2 - Properties.">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/LoxClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Walk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Walker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
     </list>
@@ -244,20 +246,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Chapter 10.1.1 - Parsing function call">
-      <created>1654883649467</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1654883649467</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Chapter 10.1.4 - Runtime arity check (untested)">
-      <created>1654887316001</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1654887316001</updated>
     </task>
     <task id="LOCAL-00041" summary="Chapter 10.2 - Native call (untested)">
       <created>1654892957401</created>
@@ -588,7 +576,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655807647507</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="Chapter 12 - Challenge 1 - Class methods (no meta-classes).">
+      <created>1655834890778</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1655834890778</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done).">
+      <created>1655841067571</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1655841067572</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -606,8 +608,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="REFAC Added Symbol target" />
-    <MESSAGE value="Chapter 11 - Variable local scoping (untested)" />
     <MESSAGE value="Chapter 11 - Lexical scoping (almost tested)" />
     <MESSAGE value="Chapter 11 - Lexical scoping (tested)" />
     <MESSAGE value="Chapter 11 - Challenge 3 - Report unused variables" />
@@ -631,6 +631,8 @@
     <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance (mostly tested)" />
     <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance, the Python way (tested)" />
     <MESSAGE value="Chapter 12 - Challenge 2 - Properties." />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 12 - Challenge 2 - Properties." />
+    <MESSAGE value="Chapter 12 - Challenge 1 - Class methods (no meta-classes)." />
+    <MESSAGE value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done)." />
   </component>
 </project>
