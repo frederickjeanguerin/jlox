@@ -57,6 +57,11 @@ public class LoxInstance {
     }
 
     public Object set(Token name, Object value) {
+        if (klass.findMethod(name.lexeme(), false) != null) {
+            throw new LoxError(name,
+                    "Cannot change '%s'. Methods and properties are immutables."
+                            .formatted(name.lexeme()));
+        }
         fields.put(name.lexeme(), value);
         return value;
     }

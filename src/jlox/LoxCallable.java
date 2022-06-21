@@ -9,19 +9,21 @@ interface LoxCallable {
 
     class Function implements LoxCallable, Cloneable {
 
-        private enum Type { FUN, LAMBDA, METHOD}
+        private enum Type { FUN, LAMBDA, METHOD }
         private final Type type;
         private final String name;
         private final List<Token> parameters;
         private final Stmt body;
         private Environment.Scoping scoping;
         public LoxClass parent = null;
+        public boolean isProperty = false;
 
         public Function(Stmt.Function declaration, Environment.Scoping scoping) {
             this.name = declaration.name.lexeme();
             this.parameters = declaration.parameters;
             this.body = declaration.body;
             this.scoping = scoping;
+            this.isProperty = declaration.isProperty;
             this.type = switch(declaration.kind) {
                 case "function" -> Type.FUN;
                 case "method" -> Type.METHOD;

@@ -36,6 +36,7 @@ public class Parser {
 
     private Supplier<Expr> supplierOf(ExprType type) {
         return switch (type) {
+            // Expressions ordered by priority
             case COMMA -> this::comma;
             case ASSIGNMENT -> this::assignment;
             case LAMBDA -> this::lambda;
@@ -101,7 +102,9 @@ public class Parser {
 
     private Stmt.Function funDeclaration(String kind) {
         var name = consume(IDENTIFIER, "Expect %s name".formatted(kind));
-        return new Stmt.Function(name, parameters(kind), body(false), kind);
+        if (match(COLON))
+            return new Stmt.Function(name, new ArrayList<>(), body(false), kind, true);
+        return new Stmt.Function(name, parameters(kind), body(false), kind, false);
     }
 
     private List<Token> parameters(String kind) {

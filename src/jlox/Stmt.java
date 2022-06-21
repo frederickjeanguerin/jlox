@@ -182,12 +182,14 @@ abstract class Stmt {
     final List<Token> parameters;
     final Stmt body;
     final String kind;
+    final boolean isProperty;
 
-    Function ( Token name, List<Token> parameters, Stmt body, String kind ) {
+    Function ( Token name, List<Token> parameters, Stmt body, String kind, boolean isProperty ) {
       this.name = name;
       this.parameters = parameters;
       this.body = body;
       this.kind = kind;
+      this.isProperty = isProperty;
     }
 
     @Override

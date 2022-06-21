@@ -1,0 +1,11 @@
+===== Properties (Chapter 12 challenge 2) =====
+
+----- Global properties -----
+25 (expected 25)
+125 (expected 125)
+
+----- Class properties -----
+BEFORE rectangle 3x5 : area 15, perimeter 16
+AFTER rectangle 2x10 : area 20, perimeter 24
+
+

@@ -258,7 +258,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     public Object visitGetExpr(Expr.Get get) {
         Object object = evaluate(get.object);
         if (object instanceof LoxInstance instance) {
-            return instance.get(get.name);
+            Object value = instance.get(get.name);
+            if (value instanceof LoxCallable.Function function && function.isProperty) {
+                return function.call(this, get.name, new ArrayList<>());
+            }
+            return value;
         }
         throw new LoxError(get.name, "Left side of '.%s' is not an instance".formatted(get.name.lexeme()));
     }
@@ -307,7 +311,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        return environment.getSymbol(expr.name, expr.target).getValue(expr.name);
+        Object value =  environment.getSymbol(expr.name, expr.target).getValue(expr.name);
+        if (value instanceof LoxCallable.Function function && function.isProperty) {
+            return function.call(this, expr.name, new ArrayList<>());
+        }
+        return value;
     }
 
     @Override

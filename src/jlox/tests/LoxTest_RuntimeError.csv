@@ -148,3 +148,9 @@ MI method priority 2 ¤ class C { m() 10; } class D { m() 20; } class E < D, C {
 MI method priority 3 super explicit ¤ class C { m() 10; } class D { m() 20; } class E < D, C { m() super(C).m(); } var e = E(); e.m() ¤ /100, *10
 MI inheriting from itself ¤ class C {  } class D < C, D {  } ¤ /001, at 'D', class can't inherit from itself
 MI inheriting twice  ¤ class C {  } class D < C, C {  } ¤ /001, at 'C', class can't be inherited more than once
+
+# Properties
+Global property ¤ var a = 10; fun b : 2 * a; print b; ++a; print b; ¤ /200, *20, *22
+Instance property ¤ class Circle { \n init(radius) self.radius = radius; \n diameter : self.radius * 2; } Circle(10).diameter ¤ /100, *20
+Class properties are readonly ¤ class C { p:10; } var c = C(); print c.p; c.p = 20; ¤ /101, *10, at 'p', cannot change 'p'
+Class methods are readonly ¤ class C { p() 10; } var c = C(); print c.p(); c.p = 20; ¤ /101, *10, at 'p', cannot change 'p'

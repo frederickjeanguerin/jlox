@@ -1,0 +1,37 @@
+
+print "===== Properties (Chapter 12 challenge 2) =====\n";
+
+print "----- Global properties -----";
+
+var bidule = 10;
+fun biduleSquare : bidule * bidule;
+fun biduleCube : {
+    return bidule * bidule * bidule;
+}
+bidule = 5;
+print biduleSquare + " (expected 25)";
+print biduleCube + " (expected 125)";
+
+print "\n----- Class properties -----";
+
+class Rectangle {
+
+    init(height, width)
+        self.height = height, self.width = width;
+
+    area:
+        self.height * self.width;
+
+    perimeter: {
+        return self.height * 2 + self.width * 2;
+    }
+
+    toString()
+        "rectangle " + self.height + "x" + self.width + " : area " + self.area + ", perimeter " + self.perimeter;
+}
+
+var rect = Rectangle (3, 5);
+print "BEFORE " + rect.toString();
+rect.height = 2;
+rect.width = 10;
+print "AFTER " + rect.toString();
