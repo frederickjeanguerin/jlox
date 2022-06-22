@@ -2,45 +2,43 @@ package jlox;
 
 import java.util.*;
 
-public class WalkReturn extends Walk.Base<WalkReturn.State> {
+public class WalkReturn extends Walk.Base {
 
-    record State(boolean insideFunction, boolean insideInit) {
-        boolean canReturn() { return insideFunction; }
-        boolean canReturnSomething() { return insideFunction && !insideInit; }
-    }
-
+    enum Return { CANNOT, VOID_ONLY, ANY }
     private final Set<Stmt> deadCodes = new HashSet<>();
 
+    private final Stack<Return> returns = new Stack<>();
+
     public WalkReturn() {
-        super(new State(false, false));
+        returns.push(Return.CANNOT);
     }
 
     @Override
     public void enterFunctionStmt(Stmt.Function stmt) {
         boolean isInit = stmt.name.lexeme().equals("init") && stmt.kind.equals("method");
-        enterState(new State(true, isInit));
+        returns.push(isInit ? Return.VOID_ONLY : Return.ANY);
     }
 
     @Override
     public void leaveFunctionStmt(Stmt.Function stmt) {
-        leaveState();
+        returns.pop();
     }
 
     @Override
     public void enterLambdaExpr(Expr.Lambda lambda) {
-        enterState(new State(true, false));
+        returns.push(Return.ANY);
     }
 
     @Override
     public void leaveLambdaExpr(Expr.Lambda expr) {
-        leaveState();
+        returns.pop();
     }
 
     @Override
     public void enterReturnStmt(Stmt.Return stmt) {
-        if (!state().canReturn()) {
+        if (returns.peek() == Return.CANNOT) {
             stdio().errorAtToken(stmt.keyword, "Return outside function.");
-        } else if (stmt.value != null && !state().canReturnSomething()) {
+        } else if (stmt.value != null && returns.peek() == Return.VOID_ONLY) {
             stdio().errorAtToken(stmt.keyword, "Initializers cannot return something.");
         } else {
             checkDeadCode(0, stmt, stmt.keyword);

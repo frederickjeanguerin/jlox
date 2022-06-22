@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class WalkSymbol extends Walk.Base<Void> {
+public class WalkSymbol extends Walk.Base {
 
     private final Environment environment;
 
@@ -12,7 +12,6 @@ public class WalkSymbol extends Walk.Base<Void> {
     private final Stack<Stmt.Class> classes = new Stack<>();
 
     public WalkSymbol(Environment environment) {
-        super(null);
         this.environment = environment;
     }
 

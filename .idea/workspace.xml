@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 7 - Added string comparisons.">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTOR remove states from Walk.Base">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/WalkReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkReturn.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,20 +238,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Chapter 10.3 - Function declarations">
-      <created>1654908249692</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1654908249692</updated>
-    </task>
-    <task id="LOCAL-00044" summary="Chapter 10.3 (+) - Added check for parameter redefinition.">
-      <created>1654909759907</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1654909759907</updated>
     </task>
     <task id="LOCAL-00045" summary="Chapter 10.3 (++) - Added readonly symbol in global scope.">
       <created>1654936519894</created>
@@ -585,7 +568,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655863945421</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="Chapter 7 - Added string comparisons.">
+      <created>1655893815762</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1655893815762</updated>
+    </task>
+    <task id="LOCAL-00093" summary="REFACTOR remove states from Walk.Base">
+      <created>1655895694932</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1655895694932</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -603,7 +600,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ADDED JLine3 support (working ±)" />
     <MESSAGE value="REFAC Independent expressions in parser." />
     <MESSAGE value="Chapter 12.2 - Class declaration (untested)" />
     <MESSAGE value="Chapter 12.2 - Class declaration (tested)" />
@@ -628,6 +624,7 @@
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (tested)." />
     <MESSAGE value="Chapter 4 - Added escape sequences in strings, including double quotes.." />
     <MESSAGE value="Chapter 7 - Added string comparisons." />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 7 - Added string comparisons." />
+    <MESSAGE value="REFACTOR remove states from Walk.Base" />
+    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR remove states from Walk.Base" />
   </component>
 </project>

@@ -19,7 +19,7 @@ I detail these challenges and together with more personal stuff I added hereafte
 ### 4.4 - Block comment (non nesting)
 Chapter 4 challenge 4 asked for block comment: ``/* my block comment */``
 
-[//]: # (TODO: Add nesting.)
+TODO: Add nesting.
 
 ### 4.x5 - String with escape sequences
 Some escape sequence are permitted, like `\n`, `\t`, `\"`, or `\\`. See [translateEscapes](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html#translateEscapes()).
@@ -62,4 +62,14 @@ May generate a division by zero.
 
 ### 8.1 - REPL still working
 
+Added `#ast` modifier to print only the AST without evaluation.
+
+Example: `#ast 4 + 5` will output `(+ 4 5)`.
+
 ### 8.2 - Variables should be initialized
+
+## 9 - Control Flow
+
+### 9.3 - Break from loops
+
+Added with an exception mechanism.

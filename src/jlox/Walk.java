@@ -5,26 +5,7 @@ import java.util.Stack;
 
 public class Walk implements Walker.AstVisitor {
 
-    static class Base<S> extends Walk {
-        private final Stack<S> states = new Stack<>();
-        private S _state;
-
-        protected S state() { return _state; }
-
-        public Base(S state) {
-            this._state = state;
-        }
-
-
-        protected void enterState(S newState) {
-            states.push(_state);
-            _state = newState;
-        }
-
-        @SuppressWarnings("UnusedReturnValue")
-        protected S leaveState() {
-            return _state = states.pop();
-        }
+    static class Base extends Walk {
 
         private WalkerData walker;
 
