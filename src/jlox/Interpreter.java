@@ -85,14 +85,6 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
-    public Void visitContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
-        try {
-            execute(stmt.statement);
-        } catch (ContinueException ignored) { }
-        return null;
-    }
-
-    @Override
     public Void visitClassStmt(Stmt.Class klass) {
         Map<String, LoxCallable.Function> methods = new HashMap<>();
         Map<String, LoxCallable.Function> classMethods = new HashMap<>();
@@ -183,7 +175,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         while (isTruthy(evaluate(stmt.condition))) {
             try {
                 execute(stmt.body);
-            } catch (BreakException Ignored) { break; }
+            } catch (BreakException Ignored) {
+                break;
+            } catch (ContinueException Ignored) {
+                // continue;
+            }
         }
 
         return null;

@@ -9,6 +9,9 @@ public class WalkReturn extends Walk.Base {
 
     private final Stack<Return> returns = new Stack<>();
 
+    private final Stack<Integer> loopNestings = new Stack<>();
+    // private int loopNesting = 0;
+
     public WalkReturn() {
         returns.push(Return.CANNOT);
     }

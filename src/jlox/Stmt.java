@@ -7,7 +7,6 @@ import java.util.List;
 abstract class Stmt {
   interface Visitor<R> {
     R visitBlockStmt(Block stmt);
-    R visitContinueCatcherStmt(ContinueCatcher stmt);
     R visitClassStmt(Class stmt);
     R visitMethodsStmt(Methods stmt);
     R visitExpressionStmt(Expression stmt);
@@ -22,7 +21,6 @@ abstract class Stmt {
   }
   interface VoidVisitor {
     void visitBlockStmt(Block stmt);
-    void visitContinueCatcherStmt(ContinueCatcher stmt);
     void visitClassStmt(Class stmt);
     void visitMethodsStmt(Methods stmt);
     void visitExpressionStmt(Expression stmt);
@@ -38,8 +36,6 @@ abstract class Stmt {
   interface WalkVisitor {
     void enterBlockStmt(Block stmt);
     void leaveBlockStmt(Block stmt);
-    void enterContinueCatcherStmt(ContinueCatcher stmt);
-    void leaveContinueCatcherStmt(ContinueCatcher stmt);
     void enterClassStmt(Class stmt);
     void leaveClassStmt(Class stmt);
     void enterMethodsStmt(Methods stmt);
@@ -89,34 +85,6 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitBlockStmt(this);
-    }
-  }
-  static class ContinueCatcher extends Stmt {
-
-    final Stmt statement;
-
-    ContinueCatcher ( Stmt statement ) {
-      this.statement = statement;
-    }
-
-    @Override
-    void voidVisit(VoidVisitor visitor) {
-        visitor.visitContinueCatcherStmt(this);
-    }
-
-    @Override
-    void enter(WalkVisitor visitor) {
-        visitor.enterContinueCatcherStmt(this);
-    }
-
-    @Override
-    void leave(WalkVisitor visitor) {
-        visitor.leaveContinueCatcherStmt(this);
-    }
-
-    @Override
-    <R> R visit(Visitor<R> visitor) {
-        return visitor.visitContinueCatcherStmt(this);
     }
   }
   static class Class extends Stmt {

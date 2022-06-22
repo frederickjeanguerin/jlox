@@ -16,7 +16,6 @@ public class Parser {
     // TODO push/pop loopNesting inside function body
     private int loopNesting = 0;
     // TODO what happens inside functions ?
-    private boolean hasContinue = false;
 
     Parser(List<Token> tokens, Stdio stdio) {
         this.tokens = tokens;
@@ -174,8 +173,6 @@ public class Parser {
 
         switch (token.type()) {
             case CONTINUE:
-                hasContinue = true;
-                // fall-through
             case BREAK:
                 if (loopNesting == 0)
                     error(token, token.lexeme() + " outside of any loop");
@@ -250,10 +247,10 @@ public class Parser {
         loopNesting++;
         try {
             var body = statement();
-            if (hasContinue) {
-                hasContinue = false;
-                body = new Stmt.ContinueCatcher(body);
-            }
+//            if (hasContinue) {
+//                hasContinue = false;
+//                body = new Stmt.ContinueCatcher(body);
+//            }
             return body;
         } finally {
             loopNesting--;

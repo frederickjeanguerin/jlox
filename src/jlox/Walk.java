@@ -188,16 +188,6 @@ public class Walk implements Walker.AstVisitor {
     }
 
     @Override
-    public void enterContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
-
-    }
-
-    @Override
-    public void leaveContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
-
-    }
-
-    @Override
     public void enterClassStmt(Stmt.Class stmt) {
 
     }

@@ -176,11 +176,6 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
     }
 
     @Override
-    public void visitContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
-        append("{ CC: "); append(stmt.statement); append("}");
-    }
-
-    @Override
     public void visitClassStmt(Stmt.Class stmt) {
         append("class "); append(stmt.name);
         if (!stmt.superclasses.isEmpty()) {

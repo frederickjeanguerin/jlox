@@ -174,11 +174,6 @@ public class Walker implements Stmt.VoidVisitor, Expr.VoidVisitor, WalkerData {
     }
 
     @Override
-    public void visitContinueCatcherStmt(Stmt.ContinueCatcher stmt) {
-        walk(stmt.statement);
-    }
-
-    @Override
     public void visitClassStmt(Stmt.Class stmt) {
         for (var superclass : stmt.superclasses) {
             walk(superclass);
