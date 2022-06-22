@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done).">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 4 - Added escape sequences in strings, including double quotes..">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap4-string-with-escapes.lox" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jlox/tests/snapshots/chap4-string-with-escapes.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Walk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Walker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Walker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,13 +242,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Chapter 10.2 - Native call (untested)">
-      <created>1654892957401</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1654892957401</updated>
     </task>
     <task id="LOCAL-00042" summary="Chapter 10.2 - Native call (tested)">
       <created>1654904335817</created>
@@ -590,7 +579,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655841067572</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (tested).">
+      <created>1655842442858</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1655842442858</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -608,8 +604,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 11 - Lexical scoping (almost tested)" />
-    <MESSAGE value="Chapter 11 - Lexical scoping (tested)" />
     <MESSAGE value="Chapter 11 - Challenge 3 - Report unused variables" />
     <MESSAGE value="ADDED JLine3 support (working ±)" />
     <MESSAGE value="REFAC Independent expressions in parser." />
@@ -633,6 +627,8 @@
     <MESSAGE value="Chapter 12 - Challenge 2 - Properties." />
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods (no meta-classes)." />
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done)." />
+    <MESSAGE value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (tested)." />
+    <MESSAGE value="Chapter 4 - Added escape sequences in strings, including double quotes.." />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 4 - Added escape sequences in strings, including double quotes.." />
   </component>
 </project>

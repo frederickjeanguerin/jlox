@@ -1,0 +1,7 @@
+===== String with escape sequences =====
+
+Double quotes:	"abc"
+
+Escape char:	\abc\
+
+

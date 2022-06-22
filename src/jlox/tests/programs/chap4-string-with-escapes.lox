@@ -1,0 +1,5 @@
+
+print "===== String with escape sequences =====";
+
+print "\nDouble quotes:\t\"abc\"";
+print "\nEscape char:\t\\abc\\";

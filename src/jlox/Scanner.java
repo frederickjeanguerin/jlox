@@ -148,8 +148,19 @@ class Scanner {
         return c;
     }
 
+    @SuppressWarnings({"SameParameterValue", "UnusedReturnValue"})
     private boolean advanceAfter(char expected) {
         while (peek() != expected) {
+            if (isAtEnd()) return false;
+            advance();
+        }
+        advance();
+        return true;
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private boolean advanceAfterAnyOf(String expected) {
+        while (expected.indexOf(peek()) < 0) {
             if (isAtEnd()) return false;
             advance();
         }
@@ -185,13 +196,15 @@ class Scanner {
     }
 
     private void string() {
-        // TODO Add escape sequences or at least the possibility to insert a " inside a string
-        if (!advanceAfter('"')) {
-            stdio.errorAtLine(line, "Unterminated string");
-        } else {
-            String value = source.substring(start + 1, current - 1);
-            addToken(STRING, value.translateEscapes());
+        while (advanceAfterAnyOf("\\\"")) {
+            if (peek(-1) == '\"') {
+                String value = source.substring(start + 1, current - 1);
+                addToken(STRING, value.translateEscapes());
+                return;
+            }
+            advance();
         }
+        stdio.errorAtLine(line, "Unterminated string");
     }
 
     private void number() {

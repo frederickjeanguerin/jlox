@@ -132,7 +132,8 @@ class LoxTest {
             "chap13-diamond-of-death-ok",
             "chap13-diamond-of-death-bad",
             "chap12-properties",
-            "chap12-class-methods"
+            "chap12-class-methods",
+            "chap4-string-with-escapes"
     })
     void testSnapShot(String fileName) throws IOException {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");
