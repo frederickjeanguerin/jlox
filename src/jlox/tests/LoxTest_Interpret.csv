@@ -58,6 +58,16 @@ Comparison >= ¤ 1 >= 2 ¤ false
 Comparison >= ¤ 2 >= 2 ¤ true
 Comparison complex ¤ 1 + 2 < 2 * 3 ¤ true
 
+# String comparison (challenge 7.1)
+String comparison < ¤ ""01"" < ""02"" ¤ true
+String comparison < ¤ ""02"" < ""02"" ¤ false
+String comparison <= ¤ ""01"" <= ""02"" ¤ true
+String comparison <= ¤ ""02"" <= ""02"" ¤ true
+String comparison > ¤ ""01"" > ""02"" ¤ false
+String comparison > ¤ ""02"" > ""02"" ¤ false
+String comparison >= ¤ ""01"" >= ""02"" ¤ false
+String comparison >= ¤ ""02"" >= ""02"" ¤ true
+
 # Equality
 Equality ¤ 1 == 2 ¤ false
 Inequality ¤ 1 != 2 ¤ true

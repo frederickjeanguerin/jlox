@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 4 - Added escape sequences in strings, including double quotes..">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jlox/tests/programs/chap4-string-with-escapes.lox" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jlox/tests/snapshots/chap4-string-with-escapes.txt" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="Chapter 7 - Added string comparisons.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Interpret.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,13 +241,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Chapter 10.2 - Native call (tested)">
-      <created>1654904335817</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1654904335817</updated>
     </task>
     <task id="LOCAL-00043" summary="Chapter 10.3 - Function declarations">
       <created>1654908249692</created>
@@ -586,7 +578,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655842442858</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="Chapter 4 - Added escape sequences in strings, including double quotes..">
+      <created>1655863945420</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1655863945421</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -604,7 +603,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 11 - Challenge 3 - Report unused variables" />
     <MESSAGE value="ADDED JLine3 support (working ±)" />
     <MESSAGE value="REFAC Independent expressions in parser." />
     <MESSAGE value="Chapter 12.2 - Class declaration (untested)" />
@@ -629,6 +627,7 @@
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done)." />
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (tested)." />
     <MESSAGE value="Chapter 4 - Added escape sequences in strings, including double quotes.." />
-    <option name="LAST_COMMIT_MESSAGE" value="Chapter 4 - Added escape sequences in strings, including double quotes.." />
+    <MESSAGE value="Chapter 7 - Added string comparisons." />
+    <option name="LAST_COMMIT_MESSAGE" value="Chapter 7 - Added string comparisons." />
   </component>
 </project>

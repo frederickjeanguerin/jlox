@@ -1,20 +1,21 @@
 description ¤ input ¤ expectedErrors
 
 # Binary operator
-Operator > ¤ true > 5 ¤ at '>', left operand, number expected
+Operator > ¤ true > 5 ¤ at '>', not applicable to a left operand of type Boolean
 Operator > ¤ 5 > true ¤ at '>', right operand, number expected
-Operator > ¤ true > true ¤ at '>', left operand, number expected
-Operator >= ¤ true >= 5 ¤ at '>=', left operand, number expected
-Operator < ¤ true < 5 ¤ at '<', left operand, number expected
-Operator <= ¤ true <= 5 ¤ at '<=', left operand, number expected
-Operator - ¤ true - 5 ¤ at '-', left operand, number expected
-Operator * ¤ true * 5 ¤ at '[*]', left operand, number expected
-Operator / ¤ true / 5 ¤ at '/', left operand, number expected
+Operator > ¤ true > true ¤ at '>', not applicable to a left operand of type Boolean
+Operator >= ¤ true >= 5 ¤ at '>=', not applicable to a left operand of type Boolean
+Operator < ¤ true < 5 ¤ at '<', not applicable to a left operand of type Boolean
+Operator <= ¤ true <= 5 ¤ at '<=', not applicable to a left operand of type Boolean
+Operator - ¤ true - 5 ¤ at '-', not applicable to a left operand of type Boolean
+Operator * ¤ true * 5 ¤ at '[*]', not applicable to a left operand of type Boolean
+Operator / ¤ true / 5 ¤ at '/', not applicable to a left operand of type Boolean
+Operator < with string ¤ ""01"" < 2 ¤ at '<', right operand, string expected
 
 # Operator +
-Operator + incompatible operands ¤ true + false ¤ at '[+]', operands cannot be added
-Operator + incompatible operands ¤ 1 + false ¤ at '[+]', operands cannot be added
-Operator + incompatible operands ¤ false + 1 ¤ at '[+]', operands cannot be added
+Operator + incompatible operands ¤ true + false ¤ at '[+]', not applicable to a left operand of type Boolean
+Operator + incompatible operands ¤ 1 + false ¤ at '[+]', Number cannot be added with Boolean
+Operator + incompatible operands ¤ false + 1 ¤ at '[+]', not applicable to a left operand of type Boolean
 
 # Division by zero
 Division by zero ¤ 3 / 0 ¤ at '/', division by zero

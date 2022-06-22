@@ -208,43 +208,78 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         var left = evaluate(expr.left);
         var right = new Lazy(() -> evaluate(expr.right));
 
-        Supplier<Double> leftNumber = () -> number(left, expr.operator, "left operand");
-        Supplier<Double> rightNumber = () -> number(right.get(), expr.operator, "right operand");
-
         return switch (expr.operator.type()) {
             case AND -> isTruthy(left) ? right.get() : left;
             case BANG_EQUAL -> !areEqual(left, right.get());
             case COMMA -> right.get();
             case EQUAL_EQUAL -> areEqual(left, right.get());
-            case GREATER -> leftNumber.get() > rightNumber.get();
-            case GREATER_EQUAL -> leftNumber.get() >= rightNumber.get();
-            case LESS -> leftNumber.get() < rightNumber.get();
-            case LESS_EQUAL -> leftNumber.get() <= rightNumber.get();
-            case MINUS -> leftNumber.get() - rightNumber.get();
             case OR -> isTruthy(left) ? left : right.get();
+            default -> {
+                if (left instanceof Double d)
+                    yield visitBinaryNumber(d, expr.operator, expr.right);
+                if (left instanceof String s)
+                    yield visitBinaryString(s, expr.operator, expr.right);
+                throw new LoxError(expr.operator,
+                        "Binary operator '%s' is not applicable to a left operand of type %s."
+                                .formatted(expr.operator.lexeme(), left.getClass().getSimpleName()));
+            }
+        };
+    }
+
+    private Object visitBinaryNumber(Double left, Token operator, Expr rightExpr) {
+
+        Supplier<Double> rightNumber =
+                () -> number(evaluate(rightExpr), operator, "right operand");
+
+        return switch(operator.type()) {
+            case GREATER -> left > rightNumber.get();
+            case GREATER_EQUAL -> left >= rightNumber.get();
+            case LESS -> left < rightNumber.get();
+            case LESS_EQUAL -> left <= rightNumber.get();
+            case MINUS -> left - rightNumber.get();
             case PERCENT -> {
                 double divisor = rightNumber.get();
                 if (divisor == 0)
-                    throw new LoxError(expr.operator, "Division by zero.");
-                yield leftNumber.get() % divisor;
+                    throw new LoxError(operator, "Division by zero.");
+                yield left % divisor;
             }
             case PLUS -> {
-                if (left instanceof Double b && right.get() instanceof Double a )
-                    yield a + b;
-                // Challenge 7.2
-                if (left instanceof String || right.get() instanceof String)
-                    yield Stdio.stringify(left) + Stdio.stringify(right.get());
-                throw new LoxError(expr.operator, "Operands cannot be added.");
+                Object right = evaluate(rightExpr);
+                if (right instanceof Double num )
+                    yield left + num;
+                if (right instanceof String str)
+                    yield Stdio.stringify(left) + str;
+                throw new LoxError(operator,
+                        "Number cannot be added with %s.".formatted(right.getClass().getSimpleName()));
             }
             case SLASH -> {
                 // Challenge 7.3
                 double divisor = rightNumber.get();
                 if (divisor == 0)
-                    throw new LoxError(expr.operator, "Division by zero.");
-                yield leftNumber.get() / divisor;
+                    throw new LoxError(operator, "Division by zero.");
+                yield left / divisor;
             }
-            case STAR -> leftNumber.get() * rightNumber.get();
-            default -> throw new IllegalStateException("Unexpected value: " + expr.operator.type());
+            case STAR -> left * rightNumber.get();
+
+            default -> throw new LoxError(operator,
+                    "Binary operator '%s' is not applicable to a left operand of type Number.");
+        };
+    }
+
+    private Object visitBinaryString(String left, Token operator, Expr rightExpr) {
+
+        Supplier<String> rightString =
+                () -> downcast(evaluate(rightExpr), String.class, "string", operator, "right operand");
+
+        return switch(operator.type()) {
+            case GREATER -> left.compareTo(rightString.get()) > 0;
+            case GREATER_EQUAL -> left.compareTo(rightString.get()) >= 0;
+            case LESS -> left.compareTo(rightString.get()) < 0;
+            case LESS_EQUAL -> left.compareTo(rightString.get()) <= 0;
+            case PLUS -> left + Stdio.stringify(evaluate(rightExpr));
+
+            default -> throw new LoxError(operator,
+                        "Binary operator '%s' is not applicable to a left operand of type String.");
         };
     }
 
@@ -393,6 +428,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         throw new LoxError(token, position + ": " +  typeName + " expected.");
     }
 
+    @SuppressWarnings("SameParameterValue")
     static private double number(Object value, Token token, String position) {
         return downcast(value, Double.class, "number", token, position);
     }
