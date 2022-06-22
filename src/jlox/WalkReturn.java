@@ -10,30 +10,34 @@ public class WalkReturn extends Walk.Base {
     private final Stack<Return> returns = new Stack<>();
 
     private final Stack<Integer> loopNestings = new Stack<>();
-    // private int loopNesting = 0;
 
     public WalkReturn() {
         returns.push(Return.CANNOT);
+        loopNestings.push(0);
     }
 
     @Override
     public void enterFunctionStmt(Stmt.Function stmt) {
         boolean isInit = stmt.name.lexeme().equals("init") && stmt.kind.equals("method");
         returns.push(isInit ? Return.VOID_ONLY : Return.ANY);
+        loopNestings.push(0);
     }
 
     @Override
     public void leaveFunctionStmt(Stmt.Function stmt) {
+        loopNestings.pop();
         returns.pop();
     }
 
     @Override
     public void enterLambdaExpr(Expr.Lambda lambda) {
         returns.push(Return.ANY);
+        loopNestings.push(0);
     }
 
     @Override
     public void leaveLambdaExpr(Expr.Lambda expr) {
+        loopNestings.pop();
         returns.pop();
     }
 
@@ -45,6 +49,33 @@ public class WalkReturn extends Walk.Base {
             stdio().errorAtToken(stmt.keyword, "Initializers cannot return something.");
         } else {
             checkDeadCode(0, stmt, stmt.keyword);
+        }
+    }
+
+    @Override
+    public void enterWhileStmt(Stmt.While stmt) {
+        int top = loopNestings.pop();
+        top++;
+        loopNestings.push(top);
+    }
+
+    @Override
+    public void leaveWhileStmt(Stmt.While stmt) {
+        int top = loopNestings.pop();
+        top--;
+        loopNestings.push(top);
+    }
+
+    @Override
+    public void enterKeywordStmt(Stmt.Keyword stmt) {
+        switch (stmt.keyword.type()) {
+            case CONTINUE, BREAK -> {
+                if (loopNestings.peek() == 0) {
+                    stdio().errorAtToken(stmt.keyword, stmt.keyword.lexeme() + " outside of any loop");
+                } else {
+                    checkDeadCode(0, stmt, stmt.keyword);
+                }
+            }
         }
     }
 

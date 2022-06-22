@@ -85,6 +85,17 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Void visitForBlockStmt(Stmt.ForBlock stmt) {
+        try {
+            execute(stmt.body);
+        } catch (ContinueException Ignored) {
+            // continue;
+        }
+        execute(stmt.updater);
+        return null;
+    }
+
+    @Override
     public Void visitClassStmt(Stmt.Class klass) {
         Map<String, LoxCallable.Function> methods = new HashMap<>();
         Map<String, LoxCallable.Function> classMethods = new HashMap<>();

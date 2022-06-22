@@ -56,8 +56,6 @@ For invalid initializer ¤ for ( while(1);;); ¤ at 'while', expect expression
 # Break & Continue
 Break missing semi ¤ break if ¤ at 'if', expect ';'
 Continue missing semi ¤ continue if ¤ at 'if', expect ';'
-Break outside loop ¤ while (1); break; ¤ at 'break', break outside of any loop
-Continue outside loop ¤ while (1); continue; ¤ at 'continue', continue outside of any loop
 
 # Increment & Decrement
 Increment invalid target ¤ ++1 ¤ at '[+][+]', invalid .*target

@@ -13,9 +13,6 @@ public class Parser {
     private final Stdio stdio;
     private final List<Token> tokens;
     private int current = 0;
-    // TODO push/pop loopNesting inside function body
-    private int loopNesting = 0;
-    // TODO what happens inside functions ?
 
     Parser(List<Token> tokens, Stdio stdio) {
         this.tokens = tokens;
@@ -61,7 +58,6 @@ public class Parser {
             if (decl != null)
                 statements.add(decl);
         }
-        assert loopNesting == 0;
         return statements;
     }
 
@@ -170,15 +166,6 @@ public class Parser {
     private Stmt keywordStatement() {
         var token = previous();
         semicolon();
-
-        switch (token.type()) {
-            case CONTINUE:
-            case BREAK:
-                if (loopNesting == 0)
-                    error(token, token.lexeme() + " outside of any loop");
-                break;
-        }
-
         return new Stmt.Keyword(token);
     }
 
@@ -223,7 +210,7 @@ public class Parser {
         var whileBody
                 = updater == null ? body
                 : body == null ? updater
-                : new Stmt.Block(List.of(body, updater));
+                : new Stmt.ForBlock(body, updater);
 
         if (condition == null)
             condition = new Expr.Literal(true);
@@ -244,17 +231,7 @@ public class Parser {
     }
 
     private Stmt loopBody() {
-        loopNesting++;
-        try {
-            var body = statement();
-//            if (hasContinue) {
-//                hasContinue = false;
-//                body = new Stmt.ContinueCatcher(body);
-//            }
-            return body;
-        } finally {
-            loopNesting--;
-        }
+        return statement();
     }
 
     private Stmt ifStatement() {

@@ -188,6 +188,16 @@ public class Walk implements Walker.AstVisitor {
     }
 
     @Override
+    public void enterForBlockStmt(Stmt.ForBlock stmt) {
+
+    }
+
+    @Override
+    public void leaveForBlockStmt(Stmt.ForBlock stmt) {
+
+    }
+
+    @Override
     public void enterClassStmt(Stmt.Class stmt) {
 
     }

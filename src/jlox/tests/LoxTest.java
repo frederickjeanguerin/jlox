@@ -2,6 +2,7 @@ package jlox.tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -133,7 +134,8 @@ class LoxTest {
             "chap13-diamond-of-death-bad",
             "chap12-properties",
             "chap12-class-methods",
-            "chap4-string-with-escapes"
+            "chap4-string-with-escapes",
+            "chap9-continue-for"
     })
     void testSnapShot(String fileName) throws IOException {
         Path sourcePath = Path.of("src/jlox/tests/programs/" + fileName + ".lox");
@@ -141,7 +143,7 @@ class LoxTest {
         var source = Files.readString(sourcePath);
         var result = Lox.run(source);
         var given = result.stdout() + "\n\n" + result.stderr();
-        var sourceIsDraft = source.matches("(?is)^//.*draft.*");
+        var sourceIsDraft = source.matches("(?is)^.*//.*draft.*");
         if (Files.exists(targetPath) && !sourceIsDraft) {
             var expected = Files.readString(targetPath);
             if (!expected.matches("(?is)^//.*draft.*")) {

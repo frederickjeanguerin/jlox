@@ -39,6 +39,18 @@ Undefined variable out of scope ¤ var b = 20; { var a = 10; print a; } b + a ¤
 # For loop
 For loop local variable out of scope ¤ for (var a = 0; a < 5; a = a + 1); a ¤ undefined identifier 'a'
 
+# Break & continue
+Break outside loop ¤ while (1); break; ¤ at 'break', break outside of any loop
+Continue outside loop ¤ while (1); continue; ¤ at 'continue', continue outside of any loop
+Break outside loop ¤ while (1) { fun f() { break; } }; ¤ at 'break', break outside of any loop
+Continue outside loop ¤ while (1) { fun f() { continue; } }; ¤ at 'continue', continue outside of any loop
+Multiple break outside loop ¤ break; while (1); break; ¤ /002, at 'break', break outside of any loop
+Multiple continue outside loop ¤ continue; while (1); continue; ¤ /002, at 'continue', continue outside of any loop
+Multiple break and continue outside loop ¤ continue; while (1) { fun f() { break; continue; } }; break; ¤ /E4, at 'continue', at 'break'
+Dead code after break ¤ while (1) { print 10; break; print 20; } ¤ /110, at 'break', dead code, print 20
+Dead code after break ¤ while (1) { print 10; { break; } print 20; } ¤ /110, at 'break', dead code, print 20
+Dead code after continue ¤ while (0) { print 10; { continue; break; } print 20; } ¤ /020, at 'continue', dead code, break, print 20
+
 # Increment & Decrement
 Increment boolean ¤ var i = true; ++i ¤ at 'i', expected 'Double' but got 'Boolean'
 Decrement string ¤ var str = "a"; --str ¤ at 'str', expected 'Double' but got 'String'

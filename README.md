@@ -72,4 +72,17 @@ Example: `#ast 4 + 5` will output `(+ 4 5)`.
 
 ### 9.3 - Break from loops
 
-Added with an exception mechanism.
+Added with an exception mechanism in Java. 
+The check is for using break outside loop is made during 
+analysis phase (after parsing but before interpretation).
+A check for dead code is also made (not exhaustive).
+
+### 9.4x - Continue from loops
+
+A continue statement is also provided. Works like break.
+
+### 9.5x - Increment and decrement
+
+Increment and decrement provided with syntax sugaring.
+
+TODO: make it work with fields.

@@ -7,6 +7,7 @@ import java.util.List;
 abstract class Stmt {
   interface Visitor<R> {
     R visitBlockStmt(Block stmt);
+    R visitForBlockStmt(ForBlock stmt);
     R visitClassStmt(Class stmt);
     R visitMethodsStmt(Methods stmt);
     R visitExpressionStmt(Expression stmt);
@@ -21,6 +22,7 @@ abstract class Stmt {
   }
   interface VoidVisitor {
     void visitBlockStmt(Block stmt);
+    void visitForBlockStmt(ForBlock stmt);
     void visitClassStmt(Class stmt);
     void visitMethodsStmt(Methods stmt);
     void visitExpressionStmt(Expression stmt);
@@ -36,6 +38,8 @@ abstract class Stmt {
   interface WalkVisitor {
     void enterBlockStmt(Block stmt);
     void leaveBlockStmt(Block stmt);
+    void enterForBlockStmt(ForBlock stmt);
+    void leaveForBlockStmt(ForBlock stmt);
     void enterClassStmt(Class stmt);
     void leaveClassStmt(Class stmt);
     void enterMethodsStmt(Methods stmt);
@@ -85,6 +89,36 @@ abstract class Stmt {
     @Override
     <R> R visit(Visitor<R> visitor) {
         return visitor.visitBlockStmt(this);
+    }
+  }
+  static class ForBlock extends Stmt {
+
+    final Stmt body;
+    final Stmt updater;
+
+    ForBlock ( Stmt body, Stmt updater ) {
+      this.body = body;
+      this.updater = updater;
+    }
+
+    @Override
+    void voidVisit(VoidVisitor visitor) {
+        visitor.visitForBlockStmt(this);
+    }
+
+    @Override
+    void enter(WalkVisitor visitor) {
+        visitor.enterForBlockStmt(this);
+    }
+
+    @Override
+    void leave(WalkVisitor visitor) {
+        visitor.leaveForBlockStmt(this);
+    }
+
+    @Override
+    <R> R visit(Visitor<R> visitor) {
+        return visitor.visitForBlockStmt(this);
     }
   }
   static class Class extends Stmt {
