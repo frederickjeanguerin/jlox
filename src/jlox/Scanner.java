@@ -3,17 +3,20 @@ package jlox;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.Map.entry;
 import static jlox.TokenType.*;
 
 class Scanner {
+    private static final Map<String, TokenType> keywords;
     private final String source;
     private final Stdio stdio;
     private final List<Token> tokens = new ArrayList<>();
     private int start = 0;      // offset in source
     private int current = 0;    // offset in source
     private int line;
+
 
     Scanner(String source, Stdio stdio, int startingLine) {
         this.source = source;
@@ -26,9 +29,44 @@ class Scanner {
             // we are at the beginning of the next lexeme
             start = current;
             scanToken();
+            formCompoundOperator();
         }
         tokens.add(new Token(EOF, "", null, line));
         return tokens;
+    }
+
+
+    /**
+     * It is tedious to create a different token for all compound operators.
+     * It is almost impossible to parse them correctly.
+     * The best way I found is to produce them from already scanned tokens.
+     */
+    private void formCompoundOperator() {
+        var last = previous(0);
+        var previous = previous(1);
+        if (last != null && last.type() == EQUAL && isCompoundable(previous)) {
+            var equal = tokens.remove(tokens.size() - 1);
+            var operator = tokens.remove(tokens.size() - 1);
+            tokens.add(new Token(COMPOUND_EQUAL,
+                    operator.lexeme() + equal.lexeme(),
+                    new Token.Compound(operator, equal),
+                    equal.line()));
+        }
+    }
+
+    private boolean isCompoundable(Token token) {
+        if (token == null) return false;
+        return switch (token.type()) {
+            case PERCENT, SLASH, MINUS, PLUS, STAR, STAR_STAR, AND, OR -> true;
+            default -> false;
+        };
+    }
+
+    private Token previous(int lookBack) {
+        assert lookBack >= 0;
+        if (tokens.size() > lookBack)
+            return tokens.get(tokens.size() - 1 - lookBack);
+        return null;
     }
 
     private boolean isAtEnd() {
@@ -135,8 +173,8 @@ class Scanner {
 
     private boolean isAlpha(char c) {
         return 'a' <= c && c <= 'z'
-            || 'A' <= c && c <= 'Z'
-            || c == '_';
+                || 'A' <= c && c <= 'Z'
+                || c == '_';
     }
 
     private boolean isAlphaNumeric(char c) {
@@ -175,7 +213,8 @@ class Scanner {
             if (isAtEnd()) return false;
             advance();
         }
-        advance(); advance();
+        advance();
+        advance();
         return true;
     }
 
@@ -247,28 +286,26 @@ class Scanner {
         tokens.add(new Token(type, text, literal, line));
     }
 
-    private static final Map<String, TokenType> keywords;
-
-    static {
-        keywords = Map.ofEntries(
-                entry("and", AND),
-                entry("break", BREAK),
-                entry("class", CLASS),
-                entry("continue", CONTINUE),
-                entry("else", ELSE),
-                entry("false", FALSE),
-                entry("for", FOR),
-                entry("fun", FUN),
-                entry("if", IF),
-                entry("nil", NIL),
-                entry("or", OR),
-                entry("print", PRINT),
-                entry("return", RETURN),
-                entry("self", SELF),
-                entry("super", SUPER),
-                entry("true", TRUE),
-                entry("var", VAR),
-                entry("while", WHILE)
+static {
+        keywords=Map.ofEntries(
+        entry("and",AND),
+        entry("break",BREAK),
+        entry("class",CLASS),
+        entry("continue",CONTINUE),
+        entry("else",ELSE),
+        entry("false",FALSE),
+        entry("for",FOR),
+        entry("fun",FUN),
+        entry("if",IF),
+        entry("nil",NIL),
+        entry("or",OR),
+        entry("print",PRINT),
+        entry("return",RETURN),
+        entry("self",SELF),
+        entry("super",SUPER),
+        entry("true",TRUE),
+        entry("var",VAR),
+        entry("while",WHILE)
         );
-    }
-}
+        }
+        }

@@ -118,11 +118,24 @@ Type checked for Double, to prohibit something like:
     var str = "string";
     ++str;                  // string1, by x = x + 1 with concatenation
 
----
+### 9.6x - Compound assignment operators
 
-<mark>TODO</mark>: compound assignment `+=`, etc.
+Added with syntax desugaring and a hack on the scanner to parse two consecutive
+operators (with the second being equal) as a compound operator and replace
+those two with the compounded.
 
----
+This has the side effect of accepting both `+=` and `+ =` as valid.
+
+The accepted compounded operators are:
+
+* `+=`
+* `-=`
+* `*=`
+* `/=`
+* `%=`
+* `**=`
+* `and=`
+* `or=`
 
 ## 10 - Functions
 

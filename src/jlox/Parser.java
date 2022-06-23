@@ -74,6 +74,7 @@ public class Parser {
         return stmts;
     }
 
+    @SuppressWarnings("unused")
     private Expr reparseExpr(String source, int line) {
         var stmts = reparse(source, line);
          if (stmts.get(0) instanceof Stmt.Expression expression) {
@@ -176,8 +177,6 @@ public class Parser {
     }
 
     private Stmt returnStatement() {
-        // TODO check if return in function body
-        // TODO check for unreachable code
         Token token = previous();
         Expr value = peek(SEMICOLON) ? null : expression();
         semicolon();
@@ -309,16 +308,26 @@ public class Parser {
         if (match(EQUAL)) {
             Token equals = previous();
             Expr value = assignment(); // right-associative
-            if (expr instanceof Expr.Variable var) {
-                Token name = var.name;
-                return new Expr.Assign(name, value);
-            }
-            if (expr instanceof Expr.Get get) {
-                return new Expr.Set(get.object, get.name, value);
-            }
-            error(equals, "Invalid assignment target (asa lvalue).");
+            return terminateAssignment(expr, equals, value);
+        } else if (match(COMPOUND_EQUAL)) {
+            var compound = (Token.Compound)previous().literal();
+            Expr right = assignment(); // right-associative
+            Expr value = new Expr.Binary(expr, compound.operator(), right);    // syntactic desugaring
+            return terminateAssignment(expr, compound.equal(), value);
         }
         return expr;
+    }
+
+    private Expr terminateAssignment(Expr left, Token equal, Expr right) {
+        if (left instanceof Expr.Variable var) {
+            Token name = var.name;
+            return new Expr.Assign(name, right);
+        }
+        if (left instanceof Expr.Get get) {
+            return new Expr.Set(get.object, get.name, right);
+        }
+        error(equal, "Invalid assignment target (variable or field expected).");
+        return left;
     }
 
     private Expr lambda() {
@@ -539,9 +548,13 @@ public class Parser {
     }
 
     private boolean peek(TokenType... types) {
-        if (isAtEnd()) return false;
+        return peek(0, types);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private boolean peek(int lookahead, TokenType... types) {
         for (var type : types) {
-            if (peek().type() == type) return true;
+            if (peek(lookahead).type() == type) return true;
         }
         return false;
     }
@@ -551,7 +564,11 @@ public class Parser {
     }
 
     private Token peek() {
-        return tokens.get(current);
+        return peek(0);
+    }
+
+    private Token peek(int lookahead) {
+        return tokens.get(Math.min(current + lookahead, tokens.size() - 1));
     }
 
     private Token previous() {

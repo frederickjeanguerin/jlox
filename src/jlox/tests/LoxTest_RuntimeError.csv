@@ -33,6 +33,19 @@ Undefined symbol in assignment ¤ a = 10 ¤ at 'a', undefined identifier 'a'
 Undefined symbol in chained assignment ¤ var a; c = b = a = 10 ¤ at 'b', undefined identifier 'b'
 Uninitialized variable ¤ var a; 10 + a + 5 ¤ at 'a', variable 'a' is uninitialized
 
+# Compound assignment
+Compound + ¤ var n = 200; n += 5; n ¤ /100, *205
+Compound + ¤ var n = ""str""; n += 55; n ¤ /100, *str55
+Compound - ¤ var n = 200; n -= 5; n ¤ /100, *195
+Compound * ¤ var n = 200; n *= 2; n ¤ /100, *400
+Compound / ¤ var n = 200; n /= 4; n ¤ /100, *50
+Compound ** ¤ var n = 2; n **= 10; n ¤ /100, *1024
+Compound % ¤ var n = 200; n %= 30; n ¤ /100, *20
+Compound and ¤ var n = 200; n and= 30; n ¤ /100, *30
+Compound and ¤ var n = 0; n and= 30; n ¤ /100, *0
+Compound or ¤ var n = 200; n or= 30; n ¤ /100, *200
+Compound or ¤ var n = 0; n or= 30; n ¤ /100, *30
+
 # Block scope
 Undefined variable out of scope ¤ var b = 20; { var a = 10; print a; } b + a ¤ undefined identifier 'a', /P0
 

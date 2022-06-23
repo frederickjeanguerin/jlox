@@ -9,4 +9,6 @@ record Token(TokenType type, String lexeme, Object literal, int line) {
     public boolean lexEquals(Token tok) {
         return lexeme.equals(tok.lexeme);
     }
+
+    public record Compound(Token operator, Token equal){}
 }

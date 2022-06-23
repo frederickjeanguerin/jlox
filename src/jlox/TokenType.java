@@ -14,6 +14,9 @@ enum TokenType {
     // Literals
     IDENTIFIER, STRING, NUMBER,
 
+    // Special literal
+    COMPOUND_EQUAL,
+
     // Keywords
     AND, BREAK, CLASS, CONTINUE, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
     PRINT, RETURN, SELF, SUPER, TRUE, VAR, WHILE,
