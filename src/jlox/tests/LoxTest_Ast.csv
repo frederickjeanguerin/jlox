@@ -1,12 +1,13 @@
 description ¤ input ¤ expectedAst
 
 # Simple expressions
-Simple number ¤ 123 ¤ 123
-Simple decimal number ¤ 987.125 ¤ 987.125
-Simple string ¤ ""abc"" ¤ abc
-Simple nil ¤ nil ¤ nil
-Simple true ¤ true ¤ true
-Simple false ¤ false ¤ false
+Simple number ¤ 123 ¤ =
+Simple decimal number ¤ 987.125 ¤ =
+Simple string ¤ ""abc"" ¤ =
+Simple nil ¤ nil ¤ =
+Simple true ¤ true ¤ =
+Simple false ¤ false ¤ =
+String with escapes ¤ ""ab\\,\"",cd"" ¤ =
 
 # Simple with comment
 Simple number with line comment ¤ 456 // comment ¤ 456
@@ -14,62 +15,62 @@ Simple number with block comment ¤ /* comment */ 456 ¤ 456
 Simple number with block and line comment ¤ /* comment */ 456 // comment ¤ 456
 
 # Unary
-Unary minus ¤ -55 ¤ (- 55)
-Unary bang ¤ !true ¤ (! true)
-Unary multiple ¤ - - -55 ¤ (- (- (- 55)))
+Unary minus ¤ -55 ¤ =
+Unary bang ¤ !true ¤ =
+Unary multiple ¤ - - -55 ¤ =
 
 # Factor
-Factor star ¤ 23 * 89 ¤ (* 23 89)
-Factor slash ¤ 23 / 89 ¤ (/ 23 89)
-Factor percent ¤ 10 % 4 ¤ (% 10 4)
-Factor and unary ¤ -55 * -33 ¤ (* (- 55) (- 33))
-Factor multiple ¤ 1 * 2 / 3 * 4 ¤ (* (/ (* 1 2) 3) 4)
+Factor star ¤ 23 * 89 ¤ =
+Factor slash ¤ 23 / 89 ¤ =
+Factor percent ¤ 10 % 4 ¤ =
+Factor and unary ¤ -55 * -33 ¤ =
+Factor multiple ¤ 1 * 2 / 3 * 4 ¤ =
 
 # Term
-Term plus ¤ 2 + 3 ¤ (+ 2 3)
-Term minus ¤ 6 - 8 ¤ (- 6 8)
-Term and factor ¤ 11 + -4 * 5 ¤ (+ 11 (* (- 4) 5))
-Term multiple ¤ 1 - 2 + 3 - 4 ¤ (- (+ (- 1 2) 3) 4)
+Term plus ¤ 2 + 3 ¤ =
+Term minus ¤ 6 - 8 ¤ =
+Term and factor ¤ 11 + -4 * 5 ¤ =
+Term multiple ¤ 1 - 2 + 3 - 4 ¤ =
 
 # Comparison
-Comparison < ¤ 1 < 2 ¤ (< 1 2)
-Comparison <= ¤ 1 <= 2 ¤ (<= 1 2)
-Comparison > ¤ 1 > 2 ¤ (> 1 2)
-Comparison >= ¤ 1 >= 2 ¤ (>= 1 2)
-Comparison complex ¤ 1 + 2 < 2 * 3 ¤ (< (+ 1 2) (* 2 3))
-Comparison multiple ¤ 1 < 2 <= 3 > 4 >= 5 ¤ (>= (> (<= (< 1 2) 3) 4) 5)
+Comparison < ¤ 1 < 2 ¤ =
+Comparison <= ¤ 1 <= 2 ¤ =
+Comparison > ¤ 1 > 2 ¤ =
+Comparison >= ¤ 1 >= 2 ¤ =
+Comparison complex ¤ 1 + 2 < 2 * 3 ¤ =
+Comparison multiple ¤ 1 < 2 <= 3 > 4 >= 5 ¤ =
 
 # Equality
-Equality ¤ 1 == 2 ¤ (== 1 2)
-Inequality ¤ 1 != 2 ¤ (!= 1 2)
-Equality complex ¤ 1 + 2 == 2 * 3 ¤ (== (+ 1 2) (* 2 3))
-Equality multiple ¤ 1 == 2 == 3 != 4 != 5 ¤ (!= (!= (== (== 1 2) 3) 4) 5)
+Equality ¤ 1 == 2 ¤ =
+Inequality ¤ 1 != 2 ¤ =
+Equality complex ¤ 1 + 2 == 2 * 3 ¤ =
+Equality multiple ¤ 1 == 2 == 3 != 4 != 5 ¤ =
 
 # Ternary
-Ternary simple ¤ true ? 1 : 2 ¤ (?: true 1 2)
-Ternary complex ¤ 1 == 2 ? 3 + 4 : -5 ¤ (?: (== 1 2) (+ 3 4) (- 5))
-Ternary multiple ¤ false ? 1 : true ? 2 : 3 ¤ (?: false 1 (?: true 2 3))
+Ternary simple ¤ true ? 1 : 2 ¤ =
+Ternary complex ¤ 1 == 2 ? 3 + 4 : -5 ¤ =
+Ternary multiple ¤ false ? 1 : true ? 2 : 3 ¤ =
 
 # Comma
-Comma simple ¤ 1, 2 ¤ 1, 2
-Comma complex ¤ 1, 2, 3 + 4 ¤ 1, 2, (+ 3 4)
+Comma simple ¤ 1, 2 ¤ =r
+Comma complex ¤ 1, 2, 3 + 4 ¤ =r
 
 # Grouping
-Grouping simple ¤ (1) ¤ (group 1)
-Grouping complex ¤ (1 + 2) * 3 ¤ (* (group (+ 1 2)) 3)
-Grouping multiple ¤ (((1))) ¤ (group (group (group 1)))
+Grouping simple ¤ (1) ¤ =
+Grouping complex ¤ (1 + 2) * 3 ¤ =
+Grouping multiple ¤ (((1))) ¤ =
 
 # Expression statement
-Expression simple ¤ 2; ¤ 2;
-Expression complex ¤ 55 - 4; ¤ (- 55 4);
-Expression multiple ¤ 1; 2; 3; ¤ 1; 2; 3;
+Expression simple ¤ 2; ¤ =
+Expression complex ¤ 55 - 4; ¤ =
+Expression multiple ¤ 1; 2; 3; ¤ =
 
 # Print statement
-Print simple ¤ print 23; ¤ print 23;
-Print complex ¤ print 2 + 3; ¤ print (+ 2 3);
+Print simple ¤ print 23; ¤ =
+Print complex ¤ print 2 + 3; ¤ =
 
 # Last expression statement
-Last simple ¤ 1; 2; 3 ¤ 1; 2; 3
+Last simple ¤ 1; 2; 3 ¤ =
 
 # No statement
 No statement ¤ "" ¤ ""
@@ -78,18 +79,18 @@ No statement ¤ "" ¤ ""
 Empty statements ¤ ;;; ¤ ""
 
 # Variables
-Variable declaration ¤ var abc; ¤ var abc;
-Variable declaration and initialization ¤ var zz = 3 + 4; ¤ var zz = (+ 3 4);
-Variable expression ¤ 3 + abc ¤ (+ 3 abc)
-Variable assignment ¤ a = 2 + 3 ¤ (= a (+ 2 3))
-Variable chained assignment ¤ a = b = 0 ¤ (= a (= b 0))
-Variable self assignment ¤ a = a + 1 ¤ (= a (+ a 1))
+Variable declaration ¤ var abc; ¤ =
+Variable declaration and initialization ¤ var zz = 3 + 4; ¤ =
+Variable expression ¤ 3 + abc ¤ =
+Variable assignment ¤ a = 2 + 3 ¤ =
+Variable chained assignment ¤ a = b = 0 ¤ =
+Variable self assignment ¤ a = a + 1 ¤ =
 
 # Block
-# Block empty ¤ { } ¤ { }
-Block one stmt ¤ { print 3; } ¤ { print 3; }
-Block many stmt ¤ { var a; a = 10; print a; } ¤ { var a; (= a 10); print a; }
-Block last stmt ¤ { var a = 10; a } ¤ { var a = 10; a }
+# Block empty ¤ { } ¤ =
+Block one stmt ¤ { print 3; } ¤ =
+Block many stmt ¤ { var a; a = 10; print a; } ¤ =
+Block last stmt ¤ { var a = 10; a } ¤ =
 
 # If
 If then ¤ if (true) print 3; ¤ if (true) print 3;
@@ -99,14 +100,14 @@ If then expr ¤ if (true) 4 ¤ if (true) 4
 If dangling else ¤ if (true) if (false) 9; else 10; ¤ if (true) if (false) 9; else 10;
 
 # Logical and, or
-Logical and ¤ 1 and 2 and 3 ¤ (and (and 1 2) 3)
-Logical or ¤ 1 or 2 or 3 ¤ (or (or 1 2) 3)
-Logical combined ¤ 1 or 2 and 3 ¤ (or 1 (and 2 3))
-Logical and equality ¤ 1 == 1 and 2 == 2 ¤ (and (== 1 1) (== 2 2))
-Logical and ternary ¤ 1 or 2 ? 3 or 4 : 5 or 6 ¤ (?: (or 1 2) (or 3 4) (or 5 6))
+Logical and ¤ 1 and 2 and 3 ¤ =
+Logical or ¤ 1 or 2 or 3 ¤ =
+Logical combined ¤ 1 or 2 and 3 ¤ =
+Logical and equality ¤ 1 == 1 and 2 == 2 ¤ =
+Logical and ternary ¤ 1 or 2 ? 3 or 4 : 5 or 6 ¤ =
 
 # While loop
-While loop ¤ while (1) print 2; ¤ while (1) print 2;
+While loop ¤ while (1) print 2; ¤ =
 
 # For loop
 For loop empty ¤ for(;;); ¤ while (true) ;
@@ -117,12 +118,12 @@ For loop missing updater ¤ for(1; 2; ) 4; ¤ { 1; while (2) 4; }
 For loop missing body ¤ for(1; 2; 3) ; ¤ { 1; while (2) 3; }
 
 # Break and Continue
-Break ¤ while (1) break; ¤ while (1) break;
-Continue ¤ while (1) continue; ¤ while (1) continue;
+Break ¤ while (1) break; ¤ =
+Continue ¤ while (1) continue; ¤ =
 
 # Increment & Decrement
-Increment ¤ ++i ¤ (= i (+ (Double)i 1))
-Decrement ¤ --i ¤ (= i (- (Double)i 1))
+Increment ¤ ++i ¤ i = /* check type: Double */i + 1
+Decrement ¤ --i ¤ i = /* check type: Double */i - 1
 
 
 # Function call
@@ -132,12 +133,12 @@ Call 3 args ¤ func ( a, b, c ) ¤ func(a, b, c)
 Call call ¤ f () (a) (b, c, d) ¤ f()(a)(b, c, d)
 
 # Function declaration
-Function empty ¤ fun f(){} ¤ fun f() { }
-Function 1 arg ¤ fun ff(aa){} ¤ fun ff(aa) { }
-Function many args ¤ fun fff ( aa, bb, cc ) {} ¤ fun fff(aa, bb, cc) { }
-Function 1 arg with body ¤ fun ff(aa){ print a ; } ¤ fun ff(aa) { print a; }
+Function empty ¤ fun f() { } ¤ =
+Function 1 arg ¤ fun ff(aa) { } ¤ =
+Function many args ¤ fun fff(aa, bb, cc) { } ¤ =
+Function 1 arg with body ¤ fun ff(aa) { print a; } ¤ =
 
 # Return
-Function with return no expr ¤ fun pr(a) { print a; return; } ¤ fun pr(a) { print a; return; }
-Function with return expr ¤ fun plus(a, b) { return a + b; } ¤ fun plus(a, b) { return (+ a b); }
-Function with return expr ¤ fun plus(a, b) { var sum = a + b; return sum; } ¤ fun plus(a, b) { var sum = (+ a b); return sum; }
+Function with return no expr ¤ fun pr(a) { print a; return; } ¤ =
+Function with return expr ¤ fun plus(a, b) { return a + b; } ¤ =
+Function with return expr ¤ fun plus(a, b) { var sum = a + b; return sum; } ¤ =

@@ -1,6 +1,6 @@
 # JLox FG flavor
 
-This is my very own version of the Lox language Java interpreter, as proposed in the book
+Welcome to my very own version of the Lox language Java interpreter, as proposed in the book
 [Crafting Interpreters](https://craftinginterpreters.com/) by _Robert Nystrom_.
 
 This implementation is far from perfect and contains still many bugs for sure, 
@@ -28,13 +28,16 @@ Some escape sequence are permitted, like `\n`, `\t`, `\"`, or `\\`. See [transla
 
 ### 6.1 - Comma expression
 
-This one is tricky because it can mess with arguments list in function calls.
+This one is tricky because it can mess with arguments list in function calls. 
+If it were just for me, I would use another separator than the comma.
 
 ### 6.2 - Ternary
 
+The famous `condition ? expr_if_true : expr_if_false` operator.
+
 ### 6.3 - Binary without first operand.
 
-An error token is provided as a missing operand and the parsing continues.
+An error token is provided as a missing first operand and the parsing continues.
 
 ## 7 - Evaluating expressions
 
@@ -68,18 +71,25 @@ Example: `#ast 4 + 5` will output `(+ 4 5)`.
 
 ### 8.2 - Variables should be initialized
 
+This is checked at runtime, although some checking could also be implemented 
+at "compile time" (static analysis phase).
+
+TODO: do some checking at compile time.
+
 ## 9 - Control Flow
 
 ### 9.3 - Break from loops
 
-Added with an exception mechanism in Java. 
-The check is for using break outside loop is made during 
+Added `break` statement using an exception mechanism in Java. 
+
+A check for using a break outside any loop is made during the 
 analysis phase (after parsing but before interpretation).
 A check for dead code is also made (not exhaustive).
 
 ### 9.4x - Continue from loops
 
-A continue statement is also provided. Works like break.
+A `continue` statement is also provided. Works like break. 
+I had to create a special construct to accommodate the desugared `for` loop.
 
 ### 9.5x - Increment and decrement
 

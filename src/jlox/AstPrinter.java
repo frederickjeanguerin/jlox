@@ -2,8 +2,6 @@ package jlox;
 
 import java.util.List;
 
-import static jlox.TokenType.COMMA;
-
 public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     private final String EOL;
@@ -29,6 +27,10 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
         append(';'); eol();
     }
 
+    private void space() {
+        append(' ');
+    }
+
     private void append(Stmt stmt) {
         if (stmt != null)
             stmt.voidVisit(this);
@@ -36,7 +38,7 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
             append(';');
     }
 
-    private void append(List<Stmt> statements) {
+    private void append(List<? extends Stmt> statements) {
         for (var stmt: statements) {
             append(stmt);
         }
@@ -44,6 +46,12 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     private void append(Token token) {
         append(token.lexeme());
+    }
+
+    private void spaced(Token token) {
+        space();
+        append(token.lexeme());
+        space();
     }
 
     private void append(String string) {
@@ -54,7 +62,7 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
         sb.append(c);
     }
 
-    private void trimend() {
+    private void trimEnd() {
         while (sb.length() > 0 && sb.charAt(sb.length() - 1) == ' ') {
             sb.setLength(sb.length() - 1);
         }
@@ -63,30 +71,32 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
     public String print(List<Stmt> statements) {
         sb.setLength(0);
         append(statements);
-        trimend();
+        trimEnd();
         return sb.toString();
     }
 
     public String print(Stmt statement) {
         sb.setLength(0);
         append(statement);
-        trimend();
+        trimEnd();
+        return sb.toString();
+    }
+
+    public String print(Expr expr) {
+        sb.setLength(0);
+        append(expr);
+        trimEnd();
         return sb.toString();
     }
 
     @Override
     public void visitAssignExpr(Expr.Assign expr) {
-        append("(= ");append(expr.name.lexeme());append(" ");
-        append(expr.value);append(")");
+        append(expr.name.lexeme());append(" = ");append(expr.value);
     }
 
     @Override
     public void visitBinaryExpr(Expr.Binary expr) {
-        if (expr.operator.type() == COMMA) {
-            append(expr.left); append(", "); append(expr.right);
-        } else {
-            parenthesize(expr.operator.lexeme(), expr.left, expr.right);
-        }
+        append(expr.left); spaced(expr.operator); append(expr.right);
     }
 
     @Override
@@ -101,13 +111,12 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitGetExpr(Expr.Get get) {
-        append(get.object); append(','); append(get.name);
+        append(get.object); append('.'); append(get.name);
     }
 
     @Override
     public void visitGroupingExpr(Expr.Grouping expr) {
-        parenthesize("group", expr.expression);
-        // append('('); append(expr.expression); append(')');
+        append('('); append(expr.expression); append(')');
     }
 
     @Override
@@ -123,12 +132,29 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitLiteralExpr(Expr.Literal expr) {
-        append(Stdio.stringify(expr.value));
+        append(stringify(expr.value));
+    }
+
+    public static String stringify(Object value) {
+        return value instanceof String str ? escape(str) : Stdio.stringify(value);
+    }
+
+    public static String escape(String str) {
+        var sb = new StringBuilder();
+        sb.append('\"');
+        str.chars().forEach(c -> {
+            switch(c) {
+                case '\n', '\t', '\"', '\\' -> sb.append('\\');
+            }
+            sb.append((char)c);
+        });
+        sb.append('\"');
+        return sb.toString();
     }
 
     @Override
     public void visitSetExpr(Expr.Set set) {
-        append(set.object); append(','); append(set.name); append(" = "); append(set.value);
+        append(set.object); append('.'); append(set.name); append(" = "); append(set.value);
     }
 
     @Override
@@ -142,7 +168,11 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitUnaryExpr(Expr.Unary expr) {
-        parenthesize(expr.operator.lexeme(), expr.right);
+        append(expr.operator);
+        if (expr.right.getClass() == Expr.Unary.class) {
+            space();
+        }
+        append(expr.right);
     }
 
     @Override
@@ -152,20 +182,12 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitTernaryExpr(Expr.Ternary expr) {
-        parenthesize(expr.leftOp.lexeme() + expr.rightOp.lexeme(), expr.left, expr.middle, expr.right);
+        append(expr.left); spaced(expr.leftOp); append(expr.middle); spaced(expr.rightOp); append(expr.right);
     }
 
     @Override
     public void visitTypeCheckExpr(Expr.TypeCheck expr) {
-        parenthesize(expr.type.getSimpleName()); append(expr.value);
-    }
-
-    private void parenthesize(String name, Expr... exprs) {
-        append('('); append(name);
-        for (var expr: exprs) {
-            append(' '); append(expr);
-        }
-        append(')');
+        append("/* check type: "); append(expr.type.getSimpleName()); append(" */"); append(expr.value);
     }
 
     @Override
@@ -190,18 +212,14 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
             });
         }
         append(" {"); eol();
-        for(var method : stmt.classMethods) {
-            visitFunctionStmt(method);
-        }
+        append(stmt.classMethods);
         append(stmt.methods);
         append("}"); eol();
     }
 
     @Override
     public void visitMethodsStmt(Stmt.Methods stmt) {
-        for(var method : stmt.methods) {
-            visitFunctionStmt(method);
-        }
+        append(stmt.methods);
     }
 
     @Override
@@ -213,13 +231,13 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
     public void visitFunctionStmt(Stmt.Function stmt) {
         if (stmt.isClass)
             append("class ");
-        if (!stmt.kind.equals("lambda"))
+        if (!stmt.kind.equals("method"))
             append("fun ");
-        append(stmt.name.lexeme());
+        append(stmt.name);
         append("(");
         for (var token : stmt.parameters) {
             if (token != stmt.parameters.get(0)) append(", ");
-            append(token.lexeme());
+            append(token);
         }
         append (") "); append(stmt.body);
     }
@@ -234,7 +252,7 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitKeywordStmt(Stmt.Keyword stmt) {
-        append(stmt.keyword.lexeme()); eos();
+        append(stmt.keyword); eos();
     }
 
     @Override
@@ -268,18 +286,6 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitLastStmt(Stmt.Last stmt) {
-        append(stmt.expression); append(' ');
-    }
-
-    public static void main(String[] args) {
-        Expr expr = new Expr.Binary(
-                new Expr.Unary(
-                        new Token(TokenType.MINUS, "-", null, 1),
-                        new Expr.Literal(123)),
-                new Token(TokenType.STAR, "*", null, 1),
-                new Expr.Grouping(
-                        new Expr.Literal(45.67))
-        );
-        System.out.println(new AstPrinter().print(List.of(new Stmt.Expression(expr))));
+        append(stmt.expression); space();
     }
 }

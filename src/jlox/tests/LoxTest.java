@@ -33,9 +33,16 @@ class LoxTest {
             delimiter = '¤')
     void testAst(String description, String input, String expectedAst) {
         input = transform(input);
-        expectedAst = transform(expectedAst);
+        var expected
+                = expectedAst.equals("=") ? input
+                : expectedAst.equals("=r") ? input.replace(" ", "")
+                : transform(expectedAst);
         var stdio = Lox.parse(input);
-        assertEquals(expectedAst, stdio.stdout().replace('\n', ' ').stripTrailing(), description);
+        var given = stdio.stdout().replace('\n', ' ').stripTrailing();
+        if (expectedAst.equals("=r")) {
+            given = given.replace(" ", "");
+        }
+        assertEquals(expected, given, description);
         assertEquals("", stdio.stderr());
     }
 
