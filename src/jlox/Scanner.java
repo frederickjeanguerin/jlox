@@ -69,9 +69,6 @@ class Scanner {
             case ';':
                 addToken(SEMICOLON);
                 break;
-            case '*':
-                addToken(STAR);
-                break;
 
             // Single or double char tokens
             case '!':
@@ -91,6 +88,9 @@ class Scanner {
                 break;
             case '+':
                 addToken(match('+') ? PLUS_PLUS : PLUS);
+                break;
+            case '*':
+                addToken(match('*') ? STAR_STAR : STAR);
                 break;
 
             // slash or comment

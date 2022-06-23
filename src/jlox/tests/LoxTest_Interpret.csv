@@ -42,6 +42,13 @@ Term minus ¤ 6 - 8 ¤ -2
 Term and factor ¤ 11 + -4 * 5 ¤ -9
 Term multiple ¤ 1 - 2 + 3 - 4 ¤ -2
 
+# Exponentiation
+Exponentiation is right associative ¤ 2 ** 4 ** 2 ¤ 65536
+Exponentiation is right associative ¤ (2 ** 4) ** 2 ¤ 256
+Exponentiation is less precedent than unary ¤ -3 ** 2 ¤ 9
+Exponentiation is less precedent than unary ¤ -(3 ** 2) ¤ -9
+Exponentiation is more precedent than multiplication ¤ 2 ** 3 * 2 ** 3 ¤ 64
+
 # String concatenation
 Concat string + string ¤ ""alpha"" + "" beta"" ¤ alpha beta
 Concat string + number ¤ ""alpha"" + 2 ¤ alpha2
@@ -200,3 +207,4 @@ Lambda capture ¤ var a = 0; var inc = fun() { ++a; }; inc(); inc(); a ¤ 2
 Lambda return ¤ var plus = fun(a, b) { return a + b; }; plus(3, 4) ¤ 7
 Lambda expression ¤ var plus = fun(a, b) a + b; plus(3, 4) ¤ 7
 lambda returning lambda ¤ var ff = fun () fun () 5; ff()() ¤ 5
+

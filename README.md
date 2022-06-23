@@ -63,13 +63,14 @@ Generate a runtime error.
 
 ### 7.x4 - Modulo operator `%`
 
-May generate a division by zero.
+* May generate a division by zero.
+* Is a multiplicative operator
+  * Same precedence and associativity than multiplication
 
----
+### 7.x5 - Exponent operator `**`
 
-<mark>TODO</mark>: exponentiation `**`
-
----
+* Has more precedence than multiplication but less than unary operators.
+* Is right associative.
 
 ## 8 - Statements
 

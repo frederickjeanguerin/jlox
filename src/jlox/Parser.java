@@ -43,6 +43,7 @@ public class Parser {
             case COMPARISON -> this::comparison;
             case TERM -> this::term;
             case FACTOR -> this::factor;
+            case EXPONENT -> this::exponent;
             case UNARY -> this::unary;
             case CALL -> this::call;
             case PRIMARY_OR_ERROR -> this::primaryOrError;
@@ -364,6 +365,15 @@ public class Parser {
         return binary(nextExpr(ExprType.FACTOR), SLASH, STAR, PERCENT);
     }
 
+    private Expr exponent() {
+        Expr left = nextExpr(ExprType.EXPONENT).get();
+        if (match(STAR_STAR)) {
+            Token operator = previous();
+            return new Expr.Binary(left, operator, exponent());     // right associative
+        }
+        return left;
+    }
+
     private Expr unary() {
         if (match(BANG, MINUS)) {
             Token operator = previous();
@@ -560,6 +570,7 @@ public class Parser {
         COMPARISON,
         TERM,
         FACTOR,
+        EXPONENT,
         UNARY,
         CALL,
         PRIMARY_OR_ERROR,

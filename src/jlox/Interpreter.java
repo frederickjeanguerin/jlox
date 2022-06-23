@@ -267,6 +267,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 yield left / divisor;
             }
             case STAR -> left * rightNumber.get();
+            case STAR_STAR -> Math.pow(left, rightNumber.get());
 
             default -> throw new LoxError(operator,
                     "Binary operator '%s' is not applicable to a left operand of type Number.");
