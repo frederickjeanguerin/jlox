@@ -154,6 +154,10 @@ Functions can be defined as oneliners as follows:
 The `exit` function has been added as a primitive. 
 It expects an exit code as an argument and terminate the program immediately.
 
+### 10.x6 - Return and dead code
+
+Some dead code warning reported after `return`.
+
 ---
 <mark>TODO</mark>: make function definition readonly. 
 The following should trigger a semantic error:
@@ -161,4 +165,95 @@ The following should trigger a semantic error:
     fun f(){}
     f = 0;          // error, f is readonly
 ---
+
+## 11 - Resolving and Binding
+
+To enable lexical scoping, I attach semantic information to the AST nodes themselves, 
+instead of collecting information in a map.
+
+### 11.1 - Safe early bing of functions
+
+Early binding of functions is not only safe but desirable, to enable recursion.
+
+    fun factorial(n) {
+        if (n < 2) return 1;
+        return n * factorial(n - 1);    // binding here desirable
+    }
+
+For variable, early binding is not desirable
+
+    var a = 
+            a + 1;       // symbol a should not reference the newly declared var here.
+
+### 11.3 - Unused variable
+
+Are reported as warnings outside the global scope. 
+Assignment/initialization doesn't count.
+
+### 11.x5 - Unused function
+
+Are reported just like unused variables.
+
+## 12 - Classes
+
+### 12.1 - Static method
+
+* Not implemented using metaclasses.
+* Cannot access `this` (or `self`).
+* Cannot define static fields.
+* Can be used without prefix inside the class itself.
+
+
+    class Math {
+        class factorial(n) {
+            if (n < 2) return 1;
+            return factorial (n - 1)
+        }
+
+        class permutationCoefficient(n, k) {
+            return factorial(n) / factorial(k);     // no prefix necessary here
+        }
+    }
+
+    print Math.factorial(10);                       // prefix necessary here
+
+### 12.2 - Readonly properties (getters)
+
+Are introduced with a colon `:` because the notation 
+proposed in the book would be conflictual for one-liners.
+
+Static properties are available as well.
+
+Hence, the following class is perfectly legal.
+
+    class Circle {
+    
+        class PI : 3.14159;         // static oneliner property (constant like)
+        class TAU : 2 * PI;         // idem
+    
+        init(radius) {
+            self.radius = radius;
+        }
+    
+        area: PI * self.radius * self.radius;   // instance oneliner property
+    
+        circumference: TAU * self.radius;       // idem
+    }
+
+## 13 - Inheritance
+
+### 13.1 - Multiple inheritance
+
+* Implemented the Python way. 
+* The order of the superclasses is important for name resolution in parents.
+* A specific superclass can be targeted with the `super` keyword as `super(superclassName)`.
+This makes it possible to initialize every parent classes in its own way.
+
+
+    class Jedi < Person, ForceBearer {
+        init(name, age, force) {
+            super.init(name, age);              // Init Person superclass
+            super(ForceBearer).init(force);     // Init ForceBearer superclass
+        }
+    }
 

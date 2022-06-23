@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="DEBUG Increment &amp; decrement operators work with class fields.">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="README chapter 10">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -238,13 +238,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00053" summary="ADDED WalkReturn (partial, untested)">
-      <created>1655103460634</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1655103460634</updated>
     </task>
     <task id="LOCAL-00054" summary="ADDED WalkReturn (complete, untested)">
       <created>1655140576857</created>
@@ -582,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655977935193</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="README chapter 10">
+      <created>1655988880215</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1655988880215</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -600,7 +600,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 12.4 - Class fields (tested)" />
     <MESSAGE value="Chapter 12.5 - Class methods (tested)" />
     <MESSAGE value="Chapter 12.6 - Class this (tested)" />
     <MESSAGE value="Chapter 12.6 - Self (tested)" />
@@ -625,6 +624,7 @@
     <MESSAGE value="BETTER break and continue statement, moved to static analyzer, check for dead code." />
     <MESSAGE value="BETTER AstPrinter to print parsable code." />
     <MESSAGE value="DEBUG Increment &amp; decrement operators work with class fields." />
-    <option name="LAST_COMMIT_MESSAGE" value="DEBUG Increment &amp; decrement operators work with class fields." />
+    <MESSAGE value="README chapter 10" />
+    <option name="LAST_COMMIT_MESSAGE" value="README chapter 10" />
   </component>
 </project>
