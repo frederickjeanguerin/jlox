@@ -52,9 +52,9 @@ Dead code after break ¤ while (1) { print 10; { break; } print 20; } ¤ /110, a
 Dead code after continue ¤ while (0) { print 10; { continue; break; } print 20; } ¤ /020, at 'continue', dead code, break, print 20
 
 # Increment & Decrement
-Increment boolean ¤ var i = true; ++i ¤ at 'i', expected 'Double' but got 'Boolean'
-Decrement string ¤ var str = "a"; --str ¤ at 'str', expected 'Double' but got 'String'
-Decrement nil ¤ var str = nil; --str ¤ at 'str', expected 'Double' but got 'Void'
+Increment boolean ¤ var i = true; ++i ¤ at '[+][+]', expected 'Double' but got 'Boolean'
+Decrement string ¤ var str = "a"; --str ¤ at '--', expected 'Double' but got 'String'
+Decrement nil ¤ var str = nil; --str ¤ at '--', expected 'Double' but got 'Void'
 
 # Native functions
 Native clock takes 0 arg, not 1 ¤ clock(1) ¤ at '[(]', call expect 0 arguments, but got 1
@@ -111,6 +111,8 @@ Class field chained ¤ class C{} var c = C(); c.alpha = C(); c.alpha.beta = 12; 
 Class field indirect ¤ class C{} var c = C(); fun f() c; f().gamma = 32; f().gamma ¤ /100, *32
 Class method get ¤ class C { hello(name) { print ""hello "" + name; } } var c = C(); c.hello ¤ /100, *<method: hello>
 Class method call ¤ class C { hello(name) { print ""hello "" + name; } } var c = C(); c.hello(33); ¤ /100, *hello 33
+Class field increment ¤ class C {} var c = C(); c.num = 98; ++c.num; print c.num; ¤ /100, *99
+Class field decrement ¤ class C {} var c = C(); c.num = 98; --c.num; print c.num; ¤ /100, *97
 
 # Self
 Self is not usable as a variable ¤ var self = 0; ¤ /001, at 'self', Expect variable name

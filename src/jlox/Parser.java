@@ -2,6 +2,7 @@ package jlox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.function.Supplier;
 
 import static jlox.TokenType.*;
@@ -10,16 +11,16 @@ import static jlox.TokenType.AND;
 @SuppressWarnings({"ThrowableNotThrown", "UnnecessaryLocalVariable"})
 public class Parser {
 
+    private record State(List<Token> tokens, int current){}
+    private final Stack<State> states = new Stack<>();
+
     private final Stdio stdio;
-    private final List<Token> tokens;
+    private List<Token> tokens;
     private int current = 0;
 
     Parser(List<Token> tokens, Stdio stdio) {
         this.tokens = tokens;
         this.stdio = stdio;
-
-        // Order expressions by precedence
-
     }
 
     private ExprType next(ExprType type) {
@@ -32,7 +33,6 @@ public class Parser {
 
     private Supplier<Expr> supplierOf(ExprType type) {
         return switch (type) {
-            // Expressions ordered by priority
             case COMMA -> this::comma;
             case ASSIGNMENT -> this::assignment;
             case LAMBDA -> this::lambda;
@@ -59,6 +59,26 @@ public class Parser {
                 statements.add(decl);
         }
         return statements;
+    }
+
+    private List<Stmt> reparse(String source, int line) {
+        Scanner scanner = new Scanner(source, stdio, line);
+        states.push(new State(tokens, current));
+        tokens = scanner.scanTokens();
+        current = 0;
+        var stmts = parse();
+        var state = states.pop();
+        tokens = state.tokens();
+        current = state.current();
+        return stmts;
+    }
+
+    private Expr reparseExpr(String source, int line) {
+        var stmts = reparse(source, line);
+         if (stmts.get(0) instanceof Stmt.Expression expression) {
+             return expression.expression;
+         }
+         return null;
     }
 
     private Stmt declaration() {
@@ -354,15 +374,16 @@ public class Parser {
         if (match(PLUS_PLUS, MINUS_MINUS)) {
             Token operator = previous();
             Expr lvalue = unary();
+            Token pseudoOperator = new Token(operator.type() == PLUS_PLUS ? PLUS : MINUS,
+                    operator.lexeme().substring(1), null, operator.line());
+            Expr rvalue = new Expr.Binary(
+                    new Expr.TypeCheck(lvalue, Double.class, operator),
+                    pseudoOperator,
+                    new Expr.Literal(1.0));
             if (lvalue instanceof Expr.Variable var) {
-                Token name = var.name;
-                Token pseudoOperator = new Token(operator.type() == PLUS_PLUS ? PLUS : MINUS,
-                        operator.lexeme().substring(1), null, operator.line());
-                Expr value = new Expr.Binary(
-                        new Expr.TypeCheck(var, Double.class, name),
-                        pseudoOperator,
-                        new Expr.Literal(1.0));
-                return new Expr.Assign(name, value);
+                return new Expr.Assign(var.name, rvalue);
+            } else if (lvalue instanceof Expr.Get get) {
+                return new Expr.Set(get.object, get.name, rvalue);
             }
             error(operator, "Invalid increment/decrement target.");
         }
@@ -528,6 +549,7 @@ public class Parser {
     }
 
     enum ExprType {
+        // Expressions ordered here by precedence
         COMMA,
         ASSIGNMENT,
         LAMBDA,

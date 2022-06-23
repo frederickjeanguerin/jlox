@@ -100,7 +100,7 @@ public class Lox {
         boolean walkOnly = phase == RunPhase.WALK;
 
         Stdio stdio = new Stdio();
-        Scanner scanner = new Scanner(source, stdio);
+        Scanner scanner = new Scanner(source, stdio, 1);
         List<Token> tokens = scanner.scanTokens();
 
         var ast = new Parser(tokens, stdio).parse();

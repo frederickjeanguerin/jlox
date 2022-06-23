@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="BETTER break and continue statement, moved to static analyzer, check for dead code.">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="DEBUG Increment &amp; decrement operators work with class fields.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Ast.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Lox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Lox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,13 +242,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00051" summary="REFACTOR Added VoidVisitor">
-      <created>1655014136921</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1655014136921</updated>
     </task>
     <task id="LOCAL-00052" summary="ADDED AstWalker">
       <created>1655036307698</created>
@@ -585,7 +579,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655919740527</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="BETTER AstPrinter to print parsable code.">
+      <created>1655974303496</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1655974303496</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -603,8 +604,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 12.2 - Class declaration (tested)" />
-    <MESSAGE value="Chapter 12.3 - Class instantiation (tested)" />
     <MESSAGE value="Chapter 12.4 - Class fields (tested)" />
     <MESSAGE value="Chapter 12.5 - Class methods (tested)" />
     <MESSAGE value="Chapter 12.6 - Class this (tested)" />
@@ -628,6 +627,8 @@
     <MESSAGE value="REFACTOR remove states from Walk.Base" />
     <MESSAGE value="REFACTOR remove ContinueCatcher statement." />
     <MESSAGE value="BETTER break and continue statement, moved to static analyzer, check for dead code." />
-    <option name="LAST_COMMIT_MESSAGE" value="BETTER break and continue statement, moved to static analyzer, check for dead code." />
+    <MESSAGE value="BETTER AstPrinter to print parsable code." />
+    <MESSAGE value="DEBUG Increment &amp; decrement operators work with class fields." />
+    <option name="LAST_COMMIT_MESSAGE" value="DEBUG Increment &amp; decrement operators work with class fields." />
   </component>
 </project>

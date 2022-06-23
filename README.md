@@ -93,6 +93,13 @@ I had to create a special construct to accommodate the desugared `for` loop.
 
 ### 9.5x - Increment and decrement
 
-Increment and decrement provided with syntax sugaring.
+Prefix increment and decrement operator provided with syntax desugaring.
 
-TODO: make it work with fields.
+* `++x` desugared to `x = x + 1`
+* `--x` desugared to `x = x - 1`
+
+Type checked for Double, to prohibit something like:
+
+    var str = "string";
+    ++str;                  // string1, by x = x + 1 with concatenation
+

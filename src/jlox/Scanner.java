@@ -13,11 +13,12 @@ class Scanner {
     private final List<Token> tokens = new ArrayList<>();
     private int start = 0;      // offset in source
     private int current = 0;    // offset in source
-    private int line = 1;
+    private int line;
 
-    Scanner(String source, Stdio stdio) {
+    Scanner(String source, Stdio stdio, int startingLine) {
         this.source = source;
         this.stdio = stdio;
+        this.line = startingLine;
     }
 
     List<Token> scanTokens() {
