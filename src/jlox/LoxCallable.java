@@ -70,7 +70,7 @@ interface LoxCallable {
             try {
                 for (int i = 0; i < arity(); i++) {
                     environment.defineSymbol(
-                            parameters.get(i), arguments.get(i), Symbol.Type.PARAMETER);
+                            parameters.get(i), arguments.get(i), Symbol.Type.PARAMETER, false);
                 }
                 if (body instanceof Stmt.Expression expr) {
                     return interpreter.evaluate(expr.expression);

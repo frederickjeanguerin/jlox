@@ -62,12 +62,12 @@ public class Environment {
     }
 
     void defineUninitializedVariable(Token name) {
-        defineSymbol(name, Symbol.UNINITIALIZED, Symbol.Type.VAR);
+        defineSymbol(name, Symbol.UNINITIALIZED, Symbol.Type.VAR, false);
     }
 
-    Symbol defineSymbol(Token name, Object value, Symbol.Type type) {
+    Symbol defineSymbol(Token name, Object value, Symbol.Type type, boolean readonlySvp) {
         // NB Symbol can be redefined without error
-        return scope.define(name.lexeme(), name, value, type);
+        return scope.define(name.lexeme(), name, value, type, readonlySvp);
     }
 
     Collection<Symbol> localSymbols() {
@@ -108,7 +108,7 @@ public class Environment {
 
         Scoping bind(Token self, LoxInstance instance) {
             Scope bound = new Scope(scope, true, true);
-            bound.define(self.lexeme(), self, instance, Symbol.Type.SPECIAL);
+            bound.define(self.lexeme(), self, instance, Symbol.Type.SPECIAL, true);
             return new Scoping(bound);
         }
     }
@@ -126,14 +126,14 @@ public class Environment {
             this.oneDefinitionOnly = oneDefinitionOnly;
         }
 
-        Symbol define(String name, Token token, Object value, Symbol.Type type) {
+        Symbol define(String name, Token token, Object value, Symbol.Type type, boolean readonlySvp) {
             Symbol previousSym = symbols.get(name);
             if (oneDefinitionOnly && previousSym != null) {
                 throw new LoxError(token,
                         "%s (at line %d) cannot be redeclared as a new %s."
                                 .formatted(previousSym.name(), previousSym.token.line(), Symbol.typeName(type)));
             }
-            Symbol newSym = new Symbol(token, readonly, value, type);
+            Symbol newSym = new Symbol(token, readonly || readonlySvp, value, type);
             symbols.put(name, newSym);
             return newSym;
         }
@@ -152,9 +152,9 @@ public class Environment {
         static final Scope GLOBAL = new Scope(null, true, true);
 
         static {
-            GLOBAL.define("clock", Token.Special("<fun clock>"), LoxCallable.Native.clock, Symbol.Type.FUN);
-            GLOBAL.define("lineSeparator", Token.Special("<fun lineSeparator>"), LoxCallable.Native.localSeparator, Symbol.Type.FUN);
-            GLOBAL.define("exit", Token.Special("<fun exit>"), LoxCallable.Native.exit, Symbol.Type.FUN);
+            GLOBAL.define("clock", Token.Special("<fun clock>"), LoxCallable.Native.clock, Symbol.Type.FUN, true);
+            GLOBAL.define("lineSeparator", Token.Special("<fun lineSeparator>"), LoxCallable.Native.localSeparator, Symbol.Type.FUN, true);
+            GLOBAL.define("exit", Token.Special("<fun exit>"), LoxCallable.Native.exit, Symbol.Type.FUN, true);
         }
     }
 }

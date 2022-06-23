@@ -188,3 +188,9 @@ Class methods simple ¤ class Math { class pi : 3.14159; class square(x) x * x; 
 Class methods undefined ¤ class Math { } print Math.pi; ¤ /001, at 'pi', undefined class method
 Instance methods cannot be used directly ¤ class C { ten: 10; twenty: 2*ten; five: twenty / 4; } C().twenty ¤ /002, at 'ten', at 'twenty', undefined identifier
 Class methods cannot use self ¤ class C { class v: self.value; } print C().v; ¤ /001, at 'self', undefined identifier
+
+# Class, functions and methods are readonly
+Function is readonly ¤ fun f(){} f = 0; f = 1; ¤ /002, at 'f', function 'f' cannot be modified
+Class is readonly ¤ class C{} C = 0; ¤ /001, at 'C', class 'C' cannot be modified
+Method is readonly ¤ class C{ m(){} } var c = C(); c.m = 0; ¤ /001, at 'm', cannot change 'm'
+Class method is readonly ¤ class C{ class m(){} } C.m = 0; ¤ /001, at 'm', is not an instance

@@ -112,11 +112,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         for (var method : klass.classMethods) {
             var classMethod = new LoxCallable.Function(method, scoping);
             classMethods.put(method.name.lexeme(), classMethod);
-            environment.defineSymbol(method.name, classMethod, Symbol.Type.FUN);
+            environment.defineSymbol(method.name, classMethod, Symbol.Type.FUN, true);
         }
         environment.pop();
         var loxClass = new LoxClass(klass.name.lexeme(), superclasses, methods, classMethods, klass);
-        environment.defineSymbol(klass.name, loxClass, Symbol.Type.CLASS);
+        environment.defineSymbol(klass.name, loxClass, Symbol.Type.CLASS, true);
         return null;
     }
 
@@ -134,7 +134,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
         var function = new LoxCallable.Function(stmt, environment.getScoping());
-        environment.defineSymbol(stmt.name, function, Symbol.Type.FUN);
+        environment.defineSymbol(stmt.name, function, Symbol.Type.FUN, true);
         return null;
     }
 
@@ -175,7 +175,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (stmt.initializer == null) {
             environment.defineUninitializedVariable(stmt.name);
         } else {
-            environment.defineSymbol(stmt.name, evaluate(stmt.initializer), Symbol.Type.VAR);
+            environment.defineSymbol(stmt.name, evaluate(stmt.initializer), Symbol.Type.VAR, false);
         }
         return null;
     }

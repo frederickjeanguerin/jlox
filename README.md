@@ -91,6 +91,10 @@ at "compile time" (static analysis phase).
 
 ---
 
+<mark>TODO</mark>: declare `const` variables.
+
+---
+
 ## 9 - Control Flow
 
 ### 9.3 - Break from loops
@@ -172,12 +176,18 @@ It expects an exit code as an argument and terminate the program immediately.
 
 Some dead code warning reported after `return`.
 
----
-<mark>TODO</mark>: make function definition readonly. 
-The following should trigger a semantic error:
+
+### 10.x7 - Method symbols are readonly
+
+A static error is generated if a function symbol is modified.
 
     fun f(){}
     f = 0;          // error, f is readonly
+
+---
+
+<mark>TODO</mark>: enable Java primitive methods for String and Number.
+
 ---
 
 ## 11 - Resolving and Binding

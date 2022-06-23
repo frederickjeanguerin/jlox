@@ -17,7 +17,7 @@ public class WalkSymbol extends Walk.Base {
 
     @Override
     public void enterClassStmt(Stmt.Class stmt) {
-        defineSymbol(stmt.name, Symbol.Type.CLASS);
+        defineSymbol(stmt.name, Symbol.Type.CLASS, true);
         List<String> visited = new ArrayList<>();
         for (var superclass: stmt.superclasses) {
             if (stmt.name.lexeme().equals(superclass.name.lexeme())) {
@@ -44,7 +44,7 @@ public class WalkSymbol extends Walk.Base {
     @Override
     public void enterMethodsStmt(Stmt.Methods methods) {
         environment.push(true);
-        defineSymbol(classes.peek().self, Symbol.Type.SPECIAL);
+        defineSymbol(classes.peek().self, Symbol.Type.SPECIAL, true);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class WalkSymbol extends Walk.Base {
     @Override
     public void enterFunctionStmt(Stmt.Function stmt) {
         if (!stmt.kind.equals("method") || stmt.isClass) {
-            var fun = defineSymbol(stmt.name, Symbol.Type.FUN);
+            var fun = defineSymbol(stmt.name, Symbol.Type.FUN, true);
             functions.push(fun);
         }
         enterFunction(stmt.parameters);
@@ -97,7 +97,7 @@ public class WalkSymbol extends Walk.Base {
 
     @Override
     public void leaveVarStmt(Stmt.Var var) {
-        defineSymbol(var.name, Symbol.Type.VAR);
+        defineSymbol(var.name, Symbol.Type.VAR, false);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class WalkSymbol extends Walk.Base {
     private void enterFunction(List<Token> parameters) {
         environment.push();
         for (var parameter : parameters) {
-            defineSymbol(parameter, Symbol.Type.PARAMETER);
+            defineSymbol(parameter, Symbol.Type.PARAMETER, false);
         }
     }
 
@@ -177,11 +177,11 @@ public class WalkSymbol extends Walk.Base {
         return true;
     }
 
-    private Symbol defineSymbol(Token token, Symbol.Type type) {
+    private Symbol defineSymbol(Token token, Symbol.Type type, boolean readonlySvp) {
         if (! checkIdentifierName(token, type))
             return null;
         try {
-            return environment.defineSymbol(token, token, type);
+            return environment.defineSymbol(token, token, type, readonlySvp);
         } catch (LoxError error) {
             stdio().errorAtToken(error.token, error.getMessage());
         }
