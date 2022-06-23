@@ -19,7 +19,11 @@ I detail these challenges and together with more personal stuff I added hereafte
 ### 4.4 - Block comment (non nesting)
 Chapter 4 challenge 4 asked for block comment: ``/* my block comment */``
 
-TODO: Add nesting.
+---
+
+<mark>TODO</mark>: Add block comment nesting.
+
+---
 
 ### 4.x5 - String with escape sequences
 Some escape sequence are permitted, like `\n`, `\t`, `\"`, or `\\`. See [translateEscapes](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html#translateEscapes()).
@@ -61,6 +65,12 @@ Generate a runtime error.
 
 May generate a division by zero.
 
+---
+
+<mark>TODO</mark>: exponentiation `**`
+
+---
+
 ## 8 - Statements
 
 ### 8.1 - REPL still working
@@ -74,7 +84,11 @@ Example: `#ast 4 + 5` will output `(+ 4 5)`.
 This is checked at runtime, although some checking could also be implemented 
 at "compile time" (static analysis phase).
 
-TODO: do some checking at compile time.
+---
+
+<mark>TODO</mark>: do some variable initialisation checking at compile time.
+
+---
 
 ## 9 - Control Flow
 
@@ -102,4 +116,49 @@ Type checked for Double, to prohibit something like:
 
     var str = "string";
     ++str;                  // string1, by x = x + 1 with concatenation
+
+---
+
+<mark>TODO</mark>: compound assignment `+=`, etc.
+
+---
+
+## 10 - Functions
+
+### 10.2 - Lambdas (anonymous functions)
+
+The statement `fun () {};` will generate a parsing error, 
+since the parser is expecting function statement, and will
+be missing a function name. 
+An error seems fine here, but a parsing error is not the best.
+
+### 10.3 - Redeclaration of parameters (prohibited)
+
+The following program will generate an error because local variables 
+at the top function level cannot shadow parameters:
+
+    fun scope(a) {
+        var a = "local";            // semantic error
+    }
+
+### 10.x4 - Oneliner functions
+
+Functions can be defined as oneliners as follows:
+
+    fun sum(a, b) a + b;            // oneliner function
+
+    var product = fun(a, b) a * b;  // oneliner lambda
+
+### 10.x5 - Primitive exit
+
+The `exit` function has been added as a primitive. 
+It expects an exit code as an argument and terminate the program immediately.
+
+---
+<mark>TODO</mark>: make function definition readonly. 
+The following should trigger a semantic error:
+
+    fun f(){}
+    f = 0;          // error, f is readonly
+---
 
