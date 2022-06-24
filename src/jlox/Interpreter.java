@@ -316,18 +316,20 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         Object object = evaluate(get.object);
         if (object instanceof LoxInstance instance) {
             Object value = instance.get(get.name);
-            if (value instanceof LoxCallable.Function function && function.isProperty) {
-                return function.call(this, get.name, new ArrayList<>());
+            if (value instanceof LoxCallable callable && callable.isProperty()) {
+                return callable.call(this, get.name, new ArrayList<>());
             }
             return value;
         } else if (object instanceof LoxClass klass) {
             var classMethod = klass.findClassMethod(get.name.lexeme());
             if (classMethod != null) {
-                if (classMethod.isProperty)
+                if (classMethod.isProperty())
                     return classMethod.call(this, get.name, new ArrayList<>());
                 return classMethod;
             }
             throw new LoxError(get.name, "Undefined class method.");
+        } else if (object instanceof String str) {
+
         }
         throw new LoxError(get.name, "Left side of '.%s' is not an instance or a class".formatted(get.name.lexeme()));
     }
@@ -377,8 +379,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
         Object value =  environment.getSymbol(expr.name, expr.target).getValue(expr.name);
-        if (value instanceof LoxCallable.Function function && function.isProperty) {
-            return function.call(this, expr.name, new ArrayList<>());
+        if (value instanceof LoxCallable callable && callable.isProperty()) {
+            return callable.call(this, expr.name, new ArrayList<>());
         }
         return value;
     }

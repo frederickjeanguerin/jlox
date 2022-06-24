@@ -153,7 +153,7 @@ public class Environment {
 
         static {
             GLOBAL.define("clock", Token.Special("<fun clock>"), LoxCallable.Native.clock, Symbol.Type.FUN, true);
-            GLOBAL.define("lineSeparator", Token.Special("<fun lineSeparator>"), LoxCallable.Native.localSeparator, Symbol.Type.FUN, true);
+            GLOBAL.define("lineSeparator", Token.Special("<fun lineSeparator>"), LoxCallable.Native.lineSeparator, Symbol.Type.FUN, true);
             GLOBAL.define("exit", Token.Special("<fun exit>"), LoxCallable.Native.exit, Symbol.Type.FUN, true);
         }
     }

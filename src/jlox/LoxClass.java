@@ -53,6 +53,11 @@ public class LoxClass implements LoxCallable {
     }
 
     @Override
+    public boolean isProperty() {
+        return false;
+    }
+
+    @Override
     public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
         LoxInstance instance = new LoxInstance(this);
         Function init = findMethod("init", false);

@@ -62,7 +62,18 @@ public class Parser {
         return statements;
     }
 
-    private List<Stmt> reparse(String source, int line) {
+    private static final Stdio _stdio = new Stdio();
+    private static final Parser _parser = new Parser(new ArrayList<>(), _stdio);
+
+    public static List<Stmt> Parse(String source, int line) {
+        var stmts = _parser.reparse(source, line);
+        if (_stdio.hasError()) {
+            _stdio.report();
+        }
+        return stmts;
+    }
+
+    public List<Stmt> reparse(String source, int line) {
         Scanner scanner = new Scanner(source, stdio, line);
         states.push(new State(tokens, current));
         tokens = scanner.scanTokens();
@@ -75,7 +86,7 @@ public class Parser {
     }
 
     @SuppressWarnings("unused")
-    private Expr reparseExpr(String source, int line) {
+    public Expr reparseExpr(String source, int line) {
         var stmts = reparse(source, line);
          if (stmts.get(0) instanceof Stmt.Expression expression) {
              return expression.expression;

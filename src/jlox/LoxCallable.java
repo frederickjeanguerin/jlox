@@ -5,6 +5,8 @@ import java.util.List;
 interface LoxCallable {
     int arity();
 
+    boolean isProperty();
+
     Object call(Interpreter interpreter, Token leftPar, List<Object> arguments);
 
     class Function implements LoxCallable, Cloneable {
@@ -16,7 +18,12 @@ interface LoxCallable {
         private final Stmt body;
         private Environment.Scoping scoping;
         public LoxClass parent = null;
-        public boolean isProperty = false;
+        private boolean isProperty = false;
+
+        @Override
+        public boolean isProperty() {
+            return isProperty;
+        }
 
         public Function(Stmt.Function declaration, Environment.Scoping scoping) {
             this.name = declaration.name.lexeme();
@@ -99,58 +106,53 @@ interface LoxCallable {
         }
     }
 
-    class Native {
-        static final LoxCallable clock = new LoxCallable(){
+    abstract class Native implements LoxCallable {
 
-            @Override
-            public int arity() {
-                return 0;
-            }
+        private final int arity;
+        private final boolean isProperty;
+        private final String name;
 
+        public Native(String name, int arity, boolean isProperty){
+            this.name = name;
+            this.arity = arity;
+            this.isProperty = isProperty;
+        }
+
+        @Override
+        public int arity() {
+            return arity;
+        }
+
+        @Override
+        public boolean isProperty() {
+            return isProperty;
+        }
+
+        @Override
+        public String toString() {
+            return "<native fun: %s>".formatted(name);
+        }
+
+        static final Native clock = new Native("clock", 0, false){
             @Override
             public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
                 return System.currentTimeMillis()/1000.0;
             }
-
-            @Override
-            public String toString() { return "<native fun: clock>"; }
-
         };
 
-        static final LoxCallable localSeparator = new LoxCallable(){
-
-            @Override
-            public int arity() {
-                return 0;
-            }
-
+        static final Native lineSeparator = new Native("lineSeparator", 0, true){
             @Override
             public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
                 return System.lineSeparator();
             }
-
-            @Override
-            public String toString() { return "<native fun: lineSeparator>"; }
-
         };
-
-        static final LoxCallable exit = new LoxCallable(){
-
-            @Override
-            public int arity() {
-                return 1;
-            }
-
+        static final Native exit = new Native("exit", 1, false){
             @Override
             public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
                 if (arguments.get(0) instanceof Double exitCode)
                     System.exit(exitCode.intValue());
                 throw new Interpreter.TypeMismatchError(leftPar, Double.class, arguments.get(0), "First argument.");
             }
-
-            @Override
-            public String toString() { return "<native fun: exit>"; }
-
         };
     }
 }
