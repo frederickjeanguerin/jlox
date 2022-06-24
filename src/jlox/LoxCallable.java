@@ -9,56 +9,15 @@ interface LoxCallable {
 
     Object call(Interpreter interpreter, Token leftPar, List<Object> arguments);
 
-    class Function implements LoxCallable, Cloneable {
-
-        private enum Type { FUN, LAMBDA, METHOD }
-        private final Type type;
-        private final String name;
+    class Lambda implements LoxCallable {
         private final List<Token> parameters;
         private final Stmt body;
-        private Environment.Scoping scoping;
-        public LoxClass parent = null;
-        private boolean isProperty = false;
+        protected final Environment.Scoping scoping;
 
-        @Override
-        public boolean isProperty() {
-            return isProperty;
-        }
-
-        public Function(Stmt.Function declaration, Environment.Scoping scoping) {
-            this.name = declaration.name.lexeme();
-            this.parameters = declaration.parameters;
-            this.body = declaration.body;
+        public Lambda(List<Token> parameters, Stmt body, Environment.Scoping scoping) {
+            this.parameters = parameters;
+            this.body = body;
             this.scoping = scoping;
-            this.isProperty = declaration.isProperty;
-            this.type = switch(declaration.kind) {
-                case "function" -> Type.FUN;
-                case "method" -> Type.METHOD;
-                default -> throw new IllegalStateException("Unexpected value: " + declaration.kind);
-            };
-        }
-
-        public Function(Expr.Lambda lambda, Environment.Scoping scoping) {
-            this.name = null;
-            this.parameters = lambda.parameters;
-            this.body = lambda.body;
-            this.scoping = scoping;
-            this.type = Type.LAMBDA;
-        }
-
-        public Function bind(LoxInstance instance) {
-            assert this.type == Type.METHOD; // TODO define class Method that inherits from Function
-            try {
-                var clone = (Function)clone();
-                clone.scoping = clone.scoping.bind(parent.classStmt.self, instance);
-                return clone;
-            } catch (CloneNotSupportedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        private boolean isInit() {
-            return type == Type.METHOD && name.equals("init");
         }
 
         @Override
@@ -67,13 +26,13 @@ interface LoxCallable {
         }
 
         @Override
+        public boolean isProperty() {
+            return false;
+        }
+        @Override
         public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
             var environment = interpreter.environment;
-            // TODO swap without new scope if no parameters or join parameters with locals in block
             environment.swap(scoping);
-            var self = isInit()
-                    ? environment.getSymbol(parent.classStmt.self, parent.classStmt.self).getValue(leftPar)
-                    : null;
             try {
                 for (int i = 0; i < arity(); i++) {
                     environment.defineSymbol(
@@ -84,12 +43,10 @@ interface LoxCallable {
                 } else {
                     interpreter.execute(body);
                 }
-                if (isInit()) return self;
             } catch (Interpreter.ReturnException ex) {
                 if (ex.value != null) {
                     return ex.value;
                 }
-                if (isInit()) return self;
             } finally {
                 environment.unswap();
             }
@@ -98,11 +55,70 @@ interface LoxCallable {
 
         @Override
         public String toString() {
-            return switch (type) {
-                case FUN -> "<fun: %s>".formatted(name);
-                case LAMBDA -> "<lambda>";
-                case METHOD -> "<method: %s>".formatted(name);
-            };
+            return "<lambda>";
+        }
+
+    }
+
+    class Function extends Lambda {
+
+        protected final Stmt.Function stmt;
+
+        public Function(Stmt.Function fun, Environment.Scoping scoping) {
+            super(fun.parameters, fun.body, scoping);
+            this.stmt = fun;
+        }
+
+        protected String name() {
+            return stmt.name.lexeme();
+        }
+
+        @Override
+        public boolean isProperty() {
+            return stmt.isProperty;
+        }
+
+        @Override
+        public String toString() {
+            return "<%s %s>".formatted(this.getClass().getSimpleName(), name());
+        }
+    }
+
+   class Method extends Function {
+
+        private final LoxClass parent;
+
+        public Method(Stmt.Function stmt, Environment.Scoping scoping, LoxClass parent) {
+            super(stmt, scoping);
+            this.parent = parent;
+        }
+
+        public BoundedMethod bind(LoxInstance instance) {
+            return new BoundedMethod(stmt, scoping.bind(parent.classStmt.self, instance), instance);
+        }
+
+        @Override
+        public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
+            throw new LoxError(leftPar, "Internal error: cannot call an unbounded method");
+        }
+    }
+
+    class BoundedMethod extends Function {
+        private final LoxInstance self;
+
+        public BoundedMethod(Stmt.Function fun, Environment.Scoping scoping, LoxInstance instance) {
+            super(fun, scoping);
+            this.self = instance;
+        }
+
+        private boolean isInit() {
+            return name().equals("init");
+        }
+
+        @Override
+        public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
+            Object result = super.call(interpreter, leftPar, arguments);
+            return isInit() ? self : result;
         }
     }
 

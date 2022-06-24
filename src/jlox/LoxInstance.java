@@ -1,7 +1,6 @@
 package jlox;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class LoxInstance {
@@ -28,7 +27,7 @@ public class LoxInstance {
         throw new LoxError(name, "Undefined property '%s'.".formatted(lexeme));
     }
 
-    public LoxCallable.Function getSuper(Token methodName, Token targetClassName, boolean isExplicit) {
+    public LoxCallable getSuper(Token methodName, Token targetClassName, boolean isExplicit) {
 
         var targetClass = findTargetClass(klass, targetClassName);
 

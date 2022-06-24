@@ -1,29 +1,30 @@
 package jlox;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class LoxClass implements LoxCallable {
     final String name;
-    private final Map<String, Function> methods;
-    private final Map<String, Function> classMethods;
+    private final Map<String, Method> methods;
+    private final Map<String, LoxCallable> classMethods;
 
     final Stmt.Class classStmt;
 
     final List<LoxClass> superclasses;
 
-    public LoxClass(String name, List<LoxClass> superclasses, Map<String, Function> methods, Map<String, Function> classMethods, Stmt.Class stmt) {
+    public LoxClass(String name, List<LoxClass> superclasses, Map<String, LoxCallable> classMethods, Stmt.Class stmt, Environment.Scoping scoping) {
         this.name = name;
-        this.methods = methods;
         this.superclasses = superclasses;
         this.classMethods = classMethods;
-        for (var method : methods.values()) {
-            method.parent = this;
+        this.classStmt = stmt;
+        methods = new HashMap<>();
+        for (var method : classStmt.methods.methods) {
+            methods.put(method.name.lexeme(), new LoxCallable.Method(method, scoping, this));
         }
-        classStmt = stmt;
     }
 
-    public Function findMethod(String name, boolean superclassOnly) {
+    public Method findMethod(String name, boolean superclassOnly) {
         var method = methods.getOrDefault(name, null);
         if (method != null && ! superclassOnly) return method;
         for (var superclass: superclasses) {
@@ -33,7 +34,7 @@ public class LoxClass implements LoxCallable {
         return null;
     }
 
-    public Function findClassMethod(String name) {
+    public LoxCallable findClassMethod(String name) {
         return classMethods.getOrDefault(name, null);
     }
 
@@ -45,7 +46,7 @@ public class LoxClass implements LoxCallable {
     @Override
     public int arity() {
         // TODO not very efficient, because we need to lookup every time.
-        Function init = findMethod("init", false);
+        Method init = findMethod("init", false);
         if (init != null) {
             return init.arity();
         }
@@ -60,7 +61,7 @@ public class LoxClass implements LoxCallable {
     @Override
     public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
         LoxInstance instance = new LoxInstance(this);
-        Function init = findMethod("init", false);
+        Method init = findMethod("init", false);
         if (init != null) {
             init.bind(instance).call(interpreter, leftPar, arguments);
         }

@@ -97,8 +97,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitClassStmt(Stmt.Class klass) {
-        Map<String, LoxCallable.Function> methods = new HashMap<>();
-        Map<String, LoxCallable.Function> classMethods = new HashMap<>();
+        Map<String, LoxCallable> classMethods = new HashMap<>();
         List<LoxClass> superclasses = new ArrayList<>();
         for (var superclass : klass.superclasses) {
            superclasses.add(
@@ -106,16 +105,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
         environment.push(true);
         var scoping = environment.getScoping();
-        for (var method : klass.methods.methods) {
-            methods.put(method.name.lexeme(), new LoxCallable.Function(method, scoping));
-        }
         for (var method : klass.classMethods) {
             var classMethod = new LoxCallable.Function(method, scoping);
             classMethods.put(method.name.lexeme(), classMethod);
             environment.defineSymbol(method.name, classMethod, Symbol.Type.FUN, true);
         }
         environment.pop();
-        var loxClass = new LoxClass(klass.name.lexeme(), superclasses, methods, classMethods, klass);
+        var loxClass = new LoxClass(klass.name.lexeme(), superclasses, classMethods, klass, scoping);
         environment.defineSymbol(klass.name, loxClass, Symbol.Type.CLASS, true);
         return null;
     }
@@ -329,7 +325,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
             throw new LoxError(get.name, "Undefined class method.");
         } else if (object instanceof String str) {
-
+            // TODO
         }
         throw new LoxError(get.name, "Left side of '.%s' is not an instance or a class".formatted(get.name.lexeme()));
     }
@@ -341,7 +337,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitLambdaExpr(Expr.Lambda lambda) {
-        return new LoxCallable.Function(lambda, environment.getScoping());
+        return new LoxCallable.Lambda(lambda.parameters, lambda.body, environment.getScoping());
     }
 
     @Override

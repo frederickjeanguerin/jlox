@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED 10.x7 - Methods are readonly symbols.">
-      <change afterPath="$PROJECT_DIR$/src/jlox/LoxString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Environment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTOR LoxCallable &amp; Function.">
       <change beforePath="$PROJECT_DIR$/src/jlox/LoxCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxCallable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/LoxClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,34 +237,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00058" summary="ADDED One-liner function (tested)">
-      <created>1655216624456</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1655216624456</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Chapter 10 - Challenge 2 - Lambda">
-      <created>1655238868547</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1655238868547</updated>
-    </task>
-    <task id="LOCAL-00060" summary="REFAC Added Symbol">
-      <created>1655259539026</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1655259539026</updated>
-    </task>
-    <task id="LOCAL-00061" summary="REFAC Added Symbol">
-      <created>1655260374491</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1655260374491</updated>
     </task>
     <task id="LOCAL-00062" summary="REFAC Added Symbol target">
       <created>1655277623392</created>
@@ -588,7 +553,35 @@
       <option name="project" value="LOCAL" />
       <updated>1656011413592</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="REFACTOR LoxCallable &amp; Native.">
+      <created>1656030860645</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1656030860645</updated>
+    </task>
+    <task id="LOCAL-00108" summary="REFACTOR LoxCallable &amp; Function.">
+      <created>1656035206709</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1656035206709</updated>
+    </task>
+    <task id="LOCAL-00109" summary="REFACTOR LoxCallable &amp; Function.">
+      <created>1656053424825</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1656053424825</updated>
+    </task>
+    <task id="LOCAL-00110" summary="REFACTOR LoxCallable &amp; Function.">
+      <created>1656054938330</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1656054938330</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -606,8 +599,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 13.1 - Superclass basics (tested)" />
-    <MESSAGE value="Chapter 13.2 - Inheriting methods (tested)" />
     <MESSAGE value="Chapter 13.3 - Super (almost tested)" />
     <MESSAGE value="Chapter 13.3 - Super (fully tested)" />
     <MESSAGE value="ADDED line comments in GenerateAst" />
@@ -631,6 +622,8 @@
     <MESSAGE value="ADDED 7.x5 - Exponent operator **" />
     <MESSAGE value="ADDED 9.x6 - Compound Assignment Operators" />
     <MESSAGE value="ADDED 10.x7 - Methods are readonly symbols." />
-    <option name="LAST_COMMIT_MESSAGE" value="ADDED 10.x7 - Methods are readonly symbols." />
+    <MESSAGE value="REFACTOR LoxCallable &amp; Native." />
+    <MESSAGE value="REFACTOR LoxCallable &amp; Function." />
+    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR LoxCallable &amp; Function." />
   </component>
 </project>
