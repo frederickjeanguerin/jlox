@@ -106,7 +106,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         environment.push(true);
         var scoping = environment.getScoping();
         for (var method : klass.classMethods) {
-            var classMethod = new LoxCallable.Function(method, scoping);
+            var classMethod = new LoxCallable.LoxFunction(method, scoping);
             classMethods.put(method.name.lexeme(), classMethod);
             environment.defineSymbol(method.name, classMethod, Symbol.Type.FUN, true);
         }
@@ -129,7 +129,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitFunctionStmt(Stmt.Function stmt) {
-        var function = new LoxCallable.Function(stmt, environment.getScoping());
+        var function = new LoxCallable.LoxFunction(stmt, environment.getScoping());
         environment.defineSymbol(stmt.name, function, Symbol.Type.FUN, true);
         return null;
     }
@@ -325,7 +325,20 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             }
             throw new LoxError(get.name, "Undefined class method.");
         } else if (object instanceof String str) {
-            // TODO
+            var classMethod = LoxString.instance.findClassMethod(get.name.lexeme());
+            if (classMethod == null) {
+                throw new LoxError(get.name, "Undefined string method.");
+            }
+            if (classMethod.arity() == 0) {
+                throw new LoxError(get.name, "String class method not applicable to a string instance");
+            }
+            if (classMethod.arity() == 1 && classMethod.isProperty()) {
+                return classMethod.call(this, get.name, List.of(str));
+            }
+            if (classMethod instanceof LoxNative.Native method) {
+                return method.bind(str, get.name);
+            }
+            throw new LoxError(get.name, "Internal error: String method is not native");
         }
         throw new LoxError(get.name, "Left side of '.%s' is not an instance or a class".formatted(get.name.lexeme()));
     }

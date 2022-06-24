@@ -1,8 +1,6 @@
 package jlox.tests;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
-import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -77,7 +75,7 @@ class LoxTest {
 
     @ParameterizedTest
     @CsvFileSource(
-            resources = "LoxTest_RuntimeError.csv",
+            resources = "LoxTest_Advanced.csv",
             numLinesToSkip = 1,
             delimiter = '¤')
     void testRuntimeError(String description, String input, String expectedErrors) {
@@ -92,7 +90,13 @@ class LoxTest {
                 stderr.contains("\n") ? "\n" : "",
                 stderr);
         for (String expectedError : expectedErrors.split(", ")) {
-            if (expectedError.startsWith("*")) {
+            expectedError = transform(expectedError);
+            if (expectedError.startsWith("=")) {
+                assertLinesMatch(
+                        List.of(expectedError.substring(1)),
+                        List.of(result.stdout().stripTrailing()),
+                        description);
+            } else if (expectedError.startsWith("*")) {
                 assertLinesMatch(
                         List.of("(?is).*" + expectedError.substring(1) + ".*"),
                         List.of(result.stdout()),

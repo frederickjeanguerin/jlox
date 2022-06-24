@@ -194,3 +194,58 @@ Function is readonly ¤ fun f(){} f = 0; f = 1; ¤ /002, at 'f', function 'f' ca
 Class is readonly ¤ class C{} C = 0; ¤ /001, at 'C', class 'C' cannot be modified
 Method is readonly ¤ class C{ m(){} } var c = C(); c.m = 0; ¤ /001, at 'm', cannot change 'm'
 Class method is readonly ¤ class C{ class m(){} } C.m = 0; ¤ /001, at 'm', is not an instance
+
+# String native methods
+Native String.charAt ¤ ""1234"".charAt(2) ¤ =3
+Native String.compareTo ¤ ""12"".compareTo(""34"") < 0 ¤ =true
+Native String.compareTo ¤ ""12"".compareTo(""12"") == 0 ¤ =true
+Native String.compareTo ¤ ""45"".compareTo(""34"") > 0 ¤ =true
+Native String.compareToIgnoreCase ¤ ""abc"".compareToIgnoreCase(""AbC"") == 0 ¤ =true
+Native String.concat ¤ ""abc"".concat(""123"") ¤ =abc123
+Native String.contains ¤ ""alpha--beta"".contains(""a--b"") ¤ =true
+Native String.contains ¤ ""alpha--beta"".contains(""a--a"") ¤ =false
+Native String.endsWith ¤ ""alpha--beta"".endsWith(""beta"") ¤ =true
+Native String.endsWith ¤ ""alpha--beta"".endsWith(""alpha"") ¤ =false
+Native String.equalsIgnoreCase ¤ ""alpha"".equalsIgnoreCase(""ALPha"") ¤ =true
+Native String.equalsIgnoreCase ¤ ""alpha"".equalsIgnoreCase(""ALPhe"") ¤ =false
+Native String.format1 ¤ ""-%.0f-"".format1(105) ¤ =-105-
+Native String.format2 ¤ ""-%.0f-%.0f-"".format2(105, 106) ¤ =-105-106-
+Native String.format3 ¤ ""-%.0f-%.0f-%.0f-"".format3(105, 106, 107) ¤ =-105-106-107-
+Native String.hashCode ¤ ""bidule"".hashCode ¤ =-1.389245807E9
+Native String.indent ¤ ""1234"".indent(3) ¤ =   1234
+Native String.indexOf ¤ ""bidule"".indexOf(""du"") ¤ =2
+Native String.indexOf ¤ ""bidule"".indexOf(""12"") ¤ =[-]1
+Native String.indexFrom ¤ ""bidule-bidule"".indexFrom(""du"", 5) ¤ =9
+Native String.intern ¤ ""bidule"".intern() ¤ =bidule
+Native String.isEmpty ¤ ""bidule"".isEmpty ¤ =false
+Native String.isEmpty ¤ """".isEmpty ¤ =true
+Native String.isBlank ¤ ""   "".isBlank ¤ =true
+Native String.isBlank ¤ "" a  "".isBlank ¤ =false
+Native String.lastIndexOf ¤ ""bidule-bidule"".lastIndexOf(""du"") ¤ =9
+Native String.lastIndexFrom ¤ ""bidule-bidule"".lastIndexFrom(""du"", 5) ¤ =2
+Native String.length ¤ "" a  "".length ¤ =4
+Native String.matches ¤ ""aaa bb"".matches(""a+ b+"") ¤ =true
+Native String.matches ¤ ""aaa "".matches(""a+ b+"") ¤ =false
+Native String.repeat ¤ ""12"".repeat(3) ¤ =121212
+Native String.replace ¤ ""I love love"".replace(""love"", ""hate"") ¤ =I hate hate
+Native String.replaceAll ¤ ""I love love"".replaceAll(""l\\S*"", ""hate"") ¤ =I hate hate
+Native String.replaceFirst ¤ ""I love love"".replaceFirst(""l\\S*"", ""hate"") ¤ =I hate love
+Native String.startsWith ¤ ""alpha--beta"".startsWith(""alpha"") ¤ =true
+Native String.startsWith ¤ ""alpha--beta"".startsWith(""beta"") ¤ =false
+Native String.startsFrom ¤ ""alpha--beta--gamma"".startsFrom(""beta"", 7) ¤ =true
+Native String.startsFrom ¤ ""alpha--beta--gamma"".startsFrom(""beta"", 5) ¤ =false
+Native String.strip ¤ ""   alpha   "".strip() ¤ =alpha
+Native String.stripIndent ¤ ""   alpha   \n   beta   \n   gamma"".stripIndent() ¤ =alpha\nbeta\ngamma
+Native String.stripLeading ¤ ""   alpha   "".stripLeading() ¤ =alpha
+Native String.stripTrailing ¤ ""   alpha   "".stripTrailing() ¤ =   alpha
+Native String.right ¤ ""alpha--beta"".right(7) ¤ =beta
+Native String.left ¤ ""alpha--beta"".left(5) ¤ =alpha
+Native String.substring ¤ ""alpha--beta--gamma"".substring(7, 11) ¤ =beta
+Native String.toLower ¤ ""La La La".toLower() ¤ =la la la
+Native String.toUpper ¤ ""La La La".toUpper() ¤ =LA LA LA
+Native String.trim ¤ ""   alpha   "".trim() ¤ =alpha
+
+# String native methods (other stuff)
+Native String direct call from class ¤ String.charAt(""1234"", 2) ¤ =3
+Native String chaining calls ¤ "   bidule   ".trim().toUpper().left(2) ¤ =BI
+Native String undefined method ¤ "bidule".car() ¤ /001, undefined string method

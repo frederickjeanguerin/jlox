@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="REFACTOR LoxCallable &amp; Function.">
-      <change beforePath="$PROJECT_DIR$/src/jlox/LoxCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxCallable.java" afterDir="false" />
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED String class with many">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/LoxNative.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxNative.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/LoxString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/LoxString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_RuntimeError.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Advanced.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,41 +243,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00062" summary="REFAC Added Symbol target">
-      <created>1655277623392</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1655277623392</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Chapter 11 - Variable local scoping (untested)">
-      <created>1655282836088</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1655282836088</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Chapter 11 - Lexical scoping (almost tested)">
-      <created>1655291280247</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1655291280247</updated>
-    </task>
-    <task id="LOCAL-00065" summary="Chapter 11 - Lexical scoping (almost tested)">
-      <created>1655326565781</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1655326565782</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Chapter 11 - Lexical scoping (tested)">
-      <created>1655339605253</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1655339605253</updated>
     </task>
     <task id="LOCAL-00067" summary="Chapter 11 - Challenge 3 - Report unused variables">
       <created>1655363066451</created>
@@ -581,7 +552,42 @@
       <option name="project" value="LOCAL" />
       <updated>1656054938330</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="REFACTOR LoxCallable &amp; Function.">
+      <created>1656055258294</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1656055258295</updated>
+    </task>
+    <task id="LOCAL-00112" summary="ADDED String class with length.">
+      <created>1656058354510</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1656058354510</updated>
+    </task>
+    <task id="LOCAL-00113" summary="ADDED String class with more methods.">
+      <created>1656073909225</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1656073909225</updated>
+    </task>
+    <task id="LOCAL-00114" summary="ADDED String class with more methods.">
+      <created>1656082361680</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1656082361680</updated>
+    </task>
+    <task id="LOCAL-00115" summary="ADDED String class with many">
+      <created>1656106775323</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1656106775323</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -599,10 +605,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 13.3 - Super (almost tested)" />
-    <MESSAGE value="Chapter 13.3 - Super (fully tested)" />
-    <MESSAGE value="ADDED line comments in GenerateAst" />
-    <MESSAGE value="REFAC super with target subclass instead of superclass." />
     <MESSAGE value="ADDED Explicit super" />
     <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance (mostly tested)" />
     <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance, the Python way (tested)" />
@@ -624,6 +626,10 @@
     <MESSAGE value="ADDED 10.x7 - Methods are readonly symbols." />
     <MESSAGE value="REFACTOR LoxCallable &amp; Native." />
     <MESSAGE value="REFACTOR LoxCallable &amp; Function." />
-    <option name="LAST_COMMIT_MESSAGE" value="REFACTOR LoxCallable &amp; Function." />
+    <MESSAGE value="ADDED String class with length." />
+    <MESSAGE value="ADDED String class with more methods." />
+    <MESSAGE value="ADDED String class with many methods." />
+    <MESSAGE value="ADDED String class with many" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED String class with many" />
   </component>
 </project>

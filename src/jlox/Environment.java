@@ -152,9 +152,11 @@ public class Environment {
         static final Scope GLOBAL = new Scope(null, true, true);
 
         static {
-            GLOBAL.define("clock", Token.Special("<fun clock>"), LoxCallable.Native.clock, Symbol.Type.FUN, true);
-            GLOBAL.define("lineSeparator", Token.Special("<fun lineSeparator>"), LoxCallable.Native.lineSeparator, Symbol.Type.FUN, true);
-            GLOBAL.define("exit", Token.Special("<fun exit>"), LoxCallable.Native.exit, Symbol.Type.FUN, true);
+            GLOBAL.define("clock", Token.Special("<fun clock>"), LoxNative.clock, Symbol.Type.FUN, true);
+            GLOBAL.define("lineSeparator", Token.Special("<fun lineSeparator>"), LoxNative.lineSeparator, Symbol.Type.FUN, true);
+            GLOBAL.define("exit", Token.Special("<fun exit>"), LoxNative.exit, Symbol.Type.FUN, true);
+
+            GLOBAL.define(LoxString.instance.name, LoxString.instance.classStmt.name, LoxString.instance, Symbol.Type.CLASS, true);
         }
     }
 }

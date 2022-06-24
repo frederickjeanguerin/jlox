@@ -1,7 +1,7 @@
 package jlox;
 
 class LoxError extends RuntimeException {
-    final Token token;
+    Token token;
 
     public LoxError(Token token, String message) {
         super(message);

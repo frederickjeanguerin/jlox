@@ -22,6 +22,7 @@ public class LoxClass implements LoxCallable {
         for (var method : classStmt.methods.methods) {
             methods.put(method.name.lexeme(), new LoxCallable.Method(method, scoping, this));
         }
+        assert methods.isEmpty() || scoping != null;
     }
 
     public Method findMethod(String name, boolean superclassOnly) {

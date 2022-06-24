@@ -184,9 +184,27 @@ A static error is generated if a function symbol is modified.
     fun f(){}
     f = 0;          // error, f is readonly
 
+### 10.x8 - Native Java string methods
+
+More than thirty new class methods added to a new predefined class `String`.
+
+These methods can be called as class methods or instance methods (like C# extension methods).
+
+    print String.toUpper("love"); // LOVE
+    print "love".toUpper();       // LOVE
+
+Some of these methods are considered properties.
+
+    print "love".length;          // 4
+    print "".isEmpty;             // true
+
 ---
 
-<mark>TODO</mark>: enable Java primitive methods for String and Number.
+<mark>TODO</mark>: add Java primitive methods for Number.
+
+---
+
+<mark>TODO</mark>: add Java primitive methods for Character in String.
 
 ---
 

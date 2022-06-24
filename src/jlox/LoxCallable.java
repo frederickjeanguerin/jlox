@@ -60,11 +60,11 @@ interface LoxCallable {
 
     }
 
-    class Function extends Lambda {
+    class LoxFunction extends Lambda {
 
         protected final Stmt.Function stmt;
 
-        public Function(Stmt.Function fun, Environment.Scoping scoping) {
+        public LoxFunction(Stmt.Function fun, Environment.Scoping scoping) {
             super(fun.parameters, fun.body, scoping);
             this.stmt = fun;
         }
@@ -84,7 +84,7 @@ interface LoxCallable {
         }
     }
 
-   class Method extends Function {
+   class Method extends LoxFunction {
 
         private final LoxClass parent;
 
@@ -103,7 +103,7 @@ interface LoxCallable {
         }
     }
 
-    class BoundedMethod extends Function {
+    class BoundedMethod extends LoxFunction {
         private final LoxInstance self;
 
         public BoundedMethod(Stmt.Function fun, Environment.Scoping scoping, LoxInstance instance) {
@@ -122,53 +122,4 @@ interface LoxCallable {
         }
     }
 
-    abstract class Native implements LoxCallable {
-
-        private final int arity;
-        private final boolean isProperty;
-        private final String name;
-
-        public Native(String name, int arity, boolean isProperty){
-            this.name = name;
-            this.arity = arity;
-            this.isProperty = isProperty;
-        }
-
-        @Override
-        public int arity() {
-            return arity;
-        }
-
-        @Override
-        public boolean isProperty() {
-            return isProperty;
-        }
-
-        @Override
-        public String toString() {
-            return "<native fun: %s>".formatted(name);
-        }
-
-        static final Native clock = new Native("clock", 0, false){
-            @Override
-            public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
-                return System.currentTimeMillis()/1000.0;
-            }
-        };
-
-        static final Native lineSeparator = new Native("lineSeparator", 0, true){
-            @Override
-            public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
-                return System.lineSeparator();
-            }
-        };
-        static final Native exit = new Native("exit", 1, false){
-            @Override
-            public Object call(Interpreter interpreter, Token leftPar, List<Object> arguments) {
-                if (arguments.get(0) instanceof Double exitCode)
-                    System.exit(exitCode.intValue());
-                throw new Interpreter.TypeMismatchError(leftPar, Double.class, arguments.get(0), "First argument.");
-            }
-        };
-    }
 }

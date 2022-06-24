@@ -182,8 +182,8 @@ Function with scope ¤ var b = 10; fun ten() { print b; }; ten(); ¤ 10
 Function with params and scope (var before) ¤ var b = 10; fun plus(a) { print a + b; }; plus(5); ¤ 15
 Function with scope shadowing ¤ var b = 10; fun plus(a, b) { b = b + a; print b; }; plus(5, 10); b ¤ 15 10
 Function variable ¤ var fn; fun two() { print 2; } fn = two; two(); fn(); ¤ 2 2
-Function name ¤ fun bidule(){}; bidule ¤ <Function bidule>
-Function name ¤ fun bidule(){}; print bidule; ¤ <Function bidule>
+Function name ¤ fun bidule(){}; bidule ¤ <LoxFunction bidule>
+Function name ¤ fun bidule(){}; print bidule; ¤ <LoxFunction bidule>
 Function with lexical scope 1 ¤ var x = 10; fun inc_x(){ ++x; }; { var x = 20; inc_x(); print x; } print x; ¤ 20 11
 Function with lexical scope 2 ¤ var x = 10; { var x = 20; fun inc_x(){ ++x; }; inc_x(); print x; } print x; ¤ 21 10
 Function capture local scope ¤ var fn; { var x = 10; fun xx() { print x; }; fn = xx; } fn(); ¤ 10
