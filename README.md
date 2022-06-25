@@ -245,8 +245,10 @@ Are reported just like unused variables.
 * Cannot define static fields.
 * Can be used without prefix inside the class itself.
 
+Example:
 
     class Math {
+        
         class factorial(n) {
             if (n < 2) return 1;
             return factorial (n - 1)
@@ -258,6 +260,7 @@ Are reported just like unused variables.
     }
 
     print Math.factorial(10);                       // prefix necessary here
+
 
 ### 12.2 - Readonly properties (getters)
 
@@ -296,8 +299,8 @@ Hence, the following class is perfectly legal.
 * Implemented the Python way. 
 * The order of the superclasses is important for name resolution in parents.
 * A specific superclass can be targeted with the `super` keyword as `super(superclassName)`.
-This makes it possible to initialize every parent classes in its own way.
 
+This makes it possible to initialize every parent classes in its own way.
 
     class Jedi < Person, ForceBearer {
         init(name, age, force) {

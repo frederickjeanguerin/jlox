@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="UPDATE Readme introduction">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED 4.4 - Block comment nesting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Advanced.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Advanced.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,13 +238,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00070" summary="Chapter 12.2 - Class declaration (tested)">
-      <created>1655422372230</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1655422372231</updated>
     </task>
     <task id="LOCAL-00071" summary="Chapter 12.3 - Class instantiation (tested)">
       <created>1655423009312</created>
@@ -584,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656139610211</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="ADDED 4.4 - Block comment nesting">
+      <created>1656143095248</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1656143095248</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -602,7 +600,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 12 - Challenge 2 - Properties." />
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods (no meta-classes)." />
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (almost done)." />
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods readily accessible inside classes (tested)." />
@@ -627,6 +624,7 @@
     <MESSAGE value="ADDED 10.x8 - Native Java string methods" />
     <MESSAGE value="ADDED 8.x3 - Constant local variables" />
     <MESSAGE value="UPDATE Readme introduction" />
-    <option name="LAST_COMMIT_MESSAGE" value="UPDATE Readme introduction" />
+    <MESSAGE value="ADDED 4.4 - Block comment nesting" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED 4.4 - Block comment nesting" />
   </component>
 </project>
