@@ -255,3 +255,10 @@ Constant declaration ¤ const pi = 3.14159; pi ¤ =3[.]14159
 Constant uninitialized ¤ const pi; ¤ /001, at 'pi', constant must be initialized
 Constant modified ¤ const pi = 3.14159; pi = 0; pi = 2; ¤ /002, at 'pi', cannot be modified
 
+# Nested block comment
+Nested block comment ¤ print /* /* foo */ /* bar /* bat */ */ */ 10; ¤ =10
+Nested block comment: unterminated ¤ print /* /* foo */ /* bar /* bat */ */ 10; ¤ unterminated block comment
+Nested block comment: unterminated level 2 ¤ print /* /* foo */ /* bar /* bat */ 10; ¤ unterminated block comment, nesting level 2
+Nested block comment: unterminated level 3 ¤ print /* /* foo */ /* bar /* bat 10; ¤ unterminated block comment, nesting level 3
+Nested block comment: unterminated many lines ¤ print /* /* foo\n\n\n */ /* bar /* bat 10; ¤ line 4, unterminated block comment, nesting level 3, started on line 1
+Nested block comment: outside any comment ¤ print */ */ */ 10; ¤ /003, unexpected block comment end

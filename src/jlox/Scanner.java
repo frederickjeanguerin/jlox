@@ -3,7 +3,6 @@ package jlox;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static java.util.Map.entry;
 import static jlox.TokenType.*;
@@ -152,7 +151,11 @@ class Scanner {
                 addToken(match('+') ? PLUS_PLUS : PLUS);
                 break;
             case '*':
-                addToken(match('*') ? STAR_STAR : STAR);
+                if (match('/')) {
+                    stdio.errorAtLine(line, "Unexpected block comment end.");
+                } else {
+                    addToken(match('*') ? STAR_STAR : STAR);
+                }
                 break;
 
             // slash or comment
@@ -161,7 +164,7 @@ class Scanner {
                     // Line comments
                     advanceAfter('\n');
                 } else if (match('*')) {
-                    blockComment();
+                    blockComment(line);
                 } else {
                     addToken(SLASH);
                 }
@@ -231,15 +234,14 @@ class Scanner {
         return true;
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private boolean advanceAfter(char expected, char nextExpected) {
-        while (peek() != expected || peek(1) != nextExpected) {
-            if (isAtEnd()) return false;
+    private String advanceAfterAnyMatch(String ... matches) {
+        while (!isAtEnd()) {
+            for (String m : matches) {
+                if (match(m)) return m;
+            }
             advance();
         }
-        advance();
-        advance();
-        return true;
+        return null;
     }
 
     private boolean match(char expected) {
@@ -247,6 +249,14 @@ class Scanner {
             return false;
         advance();
         return true;
+    }
+
+    private boolean match(String expected) {
+        if (source.startsWith(expected, current)) {
+            current += expected.length();
+            return true;
+        }
+        return false;
     }
 
     private char peek() {
@@ -294,10 +304,23 @@ class Scanner {
         addToken(type);
     }
 
-    private void blockComment() {
-        // TODO add the possibility to nest them (chapter 4 challenge)
-        if (!advanceAfter('*', '/')) {
-            stdio.errorAtLine(line, "Unterminated multiline comment");
+    private void blockComment(int startLine) {
+        int nesting = 1;
+        while (nesting > 0) {
+            String match = advanceAfterAnyMatch("/*", "*/");
+            if (match == null) {
+                String msg = "Unterminated block comment";
+                if (line != startLine) msg += ", started on line " + startLine;
+                if (nesting > 1) msg += ", nesting level " + nesting;
+                msg += ".";
+                stdio.errorAtLine(line, msg);
+                return;
+            } else if (match.equals("/*")) {
+                nesting++;
+            } else {
+                assert match.equals("*/");
+                nesting--;
+            }
         }
     }
 

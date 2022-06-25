@@ -16,14 +16,10 @@ I detail these challenges together with more personal stuff I added hereafter.
 
 ## 4 - Scanning
 
-### 4.4 - Block comment (non nesting)
-Chapter 4 challenge 4 asked for block comment: ``/* my block comment */``
+### 4.4 - Block comment (nesting)
+In chapter 4, challenge 4 asked for block comment: ``/* my block comment */``
 
----
-
-<mark>TODO</mark>: Add block comment nesting.
-
----
+* Nesting is working.
 
 ### 4.x5 - String with escape sequences
 Some escape sequence are permitted, like `\n`, `\t`, `\"`, or `\\`. See [translateEscapes](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html#translateEscapes()).
