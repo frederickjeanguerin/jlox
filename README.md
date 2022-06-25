@@ -107,6 +107,20 @@ The accepted compounded operators are:
 * `and=`
 * `or=`
 
+### 9.x5 - Increment and decrement
+
+Prefix increment and decrement operator provided with syntax desugaring.
+
+* `++x` desugared to `x = x + 1`
+* `--x` desugared to `x = x - 1`
+
+Type checked for Double, to prohibit something like:
+
+    var str = "string";
+    ++str;                  // string1, by x = x + 1 with concatenation
+
+
+
 ---
 
 <mark>TODO</mark>: do some variable initialisation checking at compile time.
@@ -123,22 +137,10 @@ A check for using a break outside any loop is made during the
 analysis phase (after parsing but before interpretation).
 A check for dead code is also made (not exhaustive).
 
-### 9.4x - Continue from loops
+### 9.x4 - Continue from loops
 
 A `continue` statement is also provided. Works like break. 
 I had to create a special construct to accommodate the desugared `for` loop.
-
-### 9.5x - Increment and decrement
-
-Prefix increment and decrement operator provided with syntax desugaring.
-
-* `++x` desugared to `x = x + 1`
-* `--x` desugared to `x = x - 1`
-
-Type checked for Double, to prohibit something like:
-
-    var str = "string";
-    ++str;                  // string1, by x = x + 1 with concatenation
 
 
 ## 10 - Functions
