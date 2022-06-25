@@ -272,7 +272,7 @@ public class AstPrinter implements Expr.VoidVisitor, Stmt.VoidVisitor {
 
     @Override
     public void visitVarStmt(Stmt.Var stmt) {
-        append("var "); append(stmt.name.lexeme());
+        append(stmt.isReadonly ? "const " : "var "); append(stmt.name.lexeme());
         if (stmt.initializer != null) {
             append(" = "); append(stmt.initializer);
         }

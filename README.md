@@ -85,13 +85,15 @@ Example: `#ast 4 + 5` will output `(+ 4 5)`.
 This is checked at runtime, although some checking could also be implemented 
 at "compile time" (static analysis phase).
 
+### 8.x3 - Constant locals
+
+* Constant local "variables" can be declared using `const` instead of `var`.
+* Constants must be initialized where declared.
+* Constants cannot be modified (checked at compile time).
+
 ---
 
 <mark>TODO</mark>: do some variable initialisation checking at compile time.
-
----
-
-<mark>TODO</mark>: declare `const` variables.
 
 ---
 
@@ -281,6 +283,13 @@ Hence, the following class is perfectly legal.
     
         circumference: TAU * self.radius;       // idem
     }
+
+---
+
+<mark>TODO</mark>: declare `const` member variables.
+
+---
+
 
 ## 13 - Inheritance
 

@@ -10,13 +10,38 @@ import static jlox.TokenType.*;
 
 class Scanner {
     private static final Map<String, TokenType> keywords;
+
+    static {
+        keywords = Map.ofEntries(
+                entry("and", AND),
+                entry("break", BREAK),
+                entry("class", CLASS),
+                entry("const", CONST),
+                entry("continue", CONTINUE),
+                entry("else", ELSE),
+                entry("false", FALSE),
+                entry("for", FOR),
+                entry("fun", FUN),
+                entry("if", IF),
+                entry("nil", NIL),
+                entry("or", OR),
+                entry("print", PRINT),
+                entry("return", RETURN),
+                entry("self", SELF),
+                entry("super", SUPER),
+                entry("true", TRUE),
+                entry("this", SELF),
+                entry("var", VAR),
+                entry("while", WHILE)
+        );
+    }
+
     private final String source;
     private final Stdio stdio;
     private final List<Token> tokens = new ArrayList<>();
     private int start = 0;      // offset in source
     private int current = 0;    // offset in source
     private int line;
-
 
     Scanner(String source, Stdio stdio, int startingLine) {
         this.source = source;
@@ -34,7 +59,6 @@ class Scanner {
         tokens.add(new Token(EOF, "", null, line));
         return tokens;
     }
-
 
     /**
      * It is tedious to create a different token for all compound operators.
@@ -285,27 +309,4 @@ class Scanner {
         String text = source.substring(start, current);
         tokens.add(new Token(type, text, literal, line));
     }
-
-static {
-        keywords=Map.ofEntries(
-        entry("and",AND),
-        entry("break",BREAK),
-        entry("class",CLASS),
-        entry("continue",CONTINUE),
-        entry("else",ELSE),
-        entry("false",FALSE),
-        entry("for",FOR),
-        entry("fun",FUN),
-        entry("if",IF),
-        entry("nil",NIL),
-        entry("or",OR),
-        entry("print",PRINT),
-        entry("return",RETURN),
-        entry("self",SELF),
-        entry("super",SUPER),
-        entry("true",TRUE),
-        entry("var",VAR),
-        entry("while",WHILE)
-        );
-        }
-        }
+}

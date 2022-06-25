@@ -9,5 +9,5 @@ Keyword         : Token keyword
 Last            : Expr expression
 Print           : Expr expression
 Return          : Token keyword, Expr value
-Var             : Token name, Expr initializer
+Var             : Token name, Expr initializer, boolean isReadonly
 While           : Expr condition, Stmt body

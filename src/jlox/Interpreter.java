@@ -171,7 +171,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         if (stmt.initializer == null) {
             environment.defineUninitializedVariable(stmt.name);
         } else {
-            environment.defineSymbol(stmt.name, evaluate(stmt.initializer), Symbol.Type.VAR, false);
+            environment.defineSymbol(stmt.name, evaluate(stmt.initializer), Symbol.Type.VAR, stmt.isReadonly);
         }
         return null;
     }

@@ -97,7 +97,7 @@ public class WalkSymbol extends Walk.Base {
 
     @Override
     public void leaveVarStmt(Stmt.Var var) {
-        defineSymbol(var.name, Symbol.Type.VAR, false);
+        defineSymbol(var.name, Symbol.Type.VAR, var.isReadonly);
     }
 
     @Override

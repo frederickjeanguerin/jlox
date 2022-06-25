@@ -400,10 +400,12 @@ abstract class Stmt {
 
     final Token name;
     final Expr initializer;
+    final boolean isReadonly;
 
-    Var ( Token name, Expr initializer ) {
+    Var ( Token name, Expr initializer, boolean isReadonly ) {
       this.name = name;
       this.initializer = initializer;
+      this.isReadonly = isReadonly;
     }
 
     @Override

@@ -98,7 +98,8 @@ public class Parser {
         try {
             if (match(CLASS)) return classDeclaration();
             if (match(FUN)) return funDeclaration("function");
-            if (match(VAR)) return varDeclaration();
+            if (match(VAR)) return varDeclaration(false);
+            if (match(CONST)) return varDeclaration(true);
             return statement();
         } catch (ParseError error) {
             synchronize();
@@ -165,14 +166,16 @@ public class Parser {
                 : expressionStatement();
     }
 
-    private Stmt varDeclaration() {
+    private Stmt varDeclaration(boolean isReadonly) {
         var name = consume(IDENTIFIER, "Expect variable name.");
         Expr initializer = null;
         if (match(EQUAL)) {
             initializer = expression();
+        } else if (isReadonly) {
+            stdio.errorAtToken(name, "Constant must be initialized.");
         }
         semicolon();
-        return new Stmt.Var(name, initializer);
+        return new Stmt.Var(name, initializer, isReadonly);
     }
 
     private Stmt statement() {
@@ -205,7 +208,7 @@ public class Parser {
 
         Stmt initializer = null;
         if (match(VAR))
-            initializer = varDeclaration();
+            initializer = varDeclaration(false);
         else if (!peek(SEMICOLON, RIGHT_PAREN))
             initializer = expressionStatement();
         else

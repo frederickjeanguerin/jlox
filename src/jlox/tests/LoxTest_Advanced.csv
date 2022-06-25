@@ -249,3 +249,9 @@ Native String.trim ¤ ""   alpha   "".trim() ¤ =alpha
 Native String direct call from class ¤ String.charAt(""1234"", 2) ¤ =3
 Native String chaining calls ¤ "   bidule   ".trim().toUpper().left(2) ¤ =BI
 Native String undefined method ¤ "bidule".car() ¤ /001, undefined string method
+
+# Constant local variables
+Constant declaration ¤ const pi = 3.14159; pi ¤ =3[.]14159
+Constant uninitialized ¤ const pi; ¤ /001, at 'pi', constant must be initialized
+Constant modified ¤ const pi = 3.14159; pi = 0; pi = 2; ¤ /002, at 'pi', cannot be modified
+
