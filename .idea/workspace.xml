@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED 10.x8 - Native Java string methods">
+    <list default="true" id="34ac17fa-9ba3-440d-a3cb-bb85d615770e" name="Changes" comment="ADDED 8.x3 - Constant local variables">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/AstPrinter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/AstPrinter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Interpreter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Scanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/Stmt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/TokenType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/WalkSymbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Advanced.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/jlox/tests/LoxTest_Advanced.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tool/statements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/tool/statements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,13 +238,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1654157134834</updated>
-    </task>
-    <task id="LOCAL-00068" summary="ADDED JLine3 support (working ±)">
-      <created>1655391145461</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1655391145461</updated>
     </task>
     <task id="LOCAL-00069" summary="REFAC Independent expressions in parser.">
       <created>1655398376299</created>
@@ -591,7 +575,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656136624879</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="ADDED 8.x3 - Constant local variables">
+      <created>1656138758553</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1656138758553</updated>
+    </task>
+    <option name="localTasksCounter" value="118" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -609,7 +600,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance (mostly tested)" />
     <MESSAGE value="Chapter 13 - Challenge 1 - Multiple Inheritance, the Python way (tested)" />
     <MESSAGE value="Chapter 12 - Challenge 2 - Properties." />
     <MESSAGE value="Chapter 12 - Challenge 1 - Class methods (no meta-classes)." />
@@ -634,6 +624,7 @@
     <MESSAGE value="ADDED String class with many methods." />
     <MESSAGE value="ADDED String class with many" />
     <MESSAGE value="ADDED 10.x8 - Native Java string methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="ADDED 10.x8 - Native Java string methods" />
+    <MESSAGE value="ADDED 8.x3 - Constant local variables" />
+    <option name="LAST_COMMIT_MESSAGE" value="ADDED 8.x3 - Constant local variables" />
   </component>
 </project>

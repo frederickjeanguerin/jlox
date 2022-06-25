@@ -1,7 +1,7 @@
-# JLox FG flavor
+# JLox enhanced
 
 Welcome to my very own version of the Lox language Java interpreter, as proposed in the book
-[Crafting Interpreters](https://craftinginterpreters.com/) by _Robert Nystrom_.
+[Crafting Interpreters](https://craftinginterpreters.com/) by _Robert Nystrom_, but with added features.
 
 This implementation is far from perfect and contains still many bugs for sure, 
 although I managed to reduce them somewhat.
@@ -9,10 +9,10 @@ Nevertheless, you might find here some interesting ideas from language extension
 I made. 
 
 First and foremost, this implementation comes with many *test cases*, because I found it
-almost impossible to trust my own code after a few chapters.
+almost impossible to trust my own code after a few chapters through the book.
 
-Throughout the book, I managed to implement most of the challenges presented to the reader.
-I detail these challenges and together with more personal stuff I added hereafter.
+I managed to implement most of the challenges presented to the reader.
+I detail these challenges together with more personal stuff I added hereafter.
 
 ## 4 - Scanning
 
@@ -78,7 +78,7 @@ Generate a runtime error.
 
 Added `#ast` modifier to print only the AST without evaluation.
 
-Example: `#ast 4 + 5` will output `(+ 4 5)`.
+Example: `#ast 4 + 5` will output `4 + 5`.
 
 ### 8.2 - Variables should be initialized
 
@@ -90,6 +90,26 @@ at "compile time" (static analysis phase).
 * Constant local "variables" can be declared using `const` instead of `var`.
 * Constants must be initialized where declared.
 * Constants cannot be modified (checked at compile time).
+
+### 8.x4 - Compound assignment operators
+
+Added with syntax desugaring (technique seen in chapter 9) 
+and a hack on the scanner to parse two consecutive
+operators (with the second being equal) as a compound operator and replace
+those two with the compounded.
+
+This has the side effect of accepting both `+=` and `+ =` as valid.
+
+The accepted compounded operators are:
+
+* `+=`
+* `-=`
+* `*=`
+* `/=`
+* `%=`
+* `**=`
+* `and=`
+* `or=`
 
 ---
 
@@ -124,24 +144,6 @@ Type checked for Double, to prohibit something like:
     var str = "string";
     ++str;                  // string1, by x = x + 1 with concatenation
 
-### 9.6x - Compound assignment operators
-
-Added with syntax desugaring and a hack on the scanner to parse two consecutive
-operators (with the second being equal) as a compound operator and replace
-those two with the compounded.
-
-This has the side effect of accepting both `+=` and `+ =` as valid.
-
-The accepted compounded operators are:
-
-* `+=`
-* `-=`
-* `*=`
-* `/=`
-* `%=`
-* `**=`
-* `and=`
-* `or=`
 
 ## 10 - Functions
 
