@@ -107,7 +107,7 @@ The accepted compounded operators are:
 * `and=`
 * `or=`
 
-### 9.x5 - Increment and decrement
+### 8.x5 - Increment and decrement
 
 Prefix increment and decrement operator provided with syntax desugaring.
 
